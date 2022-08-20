@@ -1,0 +1,20 @@
+{
+	"name": "ponzu0529-niconico",
+	"dockerComposeFile": [
+		"docker-compose.yml"
+	],
+	"service": "httpd",
+	"workspaceFolder": "/app",
+	"extensions": [
+		"oderwat.indent-rainbow", // indent-rainbow
+		"donjayamanne.githistory", // Git History
+		"eamodio.gitlens", // GitLens — Git supercharged
+		"bmewburn.vscode-intelephense-client", // PHP Intelephense
+		"adpyke.vscode-sql-formatter", // SQL Formatter
+		"octref.vetur", // Vetur
+		"dbaeumer.vscode-eslint", // ESLint
+		"humao.rest-client" // REST Client
+	],
+	"remoteUser": "USER_NAME"
+	// "shutdownAction": "none",
+}

@@ -1,0 +1,4 @@
+GRANT ALL PRIVILEGES
+    ON *.*
+    TO 'USER_NAME'@'%'
+;

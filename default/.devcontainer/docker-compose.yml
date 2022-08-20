@@ -1,0 +1,39 @@
+version: "3"
+services:
+  httpd:
+    build:
+      context: "${LOCAL_HOST_PATH}/httpd"
+      dockerfile: Dockerfile
+      args:
+        - DOCUMENT_ROOT=/app/home
+        - USERNAME=${USERNAME}
+    container_name: "${PROJECT_NAME}_httpd"
+    env_file: .env
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - "80:80"
+    tty: true
+    user: "${USERNAME}:${USERNAME}"
+    volumes:
+      - ${LOCAL_HOST_PATH}:/app
+      - /app/node_modules
+    working_dir: "/app"
+  mariadb:
+    image: mariadb:10.5
+    container_name: "${PROJECT_NAME}_mariadb"
+    environment:
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - ${LOCAL_HOST_PATH}/mariadb:/docker-entrypoint-initdb.d
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.7
+    container_name: "${PROJECT_NAME}_phpmyadmin"
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8888:80"
