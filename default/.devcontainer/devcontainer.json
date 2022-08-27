@@ -9,10 +9,12 @@
 		"oderwat.indent-rainbow", // indent-rainbow
 		"donjayamanne.githistory", // Git History
 		"eamodio.gitlens", // GitLens — Git supercharged
+		"GitHub.vscode-pull-request-github", // GitHub Pull Requests and Issues
 		"bmewburn.vscode-intelephense-client", // PHP Intelephense
 		"adpyke.vscode-sql-formatter", // SQL Formatter
 		"octref.vetur", // Vetur
 		"dbaeumer.vscode-eslint", // ESLint
+		"ms-python.python", // Python
 		"humao.rest-client" // REST Client
 	],
 	"remoteUser": "USER_NAME"
