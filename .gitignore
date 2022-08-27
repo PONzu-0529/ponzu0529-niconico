@@ -3,3 +3,6 @@
 mariadb
 
 !default/*
+
+# Python
+__pycache__

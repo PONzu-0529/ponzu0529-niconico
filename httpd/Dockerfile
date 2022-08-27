@@ -6,11 +6,11 @@ ARG USERNAME
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-# install
+# install and main setup
 RUN apt -y update && \
     apt -y upgrade && \
     curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt -y install sudo tzdata git wget nodejs && \
+    apt -y install sudo tzdata git wget nodejs python3-pip && \
     npm install -g yarn
 
 # setup composer
@@ -25,6 +25,10 @@ RUN sed -ri -e "s!/var/www/html!${DOCUMENT_ROOT}!g" /etc/apache2/sites-available
     mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     sed -ri -e 's/;extension=mysqli/extension=mysqli/g' $PHP_INI_DIR/php.ini && \
     docker-php-ext-install mysqli
+
+# setup python
+COPY requirements.txt /var/requirements.txt
+RUN pip install --no-cache-dir -r /var/requirements.txt
 
 # add user
 RUN useradd --uid ${USER_UID} --create-home --shell /bin/bash -G sudo,root ${USERNAME} && \
