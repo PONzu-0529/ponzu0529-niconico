@@ -1,9 +1,11 @@
 import os
+import sys
 import unittest
-
 from selenium.webdriver.remote.webdriver import WebElement
 
-from ...python.classes.ControlWebDriver import ControlWebDriver
+sys.path.append('/app')
+
+from Common.Python.classes.ControlWebDriver import ControlWebDriver
 
 
 class TestSelenium(unittest.TestCase):

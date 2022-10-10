@@ -1,12 +1,14 @@
+from xmlrpc.client import Boolean
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.remote.webdriver import WebElement
+from selenium.webdriver.remote.webdriver import WebDriver, WebElement
 
 
 class ControlWebDriver():
 
     driver: WebDriver = None
+
+    delete_flg = False
 
 
     def __init__(self, selenium_server_host: str, selenium_server_port = '4444'):
@@ -26,7 +28,8 @@ class ControlWebDriver():
 
         self.driver = webdriver.Remote(
             command_executor = "http://%s:%s" % (selenium_server_host, selenium_server_port),
-            options = options
+            options = options,
+            keep_alive = True
         )
 
 
@@ -84,4 +87,8 @@ class ControlWebDriver():
         Quits the driver and closes every associated window.
         """
 
-        self.driver.quit()
+        if (not self.delete_flg):
+
+            self.driver.quit()
+
+            self.delete_flg = True
