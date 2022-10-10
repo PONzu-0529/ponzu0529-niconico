@@ -1,0 +1,4 @@
+dist/*
+src/shims-tsx.d.ts
+src/shims-vue.d.ts
+babel.config.js
