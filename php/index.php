@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__ . '/model/LineNotify.php';
+require_once __DIR__ . '/model/Niconico.php';
+require_once __DIR__ . "/model/Todofuken.php";
+require_once __DIR__ . "/model/Web.php";
 require_once __DIR__ . '/auth.php';
 require_once __DIR__ . '/niconico.php';
 
@@ -211,6 +214,182 @@ if ($path === '/api/check-access-token') {
 }
 
 switch ($path) {
+    /////
+    ///// Get Web Info
+    /////
+  case "/api/get-web-info":
+    $body = json_decode(file_get_contents("php://input"));
+
+    // Validate
+    if (!isset($body->url) || $body->url === '') {
+      response(
+        json_encode(
+          [
+            "status" => "failure",
+            "message" => "ERROR: Param URL is not exist."
+          ]
+        )
+      );
+
+      break;
+    }
+
+    // Get Web Info
+    $web = new Web();
+
+    $result = $web->get_web_info($body->url);
+
+    if ($result["status"] !== "success") {
+      response(
+        json_encode(
+          [
+            "status" => "failure",
+            "message" => "ERROR: Failure Get Web Info."
+          ]
+        )
+      );
+
+      break;
+    }
+
+    response(
+      json_encode(
+        [
+          "status" => "success",
+          "title" => $result["title"]
+        ]
+      )
+    );
+
+    break;
+
+
+    /////
+    ///// Get Todofuken List
+    /////
+  case "/api/v1/get-todofuken-list":
+    $body = json_decode(file_get_contents("php://input"));
+
+    // Validate
+    if (!isset($body->num) || $body->num === '') {
+      response(
+        json_encode(
+          [
+            "status" => "failure",
+            "message" => "ERROR: Param Num is not exist."
+          ]
+        )
+      );
+
+      break;
+    }
+
+    // Get Todofuken List
+    $todofuken = new Todofuken();
+
+    $result = $todofuken->get_todofuken_list($body->num);
+
+    response(
+      json_encode(
+        [
+          "status" => "success",
+          "todofulen_list" => $result
+        ]
+      )
+    );
+
+    break;
+
+
+    /////
+    ///// Get Movie ID List
+    /////
+  case '/api/niconico/get-movie-id-list':
+    $body = json_decode(file_get_contents("php://input"));
+
+    // Validate
+    if (!isset($body->accessToken) || $body->accessToken === '') {
+      response(
+        json_encode(
+          [
+            'status' => 'failure',
+            'message' => 'ERROR: Access Token is not exist.'
+          ]
+        )
+      );
+
+      break;
+    } elseif (!isset($body->url) || $body->url === '') {
+      response(
+        json_encode(
+          [
+            'status' => 'failure',
+            'message' => 'ERROR: URL is not exist.'
+          ]
+        )
+      );
+
+      break;
+    }
+
+    // Check Access Token
+    $result = json_decode(check_access_token($body->accessToken));
+
+    if ($result->status !== 'success') {
+      response(
+        json_encode(
+          [
+            'status' => 'failure',
+            'message' => $result->message
+          ]
+        )
+      );
+
+      break;
+    }
+
+    // Get Movie ID List
+    $line = new LineNotify();
+    $niconico = new Niconico();
+    $cnt = 0;
+
+    $result = $niconico->get_movie_id_list_from_url($body->url);
+    $movie_id_list = $result["movie_id_list"];
+
+    foreach ($movie_id_list as $movie_id) {
+      $result = $niconico->get_official_info($movie_id);
+
+      if ($result["status"] === "success") {
+        $result = $niconico->insert_movie($result["video_id"], $result["title"]);
+      }
+
+      var_dump($result);
+
+      if ($result["status"] === "success") {
+        $cnt++;
+      }
+    }
+
+    $result = $line->sned_message(
+      json_decode(
+        json_encode([
+          "type" => "success",
+          "message" => "Add $cnt Videos."
+        ])
+      )
+    );
+
+    response(
+      json_encode(
+        [
+          'status' => 'success',
+        ]
+      )
+    );
+
+    break;
+
+
   case '/api/niconico/read-mylist-videos':
     /////
     ///// Read Mylist Videos

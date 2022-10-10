@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build-dev": "vue-cli-service build --mode development",
-    "build": "vue-cli-service build",
+    "build-dev": "vue-cli-service build --mode development && yarn copy",
+    "build": "vue-cli-service build && yarn copy",
     "lint": "vue-cli-service lint",
-    "copy": "cp -r php/* dist/"
+    "copy": "cp -r dist/. home/"
   },
   "dependencies": {
     "@types/lodash": "^4.14.172",

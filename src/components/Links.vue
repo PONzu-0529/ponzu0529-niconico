@@ -13,6 +13,9 @@
       <li v-if="loginStatus">
         <a href="/niconico-custom-mylist">ニコ動カスタムマイリスト</a>
       </li>
+      <li>
+        <a href="/check-todofuken">都道府県確認</a>
+      </li>
     </ul>
   </div>
 </template>

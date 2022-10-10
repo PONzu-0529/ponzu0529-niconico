@@ -44,7 +44,12 @@
       </div>
       <div class="flex-item">
         <h2 class="subtitle">結果</h2>
-        <b-input type="textarea" v-model="output" />
+        <b-field>
+          <b-input type="textarea" v-model="output" />
+        </b-field>
+        <b-field>
+          <b-button class="success-button" @click="copy">コピー</b-button>
+        </b-field>
       </div>
     </div>
   </div>
@@ -76,6 +81,13 @@ export default class FilterInPokemonGo extends Vue {
     }
 
     return options.join('&')
+  }
+
+  /**
+   * コピー
+   */
+  private async copy() {
+    await navigator.clipboard.writeText(this.output)
   }
 }
 </script>

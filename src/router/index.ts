@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '@/views/Home.vue'
+import CheckTodofuken from '@/views/CheckTodofuken.vue'
 import ConvertTransfers from '@/views/ConvertTransfers.vue'
 import CreateBibliography from '@/views/CreateBibliography.vue'
 import FilterInPokemonGo from '@/views/FilterInPokemonGo.vue'
@@ -14,6 +15,11 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/check-todofuken',
+    name: 'CheckTodofuken',
+    component: CheckTodofuken
   },
   {
     path: '/convert-transfers',

@@ -94,13 +94,23 @@
           </b-field>
         </template>
         <b-field horizontal>
-          <b-button @click="create()">変換</b-button>
-          <b-button @click="clear()">クリア</b-button>
+          <b-button v-if="baseType === 'web'" @click="encodeUrl">
+            URL変換
+          </b-button>
+          <b-button v-if="baseType === 'web'" @click="getWebInfo">
+            Web情報取得
+          </b-button>
+          <b-button @click="clear">クリア</b-button>
         </b-field>
       </div>
       <div class="flex-item">
         <h2 class="subtitle">変換先</h2>
-        <b-input type="textarea" v-model="output"></b-input>
+        <b-field>
+          <b-input type="textarea" v-model="output"></b-input>
+        </b-field>
+        <b-field horizontal>
+          <b-button @click="copy">コピー</b-button>
+        </b-field>
       </div>
     </div>
   </div>
@@ -109,37 +119,76 @@
 <script lang="ts">
 import { Vue, Component, Watch } from "vue-property-decorator"
 import dayjs from "dayjs"
+import Web from "@/Web"
 
 @Component
 export default class CreateBibliography extends Vue {
-  private baseType: "web" | "book" | "thesis" = "web"
-  private convertType: "text" = "text"
+  private baseType: "web" | "book" | "thesis" = "web";
+
+  private convertType: "text" = "text";
+
   private web: WebStyle = {
     page_title: "",
     cite_title: "",
     url: "",
     read: dayjs().format("YYYY-MM-DD"),
-  }
+  };
+
   private book: BookStyle = {
     title: "",
     authors: [""],
     created: dayjs("0000-00-00").format("YYYY-MM-DD"),
     read: dayjs().format("YYYY-MM-DD"),
-  }
+  };
+
   private thesis: ThesisStyle = {
     title: "",
     authors: [""],
     created: dayjs("0000-00-00").format("YYYY-MM-DD"),
     read: dayjs().format("YYYY-MM-DD"),
-  }
-  private output = ""
-
-  private created() {
-    this.initAllStyle()
-  }
+  };
 
   @Watch("baseType")
   private onChangeType() {
+    this.initAllStyle()
+  }
+
+  private get output(): string {
+    switch (this.baseType) {
+      case "web":
+        return [
+          `『${this.web.page_title}』`,
+          this.web.cite_title,
+          this.web.url,
+          this.web.read,
+        ].join(", ")
+
+      case "book":
+        return [
+          `『${this.book.title}』`,
+          this.book.authors.map((author) => {
+            return author
+          }),
+          this.book.created,
+          this.book.read,
+        ].join(", ")
+
+      case "thesis":
+        return [
+          `『${this.thesis.title}』`,
+          this.thesis.authors.map((author) => {
+            return author
+          }),
+          this.thesis.created,
+          this.thesis.read,
+        ].join(", ")
+
+      default:
+        return ""
+    }
+  }
+
+  private created() {
     this.initAllStyle()
   }
 
@@ -170,56 +219,21 @@ export default class CreateBibliography extends Vue {
     this.thesis.read = dayjs().format("YYYY-MM-DD")
   }
 
-  private initOutput() {
-    this.output = ""
+  /**
+   * URL変換
+   */
+  private encodeUrl() {
+    this.web.url = decodeURI(this.web.url)
   }
 
   /**
-   * 変換
+   * Web情報取得
    */
-  private create() {
-    switch (this.baseType) {
-      case "web":
-        if (this.web.page_title === "") break
-        if (this.web.cite_title === "") break
-        if (this.web.url === "") break
-        this.output = [
-          `『${this.web.page_title}』`,
-          this.web.cite_title,
-          this.web.url,
-          this.web.read,
-        ].join(", ")
-        break
-      case "book":
-        if (this.book.title === "") break
-        if (this.book.authors.length === 0) break
-        if (this.book.created === "") break
-        if (this.book.read === "") break
-        this.output = [
-          `『${this.book.title}』`,
-          this.book.authors.map((author) => {
-            return author
-          }),
-          this.book.created,
-          this.book.read,
-        ].join(", ")
-        break
-      case "thesis":
-        if (this.thesis.title === "") break
-        if (this.thesis.authors.length === 0) break
-        if (this.thesis.created === "") break
-        if (this.thesis.read === "") break
-        this.output = [
-          `『${this.thesis.title}』`,
-          this.thesis.authors.map((author) => {
-            return author
-          }),
-          this.thesis.created,
-          this.thesis.read,
-        ].join(", ")
-        break
-      default:
-        this.output = ""
+  private async getWebInfo() {
+    const result = await Web.getWebInfo(this.web.url)
+
+    if (typeof result !== "boolean") {
+      this.web.page_title = result
     }
   }
 
@@ -228,36 +242,42 @@ export default class CreateBibliography extends Vue {
    */
   private clear() {
     this.initAllStyle()
-    this.initOutput()
+  }
+
+  /**
+   * コピー
+   */
+  private copy() {
+    navigator.clipboard.writeText(this.output)
   }
 }
 
 interface WebStyle {
-  page_title: string
-  cite_title: string
-  url: string
-  authors?: Array<string>
-  created?: string
-  read: string
+  page_title: string;
+  cite_title: string;
+  url: string;
+  authors?: Array<string>;
+  created?: string;
+  read: string;
 }
 
 interface BookStyle {
-  title: string
-  authors: Array<string>
-  state?: string
-  created: string
-  startPage?: number
-  endPage?: number
-  read: string
+  title: string;
+  authors: Array<string>;
+  state?: string;
+  created: string;
+  startPage?: number;
+  endPage?: number;
+  read: string;
 }
 
 interface ThesisStyle {
-  title: string
-  authors: Array<string>
-  state?: string
-  created: string
-  startPage?: number
-  endPage?: number
-  read: string
+  title: string;
+  authors: Array<string>;
+  state?: string;
+  created: string;
+  startPage?: number;
+  endPage?: number;
+  read: string;
 }
 </script>

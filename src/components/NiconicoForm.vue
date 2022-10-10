@@ -16,11 +16,11 @@
           <b-switch v-model="video.skip"> スキップ </b-switch>
         </b-field>
         <b-field horizontal>
-          <b-button @click="getOfficialInfo">取得</b-button>
-          <b-button @click="changeVideo">
+          <b-button class="normal-button" @click="getOfficialInfo">取得</b-button>
+          <b-button class="success-button" @click="changeVideo">
             {{ isUpdate ? "更新" : "登録" }}
           </b-button>
-          <b-button @click="closeNiconicoForm">閉じる</b-button>
+          <b-button class="danger-button" @click="closeNiconicoForm">閉じる</b-button>
         </b-field>
       </form>
     </div>

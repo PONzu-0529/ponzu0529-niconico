@@ -20,6 +20,5 @@ module.exports = {
     "no-extra-semi": "error",
     "no-unexpected-multiline": "error",
     "no-unreachable": "error",
-    "@typescript-eslint/no-var-requires": "off",
   },
 };

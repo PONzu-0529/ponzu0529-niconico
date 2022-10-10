@@ -85,6 +85,21 @@ $smartphone: 480px; // Smartphone
   }
 }
 
+.normal-button {
+  background-color: lime !important;
+  margin: 10px !important;
+}
+
+.success-button {
+  background-color: lightskyblue !important;
+  margin: 10px !important;
+}
+
+.danger-button {
+  background-color: lightcoral !important;
+  margin: 10px !important;
+}
+
 .custom-modal {
   padding: 10px;
 }
