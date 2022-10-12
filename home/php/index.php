@@ -1,5 +1,8 @@
 <?php
 
+// Style: {{host}}/api/{{Version}}/{{Controller File Name}}/{{Method Name}}
+// ex: {{host}}/api/v1/auth/get-access-token
+
 $path = $_SERVER["REQUEST_URI"];
 $path_list = explode("/", $path);
 
