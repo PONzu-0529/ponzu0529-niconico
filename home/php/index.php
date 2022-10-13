@@ -6,6 +6,9 @@
 $path = $_SERVER["REQUEST_URI"];
 $path_list = explode("/", $path);
 
+// Set Host
+$host = $_SERVER["HTTP_HOST"];
+
 // set version
 if (isset($path_list[2])) {
   $version = $path_list[2];
@@ -29,7 +32,7 @@ if (
   $class_name = changeCamelCase($path_list[3]) . "Controller";
   $function_name = changeCamelCase($path_list[4]);
 
-  $class = new $class_name($version, $body);
+  $class = new $class_name($host, $version, $body);
   $response = json_encode($class->$function_name());
 
   // define header
