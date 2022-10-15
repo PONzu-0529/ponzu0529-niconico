@@ -5,7 +5,7 @@ require_once __DIR__ . '/DBBase.php';
 
 class LoggingDB extends DBBase
 {
-  public function record_log(string $type, string $log): void
+  public function record_log(LogOption $log_option): void
   {
     if (!$this->is_exist_logs_table()) {
       $this->create_logs_table();
@@ -16,9 +16,9 @@ class LoggingDB extends DBBase
     $this->mysqli->query(
       "
         INSERT INTO `$table_name`
-          (`type`, `log`, `created_at`, `updated_at`)
+          (`service`, `type`, `log`, `created_at`, `updated_at`)
         VALUES
-          ('$type', '$log', now(), now())
+          ('$log_option->service', '$log_option->type', '$log_option->log', now(), now())
         ;
       "
     );
@@ -43,6 +43,7 @@ class LoggingDB extends DBBase
       "
         CREATE TABLE IF NOT EXISTS `$table_name` (
           `id` int(16) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+          `service` varchar(64),
           `type` varchar(64),
           `log` varchar(256),
           `created_at` datetime NOT NULL,
@@ -58,5 +59,21 @@ class LoggingDB extends DBBase
     $today = new DateTime();
 
     return 'logs_' . $today->format('Y_m');
+  }
+}
+
+
+class LogOption
+{
+  public string $service;
+  public string $type;
+  public string $log;
+
+
+  public function __construct(string $service, string $type, string $log)
+  {
+    $this->service = $service;
+    $this->type = $type;
+    $this->log = $log;
   }
 }

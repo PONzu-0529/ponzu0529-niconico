@@ -14,8 +14,8 @@ class LoggingService
   }
 
 
-  public function record_log(string $type, string $log): void
+  public function record_log(LogOption $log_option): void
   {
-    $this->logging_db->record_log($type, $log);
+    $this->logging_db->record_log($log_option);
   }
 }
