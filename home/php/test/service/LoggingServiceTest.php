@@ -16,7 +16,7 @@ class LoggingServiceTest extends LoggingService
 
   public function record_log_test(): void
   {
-    $this->logging_service->record_log('test', 'test log');
+    $this->logging_service->record_log(new LogOption('test', 'test', 'test log message'));
   }
 }
 
