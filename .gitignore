@@ -24,11 +24,10 @@ pnpm-debug.log*
 # custom
 .devcontainer/
 mariadb/
+config/
 vendor/
 
 !default/*
-
-config.php
 
 # Python
 __pycache__

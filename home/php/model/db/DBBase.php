@@ -7,7 +7,7 @@ class DBBase
 
   function __construct()
   {
-    require __DIR__ . '/../../config/config.php';
+    require __DIR__ . '/../../config/Config.php';
 
     // Connect MySQL
     $this->mysqli = new mysqli($hostname, $username, $password, $database);
