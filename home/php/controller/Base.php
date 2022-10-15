@@ -42,3 +42,10 @@ class ResponseStyle
     $this->message = $message;
   }
 }
+
+
+class ResponseStatusOption
+{
+  public string $success = 'success';
+  public string $failure = 'failure';
+}
