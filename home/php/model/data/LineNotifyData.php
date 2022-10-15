@@ -19,10 +19,12 @@ class LineNotifyData
       'error' => '',
       'success' => ''
     ];
+
+    $this->set_all_data();
   }
 
 
-  public function set_all_data(): void
+  private function set_all_data(): void
   {
     $db_data = $this->line_notify_db->get_all_data();
 
