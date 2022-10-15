@@ -16,5 +16,5 @@ exec("
   cp -r home/. ../../public_html/$DIR_NAME/
 ");
 
-$line_notify_service->send_log_message("Update Brandh '$REPOSITORY_NAME.'");
+$line_notify_service->send_log_message("Update Branch '$REPOSITORY_NAME.'");
 $logging_service->record_log(new LogOption('cron', 'log', "Finish Update $REPOSITORY_NAME."));
