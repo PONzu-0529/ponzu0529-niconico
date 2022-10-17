@@ -1,5 +1,20 @@
 <?php
 
+require_once __DIR__ . '/LoggingService.php';
+
+
+class ServiceBase
+{
+  protected LoggingService $logging_service;
+
+  
+  public function __construct()
+  {
+    $this->logging_service = new LoggingService();
+  }
+}
+
+
 class ServiceResponse
 {
   public string $result;

@@ -1,12 +1,7 @@
--- Set Character
-SET CHARACTER_SET_CLIENT = utf8;
-SET CHARACTER_SET_CONNECTION = utf8;
-
--- Create DB
-CREATE DATABASE IF NOT EXISTS `ponzu0529_tools` CHARACTER SET utf8;
+-- Select DB
 USE `ponzu0529_tools`;
 
--- Create Table `line_notify_access_tokens`
+-- Create Table
 DROP TABLE IF EXISTS `line_notify_access_tokens`;
 CREATE TABLE IF NOT EXISTS `line_notify_access_tokens` (
   `id` int(16) NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -16,10 +11,10 @@ CREATE TABLE IF NOT EXISTS `line_notify_access_tokens` (
   `updated_at` datetime NOT NULL
 );
 
--- Transcate Table `line_notify_access_tokens`
+-- Transcate Table
 TRUNCATE TABLE `line_notify_access_tokens`;
 
--- Insert Data into `line_notify_access_tokens`
+-- Insert Data
 INSERT INTO `line_notify_access_tokens`
   (`type`, `access_token`, `created_at`, `updated_at`)
 VALUES
