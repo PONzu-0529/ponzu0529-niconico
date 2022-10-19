@@ -20,4 +20,5 @@ INSERT INTO `user_accounts`
   (`name`, `email`, `password_hash`, `created_at`, `updated_at`)
 VALUES
   ('test_user', 'test@tools.ponzu0529.com', '10a6e6cc8311a3e2bcc09bf6c199adecd5dd59408c343e926b129c4914f3cb01', now(), now()) -- test_password
+  ,('access_token_test_user', 'access_token_test@tools.ponzu0529.com', 'test_access_token', now(), now())
 ;
