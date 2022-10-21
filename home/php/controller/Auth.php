@@ -3,7 +3,7 @@
 require __DIR__ . "/Base.php";
 require __DIR__ . "/../model/Auth.php";
 
-class AuthController extends Base
+class AuthController extends ControllerBase
 {
   function GetAccessToken()
   {

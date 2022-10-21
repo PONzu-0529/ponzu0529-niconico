@@ -1,20 +1,38 @@
 <?php
 
-require_once __DIR__ . '/config/Config.php';
-require_once __DIR__ . '/../home/php/model/db/LoggingDB.php'; // LogOption
+require_once __DIR__ . '/../home/php/common/EnvConstants.php';
+require_once __DIR__ . '/../home/php/common/LogOptions.php';
+require_once __DIR__ . '/../home/php/common/Utils.php';
+require_once __DIR__ . '/../home/php/config/Config.php';
 require_once __DIR__ . '/../home/php/service/LineNotifyService.php';
 require_once __DIR__ . '/../home/php/service/LoggingService.php';
 
 $logging_service = new LoggingService();
 $line_notify_service = new LineNotifyService();
 
-$logging_service->record_log(new LogOption('cron', 'log', "Start Update $REPOSITORY_NAME."));
+$SERVICE_NAME = 'Cron';
 
-exec("
-  cd $BRANCH_ROOT && \
-  git pull && \
-  cp -r home/. ../../public_html/$DIR_NAME/
-");
+$logging_service->record_log(new LogStyle(
+  $SERVICE_NAME,
+  LogTypeOption::LOG,
+  'update_branch',
+  "Start Update $REPOSITORY_NAME."
+));
 
-$line_notify_service->send_log_message("Update Branch '$REPOSITORY_NAME.'");
-$logging_service->record_log(new LogOption('cron', 'log', "Finish Update $REPOSITORY_NAME."));
+$command = '';
+$command .= Utils::get_environment() === EnvConstants::DEVELOP ? "cd $BRANCH_ROOT && " : '';
+$command .= 'git pull';
+$command .= Utils::get_environment() === EnvConstants::DEVELOP ? " && cp -r home/. ../../public_html/$DIR_NAME/" : '';
+
+exec($command);
+
+if (Utils::get_environment() === EnvConstants::DEVELOP) {
+  $line_notify_service->send_log_message("Update Branch '$REPOSITORY_NAME.'");
+}
+
+$logging_service->record_log(new LogStyle(
+  $SERVICE_NAME,
+  LogTypeOption::LOG,
+  'update_branch',
+  "Finish Update $REPOSITORY_NAME."
+));

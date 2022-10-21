@@ -1,16 +1,18 @@
 <?php
 
+require_once __DIR__ . '/../common/LogOptions.php';
+
 require_once __DIR__ . '/ServiceBase.php';
 require_once __DIR__ . '/../model/db/UserAccounts.php';
 require_once __DIR__ . '/../model/db/UserAccountAccessToken.php';
-require_once __DIR__ . '/../model/db/LoggingDB.php';
 
 
 class AuthService extends ServiceBase
 {
+  const SERVICE_NAME = 'AuthService';
+
   private UserAccounts $user_accounts;
   private UserAccountAccessToken $user_account_access_token;
-  private ServiceResultOption $service_result_option;
 
 
   public function __construct()
@@ -18,29 +20,28 @@ class AuthService extends ServiceBase
     parent::__construct();
     $this->user_accounts = new UserAccounts();
     $this->user_account_access_token = new UserAccountAccessToken();
-    $this->service_result_option = new ServiceResultOption();
   }
 
 
   public function get_access_token_by_email(string $email, string $password): ServiceResponse
   {
-    $this->logging_service->record_log(new LogOption(
-      'Auth',
-      'Log',
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
       'Start Service "Get Access Token By Email".'
     ));
 
     $id = $this->user_accounts->get_id_by_email($email);
 
     if ($id === -1) {
-      $this->logging_service->record_log(new LogOption(
-        'Auth',
-        'Error',
+      $this->logging_service->record_log(new LogStyle(
+        $this::SERVICE_NAME,
+        LogTypeOption::ERROR,
         "\"$email\" is not registered."
       ));
 
       return new ServiceResponse(
-        $this->service_result_option->failure,
+        ServiceResultOption::FAILURE,
         "ERROR: \"$email\" is not registered."
       );
     }
@@ -48,28 +49,28 @@ class AuthService extends ServiceBase
     $result_check_password = $this->check_password($id, $password);
 
     if ($result_check_password !== '') {
-      $this->logging_service->record_log(new LogOption(
-        'Auth',
-        'Error',
+      $this->logging_service->record_log(new LogStyle(
+        $this::SERVICE_NAME,
+        LogTypeOption::ERROR,
         $result_check_password
       ));
 
       return new ServiceResponse(
-        $this->service_result_option->failure,
+        ServiceResultOption::FAILURE,
         $result_check_password
       );
     }
 
     $access_token = $this->create_access_token($id);
 
-    $this->logging_service->record_log(new LogOption(
-      'Auth',
-      'Log',
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
       'Finish Service "Get Access Token By Email".'
     ));
 
     return new ServiceResponse(
-      $this->service_result_option->success,
+      ServiceResultOption::SUCCESS,
       $access_token
     );
   }
@@ -77,23 +78,23 @@ class AuthService extends ServiceBase
 
   public function check_access_token(string $email, string $user_access_token)
   {
-    $this->logging_service->record_log(new LogOption(
-      'Auth',
-      'Log',
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
       'Start Service "Check Access Token".'
     ));
 
     $id = $this->user_accounts->get_id_by_email($email);
 
     if ($id === -1) {
-      $this->logging_service->record_log(new LogOption(
-        'Auth',
-        'Error',
+      $this->logging_service->record_log(new LogStyle(
+        $this::SERVICE_NAME,
+        LogTypeOption::ERROR,
         "\"$email\" is not registered."
       ));
 
       return new ServiceResponse(
-        $this->service_result_option->failure,
+        ServiceResultOption::FAILURE,
         "ERROR: \"$email\" is not registered."
       );
     }
@@ -101,39 +102,39 @@ class AuthService extends ServiceBase
     $access_token = $this->user_account_access_token->get_access_token_by_user_account_id($id);
 
     if ($access_token === '') {
-      $this->logging_service->record_log(new LogOption(
-        'Auth',
-        'Error',
+      $this->logging_service->record_log(new LogStyle(
+        $this::SERVICE_NAME,
+        LogTypeOption::ERROR,
         'The AccessToken is unauthorized.'
       ));
 
       return new ServiceResponse(
-        $this->service_result_option->failure,
+        ServiceResultOption::FAILURE,
         'ERROR: The AccessToken is unauthorized.'
       );
     }
 
     if ($user_access_token !== $access_token) {
-      $this->logging_service->record_log(new LogOption(
-        'Auth',
-        'Error',
+      $this->logging_service->record_log(new LogStyle(
+        $this::SERVICE_NAME,
+        LogTypeOption::ERROR,
         'The AccessToken is unauthorized.'
       ));
 
       return new ServiceResponse(
-        $this->service_result_option->failure,
+        ServiceResultOption::FAILURE,
         'ERROR: The AccessToken is unauthorized.'
       );
     }
 
-    $this->logging_service->record_log(new LogOption(
-      'Auth',
-      'Log',
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
       'Finish Service "Check Access Token".'
     ));
 
     return new ServiceResponse(
-      $this->service_result_option->success,
+      ServiceResultOption::SUCCESS,
       'Success Authorized.'
     );
   }

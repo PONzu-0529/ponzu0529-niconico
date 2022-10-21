@@ -1,26 +1,28 @@
 <?php
 
+require_once __DIR__ . '/ServiceTestBase.php';
+
+require_once __DIR__ . '/../../common/LogOptions.php';
+require_once __DIR__ . '/../../common/ResponseStyle.php';
+
 require_once __DIR__ . '/../../service/LoggingService.php';
 
 
-class LoggingServiceTest extends LoggingService
+class LoggingServiceTest extends ServiceTestBase
 {
-  private LoggingService $logging_service;
+  const SERVICE_NAME = 'LoggingServiceTest';
 
 
-  public function __construct()
+  public function record_log_test(): ResponseStyle
   {
-    $this->logging_service = new LoggingService();
-  }
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Record Log Test.'
+    ));
 
-
-  public function record_log_test(): void
-  {
-    $this->logging_service->record_log(new LogOption('test', 'test', 'test log message'));
+    return new ResponseStyle(
+      ResponseStatusOption::SUCCESS
+    );
   }
 }
-
-
-$logging_service_test = new LoggingServiceTest();
-
-$logging_service_test->record_log_test();
