@@ -30,7 +30,7 @@ class LineNotifyServiceTest extends ServiceTestBase
       'Start Service.'
     ));
 
-    $service_response = $this->line_notify_service->send_log_message('Test Log Message.');
+    $service_response = $this->line_notify_service->send_log_message('SERVICE TEST: Test Log Message.');
 
     $service_test_response = $this->common_service_response_test(
       $service_response,
@@ -58,7 +58,7 @@ class LineNotifyServiceTest extends ServiceTestBase
       'Start Service.'
     ));
 
-    $service_response = $this->line_notify_service->send_alert_message('Test Log Message.');
+    $service_response = $this->line_notify_service->send_alert_message('SERVICE TEST: Test Alert Message.');
 
     $service_test_response = $this->common_service_response_test(
       $service_response,
@@ -86,7 +86,7 @@ class LineNotifyServiceTest extends ServiceTestBase
       'Start Service.'
     ));
 
-    $service_response = $this->line_notify_service->send_error_message('Test Log Message.');
+    $service_response = $this->line_notify_service->send_error_message('SERVICE TEST: Test Error Message.');
 
     $service_test_response = $this->common_service_response_test(
       $service_response,
@@ -114,7 +114,7 @@ class LineNotifyServiceTest extends ServiceTestBase
       'Start Service.'
     ));
 
-    $service_response = $this->line_notify_service->send_success_message('Test Log Message.');
+    $service_response = $this->line_notify_service->send_success_message('SERVICE TEST: Test Success Message.');
 
     $service_test_response = $this->common_service_response_test(
       $service_response,

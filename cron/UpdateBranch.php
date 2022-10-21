@@ -22,7 +22,7 @@ $logging_service->record_log(new LogStyle(
 $command = '';
 $command .= Utils::get_environment() === EnvConstants::DEVELOP ? "cd $BRANCH_ROOT && " : '';
 $command .= 'git pull';
-$command .= Utils::get_environment() === EnvConstants::DEVELOP ? " && cp -r home/. ../../public_html/$DIR_NAME/" : '';
+$command .= Utils::get_environment() === EnvConstants::DEVELOP ? " && rm -Rf ../../public_html/$DIR_NAME/. && cp -r home/. ../../public_html/$DIR_NAME/" : '';
 
 exec($command);
 

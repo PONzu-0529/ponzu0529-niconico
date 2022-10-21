@@ -109,7 +109,7 @@ class LineNotifyController extends ControllerBase
   private function common_validate(): ControllerResponseStyle
   {
     // Validate Host
-    if (!$this->check_localhost()) {
+    if (!$this->check_allow_remote_ip_address()) {
       return new ControllerResponseStyle(
         ControllerResponseStatusOption::FAILURE,
         "This Network is not Accepted."

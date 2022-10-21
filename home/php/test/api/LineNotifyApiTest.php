@@ -14,10 +14,34 @@ class LineNotifyApiTest extends ApiTestBase
 {
   const SERVICE_NAME = 'LineNotifyApiTest';
 
+  private string $host;
+
+  public function __construct()
+  {
+    parent::__construct();
+
+    switch (Utils::get_environment()) {
+      case EnvConstants::LOCAL:
+        $this->host = 'http://127.0.0.1';
+        break;
+
+      case EnvConstants::DEVELOP:
+        $this->host = 'https://dev-tools.ponzu0529.com';
+        break;
+
+      case EnvConstants::MASTER:
+        $this->host = 'https://tools.ponzu0529.com';
+        break;
+
+      default:
+        $this->host = '';
+    }
+  }
+
   public function send_log_message(): ResponseStyle
   {
     $api_call_test_option = new ApiCallTestOption(
-      'http://localhost/api/v1/line-notify/send-log-message',
+      "$this->host/api/v1/line-notify/send-log-message",
       [
         'message' => 'API TEST: Send Log Message.'
       ]
@@ -51,25 +75,8 @@ class LineNotifyApiTest extends ApiTestBase
 
   public function send_different_host_log_message(): ResponseStyle
   {
-    switch (Utils::get_environment()) {
-      case EnvConstants::LOCAL:
-        $url = 'http://httpd/api/v1/line-notify/send-log-message';
-        break;
-
-      case EnvConstants::DEVELOP:
-        $url = 'https://dev-tools.ponzu0529.com/api/v1/line-notify/send-log-message';
-        break;
-
-      case EnvConstants::MASTER:
-        $url = 'https://tools.ponzu0529.com/api/v1/line-notify/send-log-message';
-        break;
-
-      default:
-        $url = '';
-    }
-
     $api_call_test_option = new ApiCallTestOption(
-      $url,
+      'https://dev-tools.ponzu0529.com/api/v1/line-notify/send-log-message',
       [
         'message' => 'API TEST: Send Log Message.'
       ]
@@ -87,7 +94,7 @@ class LineNotifyApiTest extends ApiTestBase
       $post_api_call_result,
       new ControllerResponseStyle(
         ControllerResponseStatusOption::FAILURE,
-        'This Network is not Accepted.'
+        'This IP Address is not Accepted.'
       )
     );
 
@@ -104,7 +111,7 @@ class LineNotifyApiTest extends ApiTestBase
   public function send_different_version_log_message(): ResponseStyle
   {
     $api_call_test_option = new ApiCallTestOption(
-      'http://localhost/api/v0/line-notify/send-log-message',
+      "$this->host/api/v0/line-notify/send-log-message",
       [
         'message' => 'API TEST: Send Log Message.'
       ]
