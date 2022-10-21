@@ -19,10 +19,12 @@ $logging_service->record_log(new LogStyle(
   "Start Update $REPOSITORY_NAME."
 ));
 
+$env = Utils::get_environment();
+
 $command = '';
-$command .= Utils::get_environment() === EnvConstants::DEVELOP ? "cd $BRANCH_ROOT && " : '';
+$command .= $env === EnvConstants::DEVELOP ? "cd $BRANCH_ROOT && " : '';
 $command .= 'git pull';
-$command .= Utils::get_environment() === EnvConstants::DEVELOP ? " && rm -Rf ../../public_html/$DIR_NAME/. && cp -r home/. ../../public_html/$DIR_NAME/" : '';
+$command .= $env === EnvConstants::DEVELOP ? " && rm -Rf ../../public_html/$DIR_NAME/. && cp -r home/. ../../public_html/$DIR_NAME/" : '';
 
 exec($command);
 
