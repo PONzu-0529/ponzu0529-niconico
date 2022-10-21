@@ -7,7 +7,7 @@ class Utils
 {
   public static function get_environment(): string
   {
-    require_once __DIR__ . '/../config/Config.php';
+    require __DIR__ . '/../config/Config.php';
 
     $env_username = exec('echo $USERNAME');
 
