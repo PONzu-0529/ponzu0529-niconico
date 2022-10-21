@@ -112,7 +112,7 @@ class LineNotifyController extends ControllerBase
     if (!$this->check_allow_remote_ip_address()) {
       return new ControllerResponseStyle(
         ControllerResponseStatusOption::FAILURE,
-        "This Network is not Accepted."
+        "This IP Address is not Accepted."
       );
     }
 
