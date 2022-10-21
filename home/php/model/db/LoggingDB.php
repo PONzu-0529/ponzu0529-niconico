@@ -1,11 +1,12 @@
 <?php
 
 require_once __DIR__ . '/DBBase.php';
+require_once __DIR__ . '/../../common/LogOptions.php';
 
 
 class LoggingDB extends DBBase
 {
-  public function record_log(LogOption $log_option): void
+  public function record_log(LogStyle $log_style): void
   {
     if (!$this->is_exist_logs_table()) {
       $this->create_logs_table();
@@ -13,12 +14,17 @@ class LoggingDB extends DBBase
 
     $table_name = $this->get_logs_table_name();
 
+    $debug_info = debug_backtrace();
+    $last_debug_info = end($debug_info);
+    $file_name = $last_debug_info['file'];
+    $function_name = $last_debug_info['function'];
+
     $this->mysqli->query(
       "
         INSERT INTO `$table_name`
-          (`service`, `type`, `log`, `created_at`, `updated_at`)
+          (`service`, `type`, `file_name`, `function_name`, `log`, `created_at`, `updated_at`)
         VALUES
-          ('$log_option->service', '$log_option->type', '$log_option->log', now(), now())
+          ('$log_style->service', '$log_style->type', '$file_name', '$function_name', '$log_style->log', now(), now())
         ;
       "
     );
@@ -45,6 +51,8 @@ class LoggingDB extends DBBase
           `id` int(16) NOT NULL PRIMARY KEY AUTO_INCREMENT,
           `service` varchar(64),
           `type` varchar(64),
+          `file_name` varchar(64),
+          `function_name` varchar(64),
           `log` varchar(256),
           `created_at` datetime NOT NULL,
           `updated_at` datetime NOT NULL
@@ -59,21 +67,5 @@ class LoggingDB extends DBBase
     $today = new DateTime();
 
     return 'logs_' . $today->format('Y_m');
-  }
-}
-
-
-class LogOption
-{
-  public string $service;
-  public string $type;
-  public string $log;
-
-
-  public function __construct(string $service, string $type, string $log)
-  {
-    $this->service = $service;
-    $this->type = $type;
-    $this->log = $log;
   }
 }

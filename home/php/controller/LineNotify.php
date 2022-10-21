@@ -1,15 +1,20 @@
 <?php
 
 require_once __DIR__ . '/Base.php';
+
+require_once __DIR__ . '/../common/LogOptions.php';
+require_once __DIR__ . '/../service/LoggingService.php';
+
 require_once __DIR__ . '/../service/ServiceBase.php';
 require_once __DIR__ . '/../service/LineNotifyService.php';
 
 
-class LineNotifyController extends Base
+class LineNotifyController extends ControllerBase
 {
+  const SERVICE_NAME = 'LineNotifyController';
+
   private LineNotifyService $line_notify_service;
   private ServiceResultOption $service_result_option;
-  private ResponseStatusOption $response_status_option;
 
 
   public function __construct(string $host, string $version, $body)
@@ -20,30 +25,47 @@ class LineNotifyController extends Base
 
     $this->line_notify_service = new LineNotifyService();
     $this->service_result_option = new ServiceResultOption();
-    $this->response_status_option = new ResponseStatusOption();
   }
 
 
-  public function SendLogMessage(): ResponseStyle
+  public function SendLogMessage(): ControllerResponseStyle
   {
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
     // Validate
     $response = $this->common_validate();
-    if ($response->status !== $this->response_status_option->success) {
+    if ($response->status !== ControllerResponseStatusOption::SUCCESS) {
+      $this->logging_service->record_log(new LogStyle(
+        $this::SERVICE_NAME,
+        LogTypeOption::ERROR,
+        $response->message
+      ));
+
       return $response;
     }
 
     // Send Message
     $service_response = $this->line_notify_service->send_log_message($this->body['message']);
 
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      $service_response->response
+    ));
+
     return $this->get_service_response($service_response);
   }
 
 
-  public function SendAlertMessage(): ResponseStyle
+  public function SendAlertMessage(): ControllerResponseStyle
   {
     // Validate
     $response = $this->common_validate();
-    if ($response->status !== $this->response_status_option->success) {
+    if ($response->status !== ControllerResponseStatusOption::SUCCESS) {
       return $response;
     }
 
@@ -54,11 +76,11 @@ class LineNotifyController extends Base
   }
 
 
-  public function SendErrorMessage(): ResponseStyle
+  public function SendErrorMessage(): ControllerResponseStyle
   {
     // Validate
     $response = $this->common_validate();
-    if ($response->status !== $this->response_status_option->success) {
+    if ($response->status !== ControllerResponseStatusOption::SUCCESS) {
       return $response;
     }
 
@@ -69,11 +91,11 @@ class LineNotifyController extends Base
   }
 
 
-  public function SendSuccessMessage(): ResponseStyle
+  public function SendSuccessMessage(): ControllerResponseStyle
   {
     // Validate
     $response = $this->common_validate();
-    if ($response->status !== $this->response_status_option->success) {
+    if ($response->status !== ControllerResponseStatusOption::SUCCESS) {
       return $response;
     }
 
@@ -84,34 +106,34 @@ class LineNotifyController extends Base
   }
 
 
-  private function common_validate(): ResponseStyle
+  private function common_validate(): ControllerResponseStyle
   {
     // Validate Host
     if (!$this->check_localhost()) {
-      return new ResponseStyle(
-        $this->response_status_option->failure,
+      return new ControllerResponseStyle(
+        ControllerResponseStatusOption::FAILURE,
         "This Network is not Accepted."
       );
     }
 
     // Validate Version
     if (!$this->check_version()) {
-      return new ResponseStyle(
-        $this->response_status_option->failure,
+      return new ControllerResponseStyle(
+        ControllerResponseStatusOption::FAILURE,
         "Version $this->version is not accepted."
       );
     }
 
     // Validate Body Message
     if (!$this->check_body_message()) {
-      return new ResponseStyle(
-        $this->response_status_option->failure,
+      return new ControllerResponseStyle(
+        ControllerResponseStatusOption::FAILURE,
         'Parameter \'Message\' is not set.'
       );
     }
 
-    return new ResponseStyle(
-      $this->response_status_option->success,
+    return new ControllerResponseStyle(
+      ControllerResponseStatusOption::SUCCESS,
       ''
     );
   }
@@ -123,16 +145,16 @@ class LineNotifyController extends Base
   }
 
 
-  private function get_service_response(ServiceResponse $service_response): ResponseStyle
+  private function get_service_response(ServiceResponse $service_response): ControllerResponseStyle
   {
-    if ($service_response->result === $this->service_result_option->success) {
-      return new ResponseStyle(
-        $this->response_status_option->success,
+    if ($service_response->result === ServiceResultOption::SUCCESS) {
+      return new ControllerResponseStyle(
+        ControllerResponseStatusOption::SUCCESS,
         $service_response->response
       );
     } else {
-      return new ResponseStyle(
-        $this->response_status_option->failure,
+      return new ControllerResponseStyle(
+        ControllerResponseStatusOption::FAILURE,
         $service_response->response
       );
     }

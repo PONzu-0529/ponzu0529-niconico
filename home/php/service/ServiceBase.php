@@ -7,7 +7,7 @@ class ServiceBase
 {
   protected LoggingService $logging_service;
 
-  
+
   public function __construct()
   {
     $this->logging_service = new LoggingService();
@@ -31,6 +31,6 @@ class ServiceResponse
 
 class ServiceResultOption
 {
-  public string $success = 'success';
-  public string $failure = 'failure';
+  const SUCCESS = 'success';
+  const FAILURE = 'failure';
 }

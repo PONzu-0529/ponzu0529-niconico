@@ -1,46 +1,106 @@
 <?php
 
 require_once __DIR__ . '/ServiceBase.php';
+
+require_once __DIR__ . '/../common/LogOptions.php';
+require_once __DIR__ . '/../service/LoggingService.php';
+
 require_once __DIR__ . '/../model/data/LineNotifyData.php';
 
 
-class LineNotifyService
+class LineNotifyService extends ServiceBase
 {
-  protected LineNotifyData $line_notify_data;
+  const SERVICE_NAME = 'LineNotifyService';
 
+  protected LineNotifyData $line_notify_data;
   private LineNotifySendOption $line_notify_send_option;
-  private ServiceResultOption $service_result_option;
 
 
   public function __construct()
   {
+    parent::__construct();
     $this->line_notify_data = new LineNotifyData();
     $this->line_notify_send_option = new LineNotifySendOption();
-    $this->service_result_option = new ServiceResultOption();
   }
 
 
   public function send_log_message(string $message): ServiceResponse
   {
-    return $this->send_message($this->line_notify_send_option->log, $message);
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
+    $service_response = $this->send_message($this->line_notify_send_option->log, $message);
+
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_response->result === ServiceResultOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      $service_response->response
+    ));
+
+    return $service_response;
   }
 
 
   public function send_alert_message(string $message): ServiceResponse
   {
-    return $this->send_message($this->line_notify_send_option->alert, $message);
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
+    $service_response = $this->send_message($this->line_notify_send_option->alert, $message);
+
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_response->result === ServiceResultOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      $service_response->response
+    ));
+
+    return $service_response;
   }
 
 
   public function send_error_message(string $message): ServiceResponse
   {
-    return $this->send_message($this->line_notify_send_option->error, $message);
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
+    $service_response = $this->send_message($this->line_notify_send_option->error, $message);
+
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_response->result === ServiceResultOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      $service_response->response
+    ));
+
+    return $service_response;
   }
 
 
   public function send_success_message(string $message): ServiceResponse
   {
-    return $this->send_message($this->line_notify_send_option->success, $message);
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
+    $service_response = $this->send_message($this->line_notify_send_option->success, $message);
+
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_response->result === ServiceResultOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      $service_response->response
+    ));
+
+    return $service_response;
   }
 
 
@@ -74,9 +134,15 @@ class LineNotifyService
     curl_close($ch);
 
     if ($response) {
-      return new ServiceResponse($this->service_result_option->success, 'Success Send Message.');
+      return new ServiceResponse(
+        ServiceResultOption::SUCCESS,
+        'Success Send Message.'
+      );
     } else {
-      return new ServiceResponse($this->service_result_option->failure, 'ERROR: LINE Notify API failure.');
+      return new ServiceResponse(
+        ServiceResultOption::FAILURE,
+        'ERROR: LINE Notify API failure.'
+      );
     }
   }
 }

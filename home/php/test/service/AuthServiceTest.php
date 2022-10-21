@@ -1,12 +1,17 @@
 <?php
 
-require_once __DIR__ . '/BaseServiceTest.php';
+require_once __DIR__ . '/ServiceTestBase.php';
+
+require_once __DIR__ . '/../../common/ResponseStyle.php';
+
 require_once __DIR__ . '/../../service/AuthService.php';
 require_once __DIR__ . '/../../service/ServiceBase.php';
 
 
-class AuthServiceTest extends BaseServiceTest
+class AuthServiceTest extends ServiceTestBase
 {
+  const SERVICE_NAME = 'AuthServiceTest';
+
   private AuthService $auth_service;
 
 
@@ -17,109 +22,192 @@ class AuthServiceTest extends BaseServiceTest
   }
 
 
-  public function get_access_token_by_email(): void
+  public function get_access_token_by_email(): ResponseStyle
   {
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
     $service_response = $this->auth_service->get_access_token_by_email('test@tools.ponzu0529.com', 'test_password');
 
-    if ($service_response->result !== 'success') {
-      echo ("ERROR: $service_response->result is not success.\n");
-    } else {
-      echo ("SUCCESS. AccessToken: $service_response->response\n");
-    }
-  }
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_response->result === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      $service_response->response
+    ));
 
-
-  public function get_access_token_by_dummy_email(): void
-  {
-    $service_response = $this->auth_service->get_access_token_by_email('dummy@tools.ponzu0529.com', 'test_password');
-
-    echo $this->common_service_response_test(
-      $service_response,
-      new ServiceResponse(
-        $this->service_result_option->failure,
-        'ERROR: "dummy@tools.ponzu0529.com" is not registered.'
-      )
+    return new ResponseStyle(
+      $service_response->result === ResponseStatusOption::SUCCESS ? ResponseStatusOption::SUCCESS : ResponseStatusOption::FAILURE
     );
   }
 
 
-  public function get_access_token_by_dummy_password(): void
+  public function get_access_token_by_dummy_email(): ResponseStyle
   {
-    $service_response = $this->auth_service->get_access_token_by_email('test@tools.ponzu0529.com', 'dummy_password');
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
 
-    echo $this->common_service_response_test(
+    $service_response = $this->auth_service->get_access_token_by_email('dummy@tools.ponzu0529.com', 'test_password');
+
+    $service_test_response = $this->common_service_response_test(
       $service_response,
       new ServiceResponse(
-        $this->service_result_option->failure,
+        ServiceResultOption::FAILURE,
+        'ERROR: "dummy@tools.ponzu0529.com" is not registered.'
+      )
+    );
+
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      $service_test_response->get_message()
+    ));
+
+    return $service_test_response;
+  }
+
+
+  public function get_access_token_by_dummy_password(): ResponseStyle
+  {
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
+    $service_response = $this->auth_service->get_access_token_by_email('test@tools.ponzu0529.com', 'dummy_password');
+
+    $service_test_response = $this->common_service_response_test(
+      $service_response,
+      new ServiceResponse(
+        ServiceResultOption::FAILURE,
         'ERROR: Password is wrong.'
       )
     );
+
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      $service_test_response->get_message()
+    ));
+
+    return $service_test_response;
   }
 
 
-  public function check_access_token(): void
+  public function check_access_token(): ResponseStyle
   {
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
     $service_response = $this->auth_service->check_access_token('access_token_test@tools.ponzu0529.com', 'test_access_token');
 
-    echo $this->common_service_response_test(
+    $service_test_response = $this->common_service_response_test(
       $service_response,
       new ServiceResponse(
-        $this->service_result_option->success,
+        ServiceResultOption::SUCCESS,
         'Success Authorized.'
       )
     );
+
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      $service_test_response->get_message()
+    ));
+
+    return $service_test_response;
   }
 
 
-  public function check_access_token_by_dummy_email(): void
+  public function check_access_token_by_dummy_email(): ResponseStyle
   {
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
     $service_response = $this->auth_service->check_access_token('dummy@tools.ponzu0529.com', 'test_access_token');
 
-    echo $this->common_service_response_test(
+    $service_test_response = $this->common_service_response_test(
       $service_response,
       new ServiceResponse(
-        $this->service_result_option->failure,
+        ServiceResultOption::FAILURE,
         'ERROR: "dummy@tools.ponzu0529.com" is not registered.'
       )
     );
+
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      $service_test_response->get_message()
+    ));
+
+    return $service_test_response;
   }
 
 
-  public function check_dummy_access_token(): void
+  public function check_dummy_access_token(): ResponseStyle
   {
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
     $service_response = $this->auth_service->check_access_token('access_token_test@tools.ponzu0529.com', 'dummy_access_token');
 
-    echo $this->common_service_response_test(
+    $service_test_response = $this->common_service_response_test(
       $service_response,
       new ServiceResponse(
-        $this->service_result_option->failure,
+        ServiceResultOption::FAILURE,
         'ERROR: The AccessToken is unauthorized.'
       )
     );
+
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      $service_test_response->get_message()
+    ));
+
+    return $service_test_response;
   }
 
 
-  public function check_old_access_token(): void
+  public function check_old_access_token(): ResponseStyle
   {
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
     $service_response = $this->auth_service->check_access_token('access_token_test@tools.ponzu0529.com', 'old_access_token');
 
-    echo $this->common_service_response_test(
+    $service_test_response = $this->common_service_response_test(
       $service_response,
       new ServiceResponse(
-        $this->service_result_option->failure,
+        ServiceResultOption::FAILURE,
         'ERROR: The AccessToken is unauthorized.'
       )
     );
+
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      $service_test_response->get_message()
+    ));
+
+    return $service_test_response;
   }
 }
-
-
-$auth_service_test = new AuthServiceTest();
-
-$auth_service_test->get_access_token_by_email();
-$auth_service_test->get_access_token_by_dummy_email();
-$auth_service_test->get_access_token_by_dummy_password();
-$auth_service_test->check_access_token();
-$auth_service_test->check_access_token_by_dummy_email();
-$auth_service_test->check_dummy_access_token();
-$auth_service_test->check_old_access_token();

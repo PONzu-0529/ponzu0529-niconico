@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/../common/LogOptions.php';
 require_once __DIR__ . '/../model/db/LoggingDB.php';
 
 
@@ -14,8 +15,8 @@ class LoggingService
   }
 
 
-  public function record_log(LogOption $log_option): void
+  public function record_log(LogStyle $log_style): void
   {
-    $this->logging_db->record_log($log_option);
+    $this->logging_db->record_log($log_style);
   }
 }
