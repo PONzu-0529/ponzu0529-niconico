@@ -24,7 +24,7 @@ $env = Utils::get_environment();
 $command = '';
 $command .= $env === EnvConstants::DEVELOP ? "cd $BRANCH_ROOT && " : '';
 $command .= 'git pull';
-$command .= $env === EnvConstants::DEVELOP ? " && rm -Rf ../../public_html/$DIR_NAME/. && cp -r home/. ../../public_html/$DIR_NAME/" : '';
+$command .= $env === EnvConstants::DEVELOP ? " && rm -Rf ../../public_html/$DIR_NAME/* && cp -r home/. ../../public_html/$DIR_NAME/" : '';
 
 exec($command);
 
