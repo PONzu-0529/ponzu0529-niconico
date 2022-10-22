@@ -53,10 +53,10 @@ check_test_result($line_notify_service_test->send_log_message());
 
 // AuthService
 $auth_service_test = new AuthServiceTest();
-check_test_result($auth_service_test->get_access_token_by_email());
+// check_test_result($auth_service_test->get_access_token_by_email());
 check_test_result($auth_service_test->get_access_token_by_dummy_email());
 check_test_result($auth_service_test->get_access_token_by_dummy_password());
-check_test_result($auth_service_test->check_access_token());
+// check_test_result($auth_service_test->check_access_token());
 check_test_result($auth_service_test->check_access_token_by_dummy_email());
 check_test_result($auth_service_test->check_dummy_access_token());
 check_test_result($auth_service_test->check_old_access_token());
