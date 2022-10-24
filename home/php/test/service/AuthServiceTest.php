@@ -65,7 +65,7 @@ class AuthServiceTest extends ServiceTestBase
     $this->logging_service->record_log(new LogStyle(
       $this::SERVICE_NAME,
       $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
-      $service_test_response->get_message()
+      strval($service_test_response->get_data())
     ));
 
     return $service_test_response;
@@ -93,7 +93,7 @@ class AuthServiceTest extends ServiceTestBase
     $this->logging_service->record_log(new LogStyle(
       $this::SERVICE_NAME,
       $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
-      $service_test_response->get_message()
+      strval($service_test_response->get_data())
     ));
 
     return $service_test_response;
@@ -121,7 +121,7 @@ class AuthServiceTest extends ServiceTestBase
     $this->logging_service->record_log(new LogStyle(
       $this::SERVICE_NAME,
       $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
-      $service_test_response->get_message()
+      strval($service_test_response->get_data())
     ));
 
     return $service_test_response;
@@ -149,7 +149,7 @@ class AuthServiceTest extends ServiceTestBase
     $this->logging_service->record_log(new LogStyle(
       $this::SERVICE_NAME,
       $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
-      $service_test_response->get_message()
+      strval($service_test_response->get_data())
     ));
 
     return $service_test_response;
@@ -177,7 +177,7 @@ class AuthServiceTest extends ServiceTestBase
     $this->logging_service->record_log(new LogStyle(
       $this::SERVICE_NAME,
       $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
-      $service_test_response->get_message()
+      strval($service_test_response->get_data())
     ));
 
     return $service_test_response;
@@ -205,7 +205,7 @@ class AuthServiceTest extends ServiceTestBase
     $this->logging_service->record_log(new LogStyle(
       $this::SERVICE_NAME,
       $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
-      $service_test_response->get_message()
+      strval($service_test_response->get_data())
     ));
 
     return $service_test_response;

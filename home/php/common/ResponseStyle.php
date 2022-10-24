@@ -3,14 +3,12 @@
 class ResponseStyle
 {
   private string $status;
-  private string $message;
   private $data;
 
 
-  public function __construct(string $status, string $message = '', $data = NULL)
+  public function __construct(string $status, $data = NULL)
   {
     $this->status = $status;
-    $this->message = $message;
     $this->data = $data;
   }
 
@@ -18,12 +16,6 @@ class ResponseStyle
   public function get_status()
   {
     return $this->status;
-  }
-
-
-  public function get_message()
-  {
-    return $this->message;
   }
 
 

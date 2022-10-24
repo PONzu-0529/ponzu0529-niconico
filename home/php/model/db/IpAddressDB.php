@@ -34,7 +34,6 @@ class IpAddressDB extends DBBase
 
     return new ResponseStyle(
       ResponseStatusOption::SUCCESS,
-      '',
       $ip_address_list
     );
   }
@@ -67,7 +66,6 @@ class IpAddressDB extends DBBase
 
     return new ResponseStyle(
       ResponseStatusOption::SUCCESS,
-      '',
       $ip_address_list
     );
   }

@@ -39,7 +39,6 @@ class IpAddressData
   {
     return new ResponseStyle(
       ResponseStatusOption::SUCCESS,
-      '',
       $this->allow_ip_address_list
     );
   }
@@ -49,7 +48,6 @@ class IpAddressData
   {
     return new ResponseStyle(
       ResponseStatusOption::SUCCESS,
-      '',
       $this->deny_ip_address_list
     );
   }

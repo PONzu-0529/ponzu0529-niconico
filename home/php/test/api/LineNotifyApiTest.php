@@ -66,7 +66,7 @@ class LineNotifyApiTest extends ApiTestBase
     $this->logging_service->record_log(new LogStyle(
       $this::SERVICE_NAME,
       $controller_compare_result->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
-      $controller_compare_result->get_message()
+      strval($controller_compare_result->get_data())
     ));
 
     return $controller_compare_result;
@@ -101,7 +101,7 @@ class LineNotifyApiTest extends ApiTestBase
     $this->logging_service->record_log(new LogStyle(
       $this::SERVICE_NAME,
       $controller_compare_result->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
-      $controller_compare_result->get_message()
+      strval($controller_compare_result->get_data())
     ));
 
     return $controller_compare_result;
@@ -136,7 +136,7 @@ class LineNotifyApiTest extends ApiTestBase
     $this->logging_service->record_log(new LogStyle(
       $this::SERVICE_NAME,
       $controller_compare_result->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
-      $controller_compare_result->get_message()
+      strval($controller_compare_result->get_data())
     ));
 
     return $controller_compare_result;

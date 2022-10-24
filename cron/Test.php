@@ -24,11 +24,11 @@ function check_test_result(ResponseStyle $test_result)
     $logging_service->record_log(new LogStyle(
       $SERVICE_NAME,
       LogTypeOption::ERROR,
-      $test_result->get_message()
+      strval($test_result->get_data())
     ));
 
     $line_notify_service->send_alert_message(
-      "$SERVICE_NAME Failure: " . $test_result->get_message()
+      "$SERVICE_NAME Failure: " . strval($test_result->get_data())
     );
   }
 }
