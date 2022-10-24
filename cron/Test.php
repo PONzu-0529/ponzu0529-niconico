@@ -11,6 +11,7 @@ require_once __DIR__ . '/../home/php/test/api/LineNotifyApiTest.php';
 require_once __DIR__ . '/../home/php/test/service/AuthServiceTest.php';
 require_once __DIR__ . '/../home/php/test/service/LineNotifyServiceTest.php';
 require_once __DIR__ . '/../home/php/test/service/LoggingServiceTest.php';
+require_once __DIR__ . '/../home/php/test/service/VocaloidMusicServiceTest.php';
 
 
 function check_test_result(ResponseStyle $test_result)
@@ -60,3 +61,8 @@ check_test_result($auth_service_test->get_access_token_by_dummy_password());
 check_test_result($auth_service_test->check_access_token_by_dummy_email());
 check_test_result($auth_service_test->check_dummy_access_token());
 check_test_result($auth_service_test->check_old_access_token());
+
+// VocaloidMusicService
+$vocaloid_music_service_test = new VocaloidMusicServiceTest();
+check_test_result($vocaloid_music_service_test->get_all_data());
+check_test_result($vocaloid_music_service_test->get_data_without_skip());
