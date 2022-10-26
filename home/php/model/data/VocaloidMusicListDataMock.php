@@ -5,11 +5,12 @@ require_once __DIR__ . '/VocaloidMusicListData.php';
 
 class VocaloidMusicListDataMock extends VocaloidMusicListData
 {
+  private array $vocaloid_music_list;
+
+
   public function __construct()
   {
-    parent::__construct();
-
-    $this->vocaloid_music_list_data = [
+    $this->vocaloid_music_list = [
       new VocaloidMusic(
         1, // id
         'VIDEO_ID_1', // video_id
@@ -47,5 +48,43 @@ class VocaloidMusicListDataMock extends VocaloidMusicListData
         VocaloidMusicFavoriteLankType::SKIP // favorite_lank
       )
     ];
+  }
+
+
+  public function get_vocaloid_music_list(): array
+  {
+    return $this->vocaloid_music_list;
+  }
+
+
+  public static function get_all_data(): ResponseStyle
+  {
+    $data = new static();
+    $vocaloid_music_list = $data->get_vocaloid_music_list();
+
+    return new ResponseStyle(
+      ResponseStatusOption::SUCCESS,
+      $vocaloid_music_list
+    );
+  }
+
+
+  public static function get_data_without_skip(): ResponseStyle
+  {
+    $music_list = [];
+
+    $data = new static();
+    $vocaloid_music_list = $data->get_vocaloid_music_list();
+
+    foreach ($vocaloid_music_list as $music) {
+      if ($music->get_favorite_lank() !== VocaloidMusicFavoriteLankType::SKIP) {
+        array_push($music_list, $music);
+      }
+    }
+
+    return new ResponseStyle(
+      ResponseStatusOption::SUCCESS,
+      $music_list
+    );
   }
 }

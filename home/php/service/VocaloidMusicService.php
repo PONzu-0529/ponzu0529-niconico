@@ -1,52 +1,27 @@
 <?php
 
-require_once __DIR__ . '/ServiceBase.php';
-
 require_once __DIR__ . '/../common/ResponseStyle.php';
 
 require_once __DIR__ . '/../model/data/VocaloidMusicListData.php';
-require_once __DIR__ . '/../model/data/VocaloidMusicListDataMock.php';
+
+require_once __DIR__ . '/../service/LoggingService.php';
 
 
-class VocaloidMusicService extends ServiceBase
+class VocaloidMusicService
 {
   const SERVICE_NAME = 'VocaloidMusicService';
 
-  private VocaloidMusicListData $vocaloid_music_list_data;
 
-
-  public function __construct()
+  public static function get_all_data(): ResponseStyle
   {
-    parent::__construct();
+    static::record('Start Service.');
 
-    $this->vocaloid_music_list_data = new VocaloidMusicListData();
-  }
-
-
-  public function set_mock_data(VocaloidMusicListDataMock $vocaloid_music_list_data_mock): void
-  {
-    $this->vocaloid_music_list_data = $vocaloid_music_list_data_mock;
-  }
-
-
-  public function get_all_data(): ResponseStyle
-  {
-    $this->logging_service->record_log(new LogStyle(
-      $this::SERVICE_NAME,
-      LogTypeOption::LOG,
-      "Start Service."
-    ));
-
-    $data_response = $this->vocaloid_music_list_data->get_all_data();
+    $data_response = VocaloidMusicListData::get_all_data();
 
     if ($data_response->get_status() !== ResponseStatusOption::SUCCESS) {
       $response_message = strval($data_response->get_data());
 
-      $this->logging_service->record_log(new LogStyle(
-        $this::SERVICE_NAME,
-        LogTypeOption::ERROR,
-        $response_message
-      ));
+      static::record_error($response_message);
 
       return new ResponseStyle(
         ResponseStatusOption::FAILURE,
@@ -54,41 +29,25 @@ class VocaloidMusicService extends ServiceBase
       );
     }
 
-    $debug_info = debug_backtrace();
-    $first_debug_info = array_shift($debug_info);
-    $function_name = $first_debug_info['function'];
-
-    $this->logging_service->record_log(new LogStyle(
-      $this::SERVICE_NAME,
-      LogTypeOption::LOG,
-      'Finish Service "' . Utils::change_camel_case($function_name) . '".'
-    ));
+    static::record('Finish Service.');
 
     return new ResponseStyle(
-      ServiceResultOption::SUCCESS,
+      ResponseStatusOption::SUCCESS,
       $data_response->get_data()
     );
   }
 
 
-  public function get_data_without_skip(): ResponseStyle
+  public static function get_data_without_skip(): ResponseStyle
   {
-    $this->logging_service->record_log(new LogStyle(
-      $this::SERVICE_NAME,
-      LogTypeOption::LOG,
-      "Start Service."
-    ));
+    static::record('Start Service.');
 
-    $data_response = $this->vocaloid_music_list_data->get_data_without_skip();
+    $data_response = VocaloidMusicListData::get_data_without_skip();
 
     if ($data_response->get_status() !== ResponseStatusOption::SUCCESS) {
       $response_message = strval($data_response->get_data());
 
-      $this->logging_service->record_log(new LogStyle(
-        $this::SERVICE_NAME,
-        LogTypeOption::ERROR,
-        $response_message
-      ));
+      static::record_error($response_message);
 
       return new ResponseStyle(
         ResponseStatusOption::FAILURE,
@@ -96,19 +55,23 @@ class VocaloidMusicService extends ServiceBase
       );
     }
 
-    $debug_info = debug_backtrace();
-    $first_debug_info = array_shift($debug_info);
-    $function_name = $first_debug_info['function'];
-
-    $this->logging_service->record_log(new LogStyle(
-      $this::SERVICE_NAME,
-      LogTypeOption::LOG,
-      'Finish Service "' . Utils::change_camel_case($function_name) . '".'
-    ));
+    static::record('Finish Service.');
 
     return new ResponseStyle(
-      ServiceResultOption::SUCCESS,
+      ResponseStatusOption::SUCCESS,
       $data_response->get_data()
     );
+  }
+
+
+  private static function record(string $log): void
+  {
+    LoggingService::record(static::SERVICE_NAME, $log);
+  }
+
+
+  private static function record_error(string $log): void
+  {
+    LoggingService::record_error(static::SERVICE_NAME, $log);
   }
 }

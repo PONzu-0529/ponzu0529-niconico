@@ -9,82 +9,49 @@ require_once __DIR__ . '/../db/VocaloidMusicIdFavoriteLankDB.php';
 
 class VocaloidMusicListData
 {
-  protected array $vocaloid_music_list_data;
-
-  private VocaloidMusicsDB $vocaloid_musics_db;
-  private VocaloidMusicIdNiconicoIdDB $vocaloid_music_id_niconico_id_db;
-  private VocaloidMusicIdFavoriteLankDB $vocaloid_music_id_favorite_lank_db;
-
-
-  public function __construct()
+  public static function get_all_data(): ResponseStyle
   {
-    $this->init();
-    $this->set_all_data();
-  }
+    $music_list = [];
 
+    $all_music_response = VocaloidMusicsDB::get_all_music();
 
-  public function get_all_data(): ResponseStyle
-  {
-    return new ResponseStyle(
-      ResponseStatusOption::SUCCESS,
-      $this->vocaloid_music_list_data
-    );
-  }
-
-
-  public function get_data_without_skip(): ResponseStyle
-  {
-    $list = [];
-
-    foreach ($this->vocaloid_music_list_data as $data) {
-      $music = new VocaloidMusic(
-        $data->get_id(),
-        $data->get_video_id(),
-        $data->get_title(),
-        $data->get_description(),
-        $data->get_vocal_id_list(),
-        $data->get_creater_id_list(),
-        $data->get_favorite_lank()
+    if ($all_music_response->get_status() !== ResponseStatusOption::SUCCESS) {
+      return new ResponseStyle(
+        ResponseStatusOption::FAILURE,
+        $all_music_response->get_data()
       );
-
-      if ($music->get_favorite_lank() !== VocaloidMusicFavoriteLankType::SKIP) {
-        array_push($list, $music);
-      }
     }
 
-    return new ResponseStyle(
-      ResponseStatusOption::SUCCESS,
-      $list
-    );
-  }
+    foreach ($all_music_response->get_data() as $music) {
+      $music_id = (int)$music->get_id();
+      $title = (string)$music->get_title();
 
+      $niconico_id_by_music_id_response = VocaloidMusicIdNiconicoIdDB::get_niconico_id_by_music_id($music_id);
 
-  private function init(): void
-  {
-    $this->vocaloid_music_list_data = [];
+      if ($niconico_id_by_music_id_response->get_status() !== ResponseStatusOption::SUCCESS) {
+        return new ResponseStyle(
+          ResponseStatusOption::FAILURE,
+          $niconico_id_by_music_id_response->get_data()
+        );
+      }
 
-    $this->vocaloid_musics_db = new VocaloidMusicsDB();
-    $this->vocaloid_music_id_niconico_id_db = new VocaloidMusicIdNiconicoIdDB();
-    $this->vocaloid_music_id_favorite_lank_db = new VocaloidMusicIdFavoriteLankDB();
-  }
+      $niconico_id = (string)$niconico_id_by_music_id_response->get_data();
 
+      $favorite_lank_by_music_id_response = VocaloidMusicIdFavoriteLankDB::get_favorite_lank_by_music_id($music_id);
 
-  private function set_all_data(): void
-  {
-    $music_list = $this->get_vocaloid_music_list();
-    $music_id_niconico_id = $this->get_vocaloid_music_id_niconico_id();
-    $music_id_favorite_lank = $this->get_vocaloid_music_id_favorite_lank();
+      if ($favorite_lank_by_music_id_response->get_status() !== ResponseStatusOption::SUCCESS) {
+        return new ResponseStyle(
+          ResponseStatusOption::FAILURE,
+          $favorite_lank_by_music_id_response->get_data()
+        );
+      }
 
-    foreach ($music_list as $music) {
-      $id = $music['id'];
-      $title = $music['title'];
-      $niconico_id = $music_id_niconico_id[$id]['niconico_id'];
-      $favorite_lank = $music_id_favorite_lank[$id]['favorite_lank'];
+      $favorite_lank = (int)$favorite_lank_by_music_id_response->get_data();
 
       array_push(
-        $this->vocaloid_music_list_data,
+        $music_list,
         new VocaloidMusic(
-          $id,
+          $music_id,
           $niconico_id,
           $title,
           '',
@@ -94,42 +61,37 @@ class VocaloidMusicListData
         )
       );
     }
+
+    return new ResponseStyle(
+      ResponseStatusOption::SUCCESS,
+      $music_list
+    );
   }
 
 
-  private function get_vocaloid_music_list(): array
+  public static function get_data_without_skip(): ResponseStyle
   {
-    $vocaloid_musics_db_response = $this->vocaloid_musics_db->get_vocaloid_music_list();
+    $music_list = [];
 
-    if ($vocaloid_musics_db_response->get_status() !== ResponseStatusOption::SUCCESS) {
-      return [];
+    $all_data_response = static::get_all_data();
+
+    if ($all_data_response->get_status() !== ResponseStatusOption::SUCCESS) {
+      return new ResponseStyle(
+        ResponseStatusOption::FAILURE,
+        $all_data_response->get_data()
+      );
     }
 
-    return $vocaloid_musics_db_response->get_data();
-  }
-
-
-  private function get_vocaloid_music_id_niconico_id(): array
-  {
-    $vocaloid_music_id_niconico_id_db_response = $this->vocaloid_music_id_niconico_id_db->get_vocaloid_music_id_niconico_id();
-
-    if ($vocaloid_music_id_niconico_id_db_response->get_status() !== ResponseStatusOption::SUCCESS) {
-      return [];
+    foreach ($all_data_response->get_data() as $music) {
+      if ($music->get_favorite_lank() !== VocaloidMusicFavoriteLankType::SKIP) {
+        array_push($music_list, $music);
+      }
     }
 
-    return $vocaloid_music_id_niconico_id_db_response->get_data();
-  }
-
-
-  private function get_vocaloid_music_id_favorite_lank(): array
-  {
-    $vocaloid_music_id_favorite_lank_db_response = $this->vocaloid_music_id_favorite_lank_db->get_vocaloid_music_id_favorite_lank();
-
-    if ($vocaloid_music_id_favorite_lank_db_response->get_status() !== ResponseStatusOption::SUCCESS) {
-      return [];
-    }
-
-    return $vocaloid_music_id_favorite_lank_db_response->get_data();
+    return new ResponseStyle(
+      ResponseStatusOption::SUCCESS,
+      $music_list
+    );
   }
 }
 

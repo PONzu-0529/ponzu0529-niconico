@@ -12,17 +12,6 @@ class VocaloidMusicServiceTest extends ServiceTestBase
 {
   const SERVICE_NAME = 'VocaloidMusicServiceTest';
 
-  private VocaloidMusicService $vocaloid_music_service;
-
-
-  public function __construct()
-  {
-    parent::__construct();
-
-    $this->vocaloid_music_service = new VocaloidMusicService();
-    $this->vocaloid_music_service->set_mock_data(new VocaloidMusicListDataMock());
-  }
-
 
   public function get_all_data(): ResponseStyle
   {
@@ -32,7 +21,7 @@ class VocaloidMusicServiceTest extends ServiceTestBase
       'Start Service Test.'
     ));
 
-    $service_response = $this->vocaloid_music_service->get_all_data();
+    $service_response = VocaloidMusicListDataMock::get_all_data();
 
     if ($service_response->get_status() !== ResponseStatusOption::SUCCESS) {
       $this->logging_service->record_log(new LogStyle(
@@ -65,7 +54,7 @@ class VocaloidMusicServiceTest extends ServiceTestBase
       'Start Service Test.'
     ));
 
-    $service_response = $this->vocaloid_music_service->get_data_without_skip();
+    $service_response = VocaloidMusicListDataMock::get_data_without_skip();
 
     if ($service_response->get_status() !== ResponseStatusOption::SUCCESS) {
       $this->logging_service->record_log(new LogStyle(
