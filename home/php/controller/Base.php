@@ -29,7 +29,7 @@ class ControllerBase
   }
 
 
-  public function check_allow_remote_ip_address(): bool
+  protected function check_allow_remote_ip_address(): bool
   {
     $allow_ip_address_list = [];
 
@@ -43,9 +43,15 @@ class ControllerBase
   }
 
 
-  protected function check_version(): bool
+  protected function check_version(array $arrow_version_list): bool
   {
-    return in_array($this->version, $this->ALLOW_VERSION_LIST, true);
+    return in_array($this->version, $arrow_version_list, true);
+  }
+
+
+  protected function check_body(string $member): bool
+  {
+    return isset($this->body[$member]);
   }
 }
 
@@ -53,39 +59,14 @@ class ControllerBase
 class ControllerResponseStyle
 {
   public string $status;
-  public string $message;
+  public $body;
 
 
-  public function __construct(string $status, string $message)
+  public function __construct(string $status, $body)
   {
     $this->status = $status;
-    $this->message = $message;
+    $this->body = $body;
   }
-}
-
-
-function compare_controller_response_style(
-  ControllerResponseStyle $controller_response_style_1,
-  ControllerResponseStyle $controller_response_style_2
-): ResponseStyle {
-  if ($controller_response_style_1->status !== $controller_response_style_2->status) {
-    return new ResponseStyle(
-      ResponseStatusOption::FAILURE,
-      "$controller_response_style_1->status is not $controller_response_style_2->status."
-    );
-  }
-
-  if ($controller_response_style_1->message !== $controller_response_style_2->message) {
-    return new ResponseStyle(
-      ResponseStatusOption::FAILURE,
-      "$controller_response_style_1->message is not $controller_response_style_2->message."
-    );
-  }
-
-  return new ResponseStyle(
-    ResponseStatusOption::SUCCESS,
-    "Each Result is Equal."
-  );
 }
 
 

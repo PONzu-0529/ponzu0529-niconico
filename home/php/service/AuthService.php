@@ -1,10 +1,16 @@
 <?php
 
 require_once __DIR__ . '/../common/LogOptions.php';
+require_once __DIR__ . '/../common/ResponseStyle.php';
 
 require_once __DIR__ . '/ServiceBase.php';
 require_once __DIR__ . '/../model/db/UserAccounts.php';
 require_once __DIR__ . '/../model/db/UserAccountAccessToken.php';
+
+require_once __DIR__ . '/../model/data/AuthData.php';
+
+require_once __DIR__ . '/../service/AuthService.php';
+require_once __DIR__ . '/../service/LoggingService.php';
 
 
 class AuthService extends ServiceBase
@@ -76,7 +82,36 @@ class AuthService extends ServiceBase
   }
 
 
-  public function check_access_token(string $email, string $user_access_token)
+  public static function check_access_token(string $access_token): ResponseStyle
+  {
+    static::record_start();
+
+    $check_access_token_response = AuthData::check_access_token($access_token);
+
+    if ($check_access_token_response->get_status() !== ResponseStatusOption::SUCCESS) {
+      return static::return_error(strval($check_access_token_response->get_data()));
+    }
+
+    $data = $check_access_token_response->get_data();
+    $created_at = $data->get_created_at();
+
+    // Check CreateTime
+    $today = new DateTime('now', new DateTimeZone('Asia/Tokyo'));
+
+    if ($today->modify('-1 day') > $created_at) {
+      return static::return_error('This AccessToken Timeout.');
+    }
+
+    static::record_finish();
+
+    return new ResponseStyle(
+      ResponseStatusOption::SUCCESS,
+      $check_access_token_response->get_data()
+    );
+  }
+
+
+  public function check_access_token_by_email(string $email, string $user_access_token)
   {
     $this->logging_service->record_log(new LogStyle(
       $this::SERVICE_NAME,
@@ -164,7 +199,7 @@ class AuthService extends ServiceBase
 
   private function create_access_token(int $id): string
   {
-    $today = new DateTime();
+    $today = new DateTime('now', new DateTimeZone('Asia/Tokyo'));
 
     $access_token = hash('sha256', strval($id * 39) . $today->format('Y-m-d H:i:s'));
 
@@ -174,5 +209,40 @@ class AuthService extends ServiceBase
     );
 
     return $access_token;
+  }
+
+
+  private static function return_error(string $error_message): ResponseStyle
+  {
+    static::record_error($error_message);
+
+    return new ResponseStyle(
+      ResponseStatusOption::FAILURE,
+      $error_message
+    );
+  }
+
+
+  private static function record(string $log): void
+  {
+    LoggingService::record(static::SERVICE_NAME, $log);
+  }
+
+
+  private static function record_error(string $log): void
+  {
+    LoggingService::record_error(static::SERVICE_NAME, $log);
+  }
+
+
+  private static function record_start(): void
+  {
+    static::record('Start Service.');
+  }
+
+
+  private static function record_finish(): void
+  {
+    static::record('Finish Service.');
   }
 }

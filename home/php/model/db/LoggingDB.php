@@ -31,21 +31,52 @@ class LoggingDB extends DBBase
   }
 
 
-  private function is_exist_logs_table(): bool
+  public static function record(LogStyle $log_style): void
   {
-    $table_name = $this->get_logs_table_name();
+    $mysqli = DBBase::get_db_connection();
 
-    $sql_result = $this->mysqli->query("SHOW TABLES LIKE '$table_name'");
+    if (!static::is_exist_logs_table()) {
+      static::create_logs_table();
+    }
+
+    $table_name = static::get_logs_table_name();
+
+    $debug_info = debug_backtrace();
+    $last_debug_info = end($debug_info);
+    $file_name = $last_debug_info['file'];
+    $function_name = $last_debug_info['function'];
+
+    $mysqli->query(
+      "
+        INSERT INTO `$table_name`
+          (`service`, `type`, `file_name`, `function_name`, `log`, `created_at`, `updated_at`)
+        VALUES
+          ('$log_style->service', '$log_style->type', '$file_name', '$function_name', '$log_style->log', now(), now())
+        ;
+      "
+    );
+  }
+
+
+  private static function is_exist_logs_table(): bool
+  {
+    $mysqli = DBBase::get_db_connection();
+
+    $table_name = static::get_logs_table_name();
+
+    $sql_result = $mysqli->query("SHOW TABLES LIKE '$table_name'");
 
     return $sql_result->num_rows !== 0;
   }
 
 
-  private function create_logs_table(): void
+  private static function create_logs_table(): void
   {
-    $table_name = $this->get_logs_table_name();
+    $mysqli = DBBase::get_db_connection();
 
-    $this->mysqli->query(
+    $table_name = static::get_logs_table_name();
+
+    $mysqli->query(
       "
         CREATE TABLE IF NOT EXISTS `$table_name` (
           `id` int(16) NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -62,9 +93,9 @@ class LoggingDB extends DBBase
   }
 
 
-  private function get_logs_table_name(): string
+  private static function get_logs_table_name(): string
   {
-    $today = new DateTime();
+    $today = new DateTime('now', new DateTimeZone('Asia/Tokyo'));
 
     return 'logs_' . $today->format('Y_m');
   }

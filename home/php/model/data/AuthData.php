@@ -15,4 +15,10 @@ class AuthData
     $this->user_accounts = new UserAccounts();
     $this->user_account_access_token = new UserAccountAccessToken();
   }
+
+
+  public static function check_access_token(string $access_token): ResponseStyle
+  {
+    return UserAccountAccessToken::check_access_token($access_token);
+  }
 }

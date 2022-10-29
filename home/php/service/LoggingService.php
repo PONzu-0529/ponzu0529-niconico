@@ -19,4 +19,16 @@ class LoggingService
   {
     $this->logging_db->record_log($log_style);
   }
+
+
+  public static function record(string $service, string $log): void
+  {
+    LoggingDB::record(new LogStyle($service, LogTypeOption::LOG, $log));
+  }
+
+
+  public static function record_error(string $service, string $log): void
+  {
+    LoggingDB::record(new LogStyle($service, LogTypeOption::ERROR, $log));
+  }
 }
