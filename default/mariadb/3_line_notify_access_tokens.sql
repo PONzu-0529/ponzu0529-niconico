@@ -1,5 +1,5 @@
 -- Select DB
-USE `ponzu0529_tools`;
+USE `ponzu0529_devtools`;
 
 -- Create Table
 DROP TABLE IF EXISTS `line_notify_access_tokens`;

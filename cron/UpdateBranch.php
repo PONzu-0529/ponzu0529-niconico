@@ -7,17 +7,11 @@ require_once __DIR__ . '/../home/php/config/Config.php';
 require_once __DIR__ . '/../home/php/service/LineNotifyService.php';
 require_once __DIR__ . '/../home/php/service/LoggingService.php';
 
-$logging_service = new LoggingService();
 $line_notify_service = new LineNotifyService();
 
 $SERVICE_NAME = 'Cron';
 
-$logging_service->record_log(new LogStyle(
-  $SERVICE_NAME,
-  LogTypeOption::LOG,
-  'update_branch',
-  "Start Update $REPOSITORY_NAME."
-));
+LoggingService::record($SERVICE_NAME, "Start Update $REPOSITORY_NAME.");
 
 $env = Utils::get_environment();
 
@@ -29,12 +23,7 @@ $command .= $env === EnvConstants::DEVELOP ? " && rm -Rf ../../public_html/$DIR_
 exec($command);
 
 if (Utils::get_environment() === EnvConstants::DEVELOP) {
-  $line_notify_service->send_log_message("Update Branch '$REPOSITORY_NAME.'");
+  $line_notify_service->send_log_message("Update Branch '$REPOSITORY_NAME'.");
 }
 
-$logging_service->record_log(new LogStyle(
-  $SERVICE_NAME,
-  LogTypeOption::LOG,
-  'update_branch',
-  "Finish Update $REPOSITORY_NAME."
-));
+LoggingService::record($SERVICE_NAME, "Finish Update $REPOSITORY_NAME.");

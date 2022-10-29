@@ -20,4 +20,4 @@ $BRANCH_ROOT = "$REPOSITORY_ROOT/$BRANCH_DIR_NAME";
 $hostname = '';
 $username = '';
 $password = '';
-$database = '';
+$database = 'ponzu0529_devtools';
