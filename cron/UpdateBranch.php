@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . '/../home/php/common/EnvConstants.php';
-require_once __DIR__ . '/../home/php/common/LogOptions.php';
 require_once __DIR__ . '/../home/php/common/Utils.php';
 require_once __DIR__ . '/../home/php/config/Config.php';
 require_once __DIR__ . '/../home/php/service/LineNotifyService.php';
