@@ -41,7 +41,7 @@ class VocaloidMusicIdNiconicoIdDB
   }
 
 
-  public static function insert_data(VocaloidMusicIdNiconicoIdStyle $data): void
+  public static function insert_data(VocaloidMusicIdNiconicoIdStyle $data): int
   {
     $mysqli = DBBase::get_db_connection();
 
@@ -58,15 +58,15 @@ class VocaloidMusicIdNiconicoIdDB
         ;
       "
     );
+
+    return $mysqli->insert_id;
   }
 
 
-  public static function update_data(int $id, VocaloidMusicIdNiconicoIdStyle $data): void
+  public static function update_data_by_music_id(int $music_id, VocaloidMusicIdNiconicoIdStyle $data): void
   {
     $mysqli = DBBase::get_db_connection();
 
-    $str_id = strval($id);
-    $music_id = $data->get_music_id();
     $str_music_id = strval($music_id);
     $niconico_id = $data->get_niconico_id();
 
@@ -75,29 +75,28 @@ class VocaloidMusicIdNiconicoIdDB
         UPDATE
           `vocaloid_music_id_niconico_id`
         SET
-          `music_id` = '$str_music_id',
           `niconico_id` = '$niconico_id',
           `updated_at` = now()
         WHERE
-          `id` = $str_id
+          `music_id` = '$str_music_id'
         ;
       "
     );
   }
 
 
-  public static function delete_data(int $id): void
+  public static function delete_data_by_music_id(int $music_id): void
   {
     $mysqli = DBBase::get_db_connection();
 
-    $str_id = strval($id);
+    $str_music_id = strval($music_id);
 
     $mysqli->query(
       "
         DELETE FROM
           `vocaloid_music_id_niconico_id`
         WHERE
-          `id` = $str_id
+          `music_id` = $str_music_id
         ;
       "
     );

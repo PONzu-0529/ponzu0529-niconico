@@ -42,7 +42,7 @@ class LineNotifyController extends ControllerBase
       $this->logging_service->record_log(new LogStyle(
         $this::SERVICE_NAME,
         LogTypeOption::ERROR,
-        $response->message
+        $response->body
       ));
 
       return $response;
@@ -117,7 +117,7 @@ class LineNotifyController extends ControllerBase
     }
 
     // Validate Version
-    if (!$this->check_version()) {
+    if (!$this->check_version($this->ALLOW_VERSION_LIST)) {
       return new ControllerResponseStyle(
         ControllerResponseStatusOption::FAILURE,
         "Version $this->version is not accepted."

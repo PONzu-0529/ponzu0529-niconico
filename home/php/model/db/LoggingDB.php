@@ -95,7 +95,7 @@ class LoggingDB extends DBBase
 
   private static function get_logs_table_name(): string
   {
-    $today = new DateTime();
+    $today = new DateTime('now', new DateTimeZone('Asia/Tokyo'));
 
     return 'logs_' . $today->format('Y_m');
   }

@@ -48,17 +48,20 @@ class VocaloidMusicListData
 
       $favorite_lank = (int)$favorite_lank_by_music_id_response->get_data();
 
+      // Result
+      $vocaloid_music = new VocaloidMusic(
+        $music_id,
+        $niconico_id,
+        $title,
+        '',
+        [],
+        [],
+        $favorite_lank
+      );
+
       array_push(
         $music_list,
-        new VocaloidMusic(
-          $music_id,
-          $niconico_id,
-          $title,
-          '',
-          [],
-          [],
-          $favorite_lank
-        )
+        $vocaloid_music->get_all_data()
       );
     }
 
@@ -83,7 +86,7 @@ class VocaloidMusicListData
     }
 
     foreach ($all_data_response->get_data() as $music) {
-      if ($music->get_favorite_lank() !== VocaloidMusicFavoriteLankType::SKIP) {
+      if ($music['favorite_lank'] !== VocaloidMusicFavoriteLankType::SKIP) {
         array_push($music_list, $music);
       }
     }
@@ -92,6 +95,36 @@ class VocaloidMusicListData
       ResponseStatusOption::SUCCESS,
       $music_list
     );
+  }
+
+
+  public static function insert_music(VocaloidMusic $music): ResponseStyle
+  {
+    $music_id = VocaloidMusicsDB::insert_music(new VocaloidMusicsStyle(-1, $music->get_title()));
+    VocaloidMusicIdNiconicoIdDB::insert_data(new VocaloidMusicIdNiconicoIdStyle(-1, $music_id, $music->get_video_id()));
+    VocaloidMusicIdFavoriteLankDB::insert_data(new VocaloidMusicIdFavoriteLankStyle(-1, $music_id, $music->get_favorite_lank()));
+
+    return new ResponseStyle(ResponseStatusOption::SUCCESS, ['id' => $music_id]);
+  }
+
+
+  public static function update_music(int $id, VocaloidMusic $music): ResponseStyle
+  {
+    VocaloidMusicsDB::update_music($id, new VocaloidMusicsStyle($id, $music->get_title()));
+    VocaloidMusicIdNiconicoIdDB::update_data_by_music_id($id, new VocaloidMusicIdNiconicoIdStyle(-1, $id, $music->get_video_id()));
+    VocaloidMusicIdFavoriteLankDB::update_data_by_music_id($id, new VocaloidMusicIdFavoriteLankStyle(-1, $id, $music->get_favorite_lank()));
+
+    return new ResponseStyle(ResponseStatusOption::SUCCESS);
+  }
+
+
+  public static function delete_music(int $id): ResponseStyle
+  {
+    VocaloidMusicsDB::delete_music($id);
+    VocaloidMusicIdNiconicoIdDB::delete_data_by_music_id($id);
+    VocaloidMusicIdFavoriteLankDB::delete_data_by_music_id($id);
+
+    return new ResponseStyle(ResponseStatusOption::SUCCESS);
   }
 }
 
@@ -154,6 +187,19 @@ class VocaloidMusic
   public function get_favorite_lank(): int
   {
     return $this->favorite_lank;
+  }
+
+  public function get_all_data(): array
+  {
+    return [
+      'id' => $this->get_id(),
+      'video_id' => $this->get_video_id(),
+      'title' => $this->get_title(),
+      'description' => $this->get_description(),
+      'vocal_id_list' => $this->get_vocal_id_list(),
+      'creater_id_list' => $this->get_creater_id_list(),
+      'favorite_lank' => $this->get_favorite_lank()
+    ];
   }
 }
 

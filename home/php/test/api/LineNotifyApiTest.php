@@ -55,11 +55,16 @@ class LineNotifyApiTest extends ApiTestBase
 
     $post_api_call_result = $this->post_api_call_test($api_call_test_option);
 
-    $controller_compare_result = compare_controller_response_style(
+    $controller_compare_result = Utils::compare_response_style(
       $post_api_call_result,
-      new ControllerResponseStyle(
-        ControllerResponseStatusOption::SUCCESS,
-        'Success Send Message.'
+      new ResponseStyle(
+        ResponseStatusOption::SUCCESS,
+        get_object_vars(
+          new ControllerResponseStyle(
+            ControllerResponseStatusOption::SUCCESS,
+            'Success Send Message.'
+          )
+        )
       )
     );
 
@@ -90,11 +95,16 @@ class LineNotifyApiTest extends ApiTestBase
 
     $post_api_call_result = $this->post_api_call_test($api_call_test_option);
 
-    $controller_compare_result = compare_controller_response_style(
+    $controller_compare_result = Utils::compare_response_style(
       $post_api_call_result,
-      new ControllerResponseStyle(
-        ControllerResponseStatusOption::FAILURE,
-        'This IP Address is not Accepted.'
+      new ResponseStyle(
+        ResponseStatusOption::SUCCESS,
+        get_object_vars(
+          new ControllerResponseStyle(
+            ControllerResponseStatusOption::FAILURE,
+            'This IP Address is not Accepted.'
+          )
+        )
       )
     );
 
@@ -125,11 +135,16 @@ class LineNotifyApiTest extends ApiTestBase
 
     $post_api_call_result = $this->post_api_call_test($api_call_test_option);
 
-    $controller_compare_result = compare_controller_response_style(
+    $controller_compare_result = Utils::compare_response_style(
       $post_api_call_result,
-      new ControllerResponseStyle(
-        ControllerResponseStatusOption::FAILURE,
-        'Version v0 is not accepted.'
+      new ResponseStyle(
+        ResponseStatusOption::SUCCESS,
+        get_object_vars(
+          new ControllerResponseStyle(
+            ControllerResponseStatusOption::FAILURE,
+            'Version v0 is not accepted.'
+          )
+        )
       )
     );
 

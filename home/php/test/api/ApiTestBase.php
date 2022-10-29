@@ -16,7 +16,25 @@ class ApiTestBase
   }
 
 
-  public function post_api_call_test(ApiCallTestOption $api_call_test_option): ControllerResponseStyle
+  public static function get_host(): string
+  {
+    switch (Utils::get_environment()) {
+      case EnvConstants::LOCAL:
+        return 'http://127.0.0.1';
+
+      case EnvConstants::DEVELOP:
+        return 'https://dev-tools.ponzu0529.com';
+
+      case EnvConstants::MASTER:
+        return 'https://tools.ponzu0529.com';
+
+      default:
+        return '';
+    }
+  }
+
+
+  public static function post_api_call_test(ApiCallTestOption $api_call_test_option): ResponseStyle
   {
     $ch = curl_init($api_call_test_option->get_url());
     $query = json_encode($api_call_test_option->get_body());
@@ -31,17 +49,17 @@ class ApiTestBase
     $response_obj = json_decode($response);
 
     if ($response_obj === NULL) {
-      return new ControllerResponseStyle(
-        ControllerResponseStatusOption::FAILURE,
+      return new ResponseStyle(
+        ResponseStatusOption::FAILURE,
         'ERROR: Unexpected Response.'
       );
     }
 
     $result = get_object_vars($response_obj);
 
-    return new ControllerResponseStyle(
-      $result["status"],
-      $result["message"]
+    return new ResponseStyle(
+      ResponseStatusOption::SUCCESS,
+      $result
     );
   }
 }

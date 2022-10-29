@@ -42,7 +42,7 @@ class VocaloidMusicsDB
   }
 
 
-  public static function insert_music(VocaloidMusicsStyle $music): void
+  public static function insert_music(VocaloidMusicsStyle $music): int
   {
     $mysqli = DBBase::get_db_connection();
 
@@ -57,6 +57,8 @@ class VocaloidMusicsDB
         ;
       "
     );
+
+    return $mysqli->insert_id;
   }
 
 

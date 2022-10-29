@@ -41,7 +41,7 @@ class VocaloidMusicIdFavoriteLankDB
   }
 
 
-  public static function insert_data(VocaloidMusicIdFavoriteLankStyle $data): void
+  public static function insert_data(VocaloidMusicIdFavoriteLankStyle $data): int
   {
     $mysqli = DBBase::get_db_connection();
 
@@ -59,15 +59,15 @@ class VocaloidMusicIdFavoriteLankDB
         ;
       "
     );
+
+    return $mysqli->insert_id;
   }
 
 
-  public static function update_data(int $id, VocaloidMusicIdFavoriteLankStyle $data): void
+  public static function update_data_by_music_id(int $music_id, VocaloidMusicIdFavoriteLankStyle $data): void
   {
     $mysqli = DBBase::get_db_connection();
 
-    $str_id = strval($id);
-    $music_id = $data->get_music_id();
     $str_music_id = strval($music_id);
     $favorite_lank = $data->get_favorite_lank();
     $str_favorite_lank = strval($favorite_lank);
@@ -77,29 +77,28 @@ class VocaloidMusicIdFavoriteLankDB
         UPDATE
           `vocaloid_music_id_favorite_lank`
         SET
-          `music_id` = $str_music_id,
           `favorite_lank` = $str_favorite_lank,
           `updated_at` = now()
         WHERE
-          `id` = $str_id
+          `music_id` = $str_music_id
         ;
       "
     );
   }
 
 
-  public static function delete_data(int $id): void
+  public static function delete_data_by_music_id(int $music_id): void
   {
     $mysqli = DBBase::get_db_connection();
 
-    $str_id = strval($id);
+    $str_music_id = strval($music_id);
 
     $mysqli->query(
       "
         DELETE FROM
           `vocaloid_music_id_favorite_lank`
         WHERE
-          `id` = $str_id
+          `music_id` = $str_music_id
         ;
       "
     );
