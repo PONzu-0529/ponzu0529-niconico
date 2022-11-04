@@ -29,7 +29,7 @@ class AuthService extends ServiceBase
   }
 
 
-  public function get_access_token_by_email(string $email, string $password): ServiceResponse
+  public function get_access_token_by_email(string $email, string $password): ResponseStyle
   {
     $this->logging_service->record_log(new LogStyle(
       $this::SERVICE_NAME,
@@ -46,8 +46,8 @@ class AuthService extends ServiceBase
         "\"$email\" is not registered."
       ));
 
-      return new ServiceResponse(
-        ServiceResultOption::FAILURE,
+      return new ResponseStyle(
+        ResponseStatusOption::FAILURE,
         "ERROR: \"$email\" is not registered."
       );
     }
@@ -61,8 +61,8 @@ class AuthService extends ServiceBase
         $result_check_password
       ));
 
-      return new ServiceResponse(
-        ServiceResultOption::FAILURE,
+      return new ResponseStyle(
+        ResponseStatusOption::FAILURE,
         $result_check_password
       );
     }
@@ -75,8 +75,8 @@ class AuthService extends ServiceBase
       'Finish Service "Get Access Token By Email".'
     ));
 
-    return new ServiceResponse(
-      ServiceResultOption::SUCCESS,
+    return new ResponseStyle(
+      ResponseStatusOption::SUCCESS,
       $access_token
     );
   }
@@ -128,8 +128,8 @@ class AuthService extends ServiceBase
         "\"$email\" is not registered."
       ));
 
-      return new ServiceResponse(
-        ServiceResultOption::FAILURE,
+      return new ResponseStyle(
+        ResponseStatusOption::FAILURE,
         "ERROR: \"$email\" is not registered."
       );
     }
@@ -143,8 +143,8 @@ class AuthService extends ServiceBase
         'The AccessToken is unauthorized.'
       ));
 
-      return new ServiceResponse(
-        ServiceResultOption::FAILURE,
+      return new ResponseStyle(
+        ResponseStatusOption::FAILURE,
         'ERROR: The AccessToken is unauthorized.'
       );
     }
@@ -156,8 +156,8 @@ class AuthService extends ServiceBase
         'The AccessToken is unauthorized.'
       ));
 
-      return new ServiceResponse(
-        ServiceResultOption::FAILURE,
+      return new ResponseStyle(
+        ResponseStatusOption::FAILURE,
         'ERROR: The AccessToken is unauthorized.'
       );
     }
@@ -168,8 +168,8 @@ class AuthService extends ServiceBase
       'Finish Service "Check Access Token".'
     ));
 
-    return new ServiceResponse(
-      ServiceResultOption::SUCCESS,
+    return new ResponseStyle(
+      ResponseStatusOption::SUCCESS,
       'Success Authorized.'
     );
   }

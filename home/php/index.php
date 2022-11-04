@@ -1,7 +1,14 @@
 <?php
 
+require_once __DIR__ . '/service/LoggingService.php';
+
+
+$SERVICE_NAME = 'Server';
+
 $path = $_SERVER["REQUEST_URI"];
 $path_list = explode("/", $path);
+
+LoggingService::record($SERVICE_NAME, "Call \"$path\".");
 
 // Set Remote IP Address
 $remote_ip_address = $_SERVER["REMOTE_ADDR"];

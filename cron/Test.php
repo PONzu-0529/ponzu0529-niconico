@@ -6,6 +6,7 @@ require_once __DIR__ . '/../home/php/common/LogOptions.php';
 require_once __DIR__ . '/../home/php/service/LoggingService.php';
 require_once __DIR__ . '/../home/php/service/LineNotifyService.php';
 
+require_once __DIR__ . '/../home/php/test/api/AuthApiTest.php';
 require_once __DIR__ . '/../home/php/test/api/LineNotifyApiTest.php';
 require_once __DIR__ . '/../home/php/test/api/VocaloidMusicApiTest.php';
 
@@ -53,7 +54,7 @@ check_test_result($line_notify_api_test->send_log_message());
 // check_test_result($line_notify_api_test->send_different_host_log_message()); // Only Local to Server
 check_test_result($line_notify_api_test->send_different_version_log_message());
 
-// AuthService
+// Auth
 $auth_service_test = new AuthServiceTest();
 // check_test_result($auth_service_test->get_access_token_by_email());
 check_test_result($auth_service_test->get_access_token_by_dummy_email());
@@ -61,6 +62,8 @@ check_test_result($auth_service_test->get_access_token_by_dummy_password());
 // check_test_result($auth_service_test->check_access_token());
 check_test_result($auth_service_test->check_dummy_access_token());
 check_test_result($auth_service_test->check_old_access_token());
+check_test_result(AuthApiTest::GetAccessTokenByEmail());
+// check_test_result(AuthApiTest::CheckAccessToken());
 
 // VocaloidMusicService
 $vocaloid_music_service_test = new VocaloidMusicServiceTest();

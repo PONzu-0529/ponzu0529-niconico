@@ -3,6 +3,7 @@
 require_once __DIR__ . '/ServiceTestBase.php';
 
 require_once __DIR__ . '/../../common/ResponseStyle.php';
+require_once __DIR__ . '/../../common/Utils.php';
 
 require_once __DIR__ . '/../../service/AuthService.php';
 require_once __DIR__ . '/../../service/ServiceBase.php';
@@ -54,10 +55,10 @@ class AuthServiceTest extends ServiceTestBase
 
     $service_response = $this->auth_service->get_access_token_by_email('dummy@tools.ponzu0529.com', 'test_password');
 
-    $service_test_response = $this->common_service_response_test(
+    $service_test_response = Utils::compare_response_style(
       $service_response,
-      new ServiceResponse(
-        ServiceResultOption::FAILURE,
+      new ResponseStyle(
+        ResponseStatusOption::FAILURE,
         'ERROR: "dummy@tools.ponzu0529.com" is not registered.'
       )
     );
@@ -82,10 +83,10 @@ class AuthServiceTest extends ServiceTestBase
 
     $service_response = $this->auth_service->get_access_token_by_email('test@tools.ponzu0529.com', 'dummy_password');
 
-    $service_test_response = $this->common_service_response_test(
+    $service_test_response = Utils::compare_response_style(
       $service_response,
-      new ServiceResponse(
-        ServiceResultOption::FAILURE,
+      new ResponseStyle(
+        ResponseStatusOption::FAILURE,
         'ERROR: Password is wrong.'
       )
     );
