@@ -23,8 +23,8 @@ pnpm-debug.log*
 
 # custom
 .devcontainer/
-mariadb/
 config/
+mariadb/
 vendor/
 
 !default/*

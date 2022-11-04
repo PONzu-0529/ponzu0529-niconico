@@ -13,14 +13,6 @@
     <b-field style="padding: 10px">
       <b-table :data="videoList" :bordered="true">
         <b-table-column
-          field="video_id"
-          label="ID"
-          :centered="true"
-          v-slot="props"
-        >
-          {{ props.row.video_id }}
-        </b-table-column>
-        <b-table-column
           field="title"
           label="タイトル"
           :centered="true"
@@ -28,29 +20,23 @@
         >
           {{ props.row.title }}
         </b-table-column>
+
         <b-table-column
-          field="favorite"
-          label="お気に入り"
+          field="favorite_lank"
+          label="ランク"
           :centered="true"
           v-slot="props"
         >
-          {{ props.row.favorite }}
+          {{ getFavoriteLank(props.row.favorite_lank) }}
         </b-table-column>
-        <b-table-column
-          field="skip"
-          label="スキップ"
-          :centered="true"
-          v-slot="props"
-        >
-          {{ props.row.skip }}
-        </b-table-column>
+
         <b-table-column
           field="option"
           label="オプション"
           :centered="true"
           v-slot="props"
         >
-          <b-button class="success-button" @click="openUpdateVideo(props.row)">詳細</b-button>
+          <b-button class="normal-button" @click="openUpdateVideo(props.row)">詳細</b-button>
         </b-table-column>
       </b-table>
     </b-field>
@@ -61,8 +47,10 @@
 import _ from "lodash"
 import NiconicoForm from "@/components/NiconicoForm.vue"
 import { userModule } from "@/store/modules/User"
-import User from "@/User"
-import Niconico, { music } from "@/Niconico"
+
+import { ApiModel } from "@/models/ApiModel"
+import { VocaloidMusicModel, VocaloidMusicStyle } from '@/models/VocaloidMusicModel'
+
 import { Vue, Component } from "vue-property-decorator"
 
 @Component({
@@ -71,13 +59,11 @@ import { Vue, Component } from "vue-property-decorator"
   },
 })
 export default class NiconicoCustomMylist extends Vue {
-  private videoList: Array<music> = [];
-  private video: music = {
-    video_id: "",
-    title: "",
-    favorite: false,
-    skip: false,
-  };
+  private videoList: Array<VocaloidMusicStyle> = [];
+
+  // Target Video
+  private video: VocaloidMusicStyle;
+
   private isUpdate = false;
 
   private get loginStatus(): boolean {
@@ -85,20 +71,42 @@ export default class NiconicoCustomMylist extends Vue {
   }
 
   private async created() {
-    await User.checkAccessToken()
-    if (!this.loginStatus) {
-      this.$router.push("/")
-    }
+    // await User.checkAccessToken()
+    // if (!this.loginStatus) {
+    //   this.$router.push("/")
+    // }
   }
 
   private async mounted() {
-    await this.readAllVideos()
+    this.videoList = await this.getMusicList()
+  }
+
+
+  private async getMusicList(): Promise<Array<VocaloidMusicStyle>> {
+    const callApiResult = await ApiModel.callApi({
+      url: "http://127.0.0.1/api/v1/vocaloid-music/get-music-list",
+      body: { accessToken: "test_access_token" },
+    })
+
+    if (callApiResult.status !== 'success') {
+      console.error(callApiResult.body)
+      return []
+    }
+
+    if (typeof callApiResult.body === 'string') {
+      return []
+    } else {
+      return callApiResult.body
+    }
+  }
+
+
+  private getFavoriteLank(favoriteLankNumber: number): string {
+    return VocaloidMusicModel.getFavoriteLank(favoriteLankNumber)
   }
 
   private async readAllVideos() {
-    const result = await Niconico.readAllVideos()
-
-    this.videoList = typeof result !== "boolean" ? result : []
+    await this.getMusicList()
   }
 
   private openNiconicoForm() {
@@ -110,17 +118,12 @@ export default class NiconicoCustomMylist extends Vue {
   }
 
   private openCreateVideo() {
-    this.video = {
-      video_id: "",
-      title: "",
-      favorite: false,
-      skip: false,
-    }
+    this.video = new VocaloidMusicModel()
     this.isUpdate = false
     this.openNiconicoForm()
   }
 
-  private openUpdateVideo(music: music) {
+  private openUpdateVideo(music: VocaloidMusicStyle) {
     this.video = _.cloneDeep(music)
     this.isUpdate = true
     this.openNiconicoForm()

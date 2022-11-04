@@ -50,6 +50,12 @@ export default class Home extends Vue {
       icon: "fa-gamepad",
       url: "/filter-in-pokemongo",
     },
+    {
+      title: "ニコ動カスタムマイリスト",
+      description: "ニコニコ動画のお気に入りの動画を確認できます。",
+      icon: "fa-music",
+      url: "/niconico-custom-mylist",
+    },
   ];
 
   private changePage(url: string): void {

@@ -47,11 +47,6 @@ class VocaloidMusicController extends ControllerBase
   {
     static::record_start();
 
-    // Validate Host
-    if (!$this->check_allow_remote_ip_address()) {
-      return static::return_error('This IP Address is not Accepted.');
-    }
-
     // Validate Version
     if (!$this->check_version(static::ALLOW_VERSION_LIST)) {
       return static::return_error("Version $this->version is not accepted.");
