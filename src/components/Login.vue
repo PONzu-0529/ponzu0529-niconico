@@ -1,12 +1,10 @@
 <template>
-  <div class="nav">
-    <div class="nav-item">
-      <p v-if="loginStatus">ログインしています</p>
-      <p v-else>
-        ログインしていません
-        <button @click="openLoginForm">ログインする</button>
-      </p>
-    </div>
+  <div class="login">
+    <p v-if="loginStatus">ログインしています</p>
+    <p v-else>
+      ログインしていません
+      <b-button @click="openLoginForm">ログインする</b-button>
+    </p>
   </div>
 </template>
 
@@ -31,15 +29,3 @@ export default class Login extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-.nav {
-  height: 30px;
-  position: relative;
-}
-
-.nav-item {
-  position: absolute;
-  right: 0;
-}
-</style>
