@@ -3,9 +3,7 @@ const path = require("path")
 
 module.exports = {
   mode: 'development',
-  entry: {
-    NiconicoCustomMylistViewModelTests: './src/tests/NiconicoCustomMylistViewModelTests.ts'
-  },
+  entry: entry(),
   output: {
     path: path.resolve(__dirname, "src/tests"),
     filename: '[name].js'
@@ -32,4 +30,29 @@ module.exports = {
     },
   },
   target: 'node',
+}
+
+function entry() {
+  /* eslint-disable */
+  const fs = require('fs')
+
+  var entries = {}
+
+  const path = process.cwd()
+  const apiTests = fs.readdirSync(`${path}/src/tests/apis`)
+  const viewModelTests = fs.readdirSync(`${path}/src/tests/viewModels`)
+
+  apiTests.forEach(file => {
+    if (!String(file).includes('TestBase.ts')) {
+      Object.assign(entries, { [file.substring(0, file.length - 3)]: `${path}/src/tests/apis/${file}` })
+    }
+  })
+
+  viewModelTests.forEach(file => {
+    if (!String(file).includes('TestBase.ts')) {
+      Object.assign(entries, { [file.substring(0, file.length - 3)]: `${path}/src/tests/viewModels/${file}` })
+    }
+  })
+
+  return entries
 }
