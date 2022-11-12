@@ -1,28 +1,29 @@
 import _ from 'lodash'
 import axios from 'axios'
 
-import ResponseModel from '@/models/ResponseModel'
+// Model
+import { ResponseStyle } from '@/models/ResponseStyle'
 
 
 export class ApiModel {
-  public static get_host(): string {
+  public static getHost(): string {
     switch (process.env.NODE_ENV) {
-      case "development": {
-        return "http://127.0.0.1"
+      case 'development': {
+        return 'http://127.0.0.1'
       }
 
-      case "production": {
-        return "https://dev-tools.ponzu0529.com"
+      case 'production': {
+        return 'https://dev-tools.ponzu0529.com'
       }
 
       default: {
-        return "http://127.0.0.1"
+        return 'http://127.0.0.1'
       }
     }
   }
 
 
-  public static async callApi(callApiStyle: CallApiStyle): Promise<ResponseModel> {
+  protected async callApi(callApiStyle: CallApiStyle): Promise<ResponseStyle> {
     try {
       const result = await axios.post(callApiStyle.url, callApiStyle.body)
 
@@ -33,18 +34,18 @@ export class ApiModel {
       if (_.get(result.data, 'status', '') !== 'success') {
         return {
           status: 'failuer',
-          body: _.get(result.data, 'body', '')
+          data: _.get(result.data, 'body', '')
         }
       }
 
       return {
         status: 'success',
-        body: _.get(result.data, 'body', null)
+        data: _.get(result.data, 'body', null)
       }
     } catch (error) {
       return {
         status: 'failuer',
-        body: String(error)
+        data: String(error)
       }
     }
   }
