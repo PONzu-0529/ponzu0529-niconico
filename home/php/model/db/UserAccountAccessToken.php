@@ -18,6 +18,8 @@ class UserAccountAccessToken extends DBBase
         WHERE
           `user_account_id` = '$id'
           AND created_at > (now() - INTERVAL 1 DAY)
+        ORDER
+          BY created_at DESC
         ;
       "
     );
