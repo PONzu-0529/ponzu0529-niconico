@@ -6,6 +6,7 @@
     <div class="nav-right-item">
       <login @openLoginForm="openLoginForm" />
       <login-form @closeLoginForm="closeLoginForm" />
+      <login-modal />
     </div>
   </div>
 </template>
@@ -13,12 +14,16 @@
 <script lang="ts">
 import Login from "@/components/Login.vue"
 import LoginForm from "@/components/LoginForm.vue"
+
+import LoginModal from '@/components/modal/LoginModal.vue'
+
 import { Component, Vue } from "vue-property-decorator"
 
 @Component({
   components: {
     Login,
     LoginForm,
+    LoginModal,
   },
 })
 export default class AppHeader extends Vue {
