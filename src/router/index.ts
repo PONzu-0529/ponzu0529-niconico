@@ -36,11 +36,11 @@ const routes: Array<RouteConfig> = [
     name: 'FilterInPokemonGo',
     component: FilterInPokemonGo
   },
-  {
-    path: '/niconico-custom-mylist',
-    name: 'NiconicoCustomMylist',
-    component: NiconicoCustomMylist
-  },
+  // {
+  //   path: '/niconico-custom-mylist',
+  //   name: 'NiconicoCustomMylist',
+  //   component: NiconicoCustomMylist
+  // },
   {
     path: '*',
     name: 'error',
