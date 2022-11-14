@@ -68,6 +68,7 @@ check_test_result($auth_service_test->check_old_access_token());
 // check_test_result($auth_service_test->check_old_access_token_by_email());
 // check_test_result(AuthApiTest::GetAccessTokenByEmail());
 // check_test_result(AuthApiTest::CheckAccessToken());
+// check_test_result(AuthApiTest::CheckAccessTokenByEmail());
 
 // VocaloidMusicService
 $vocaloid_music_service_test = new VocaloidMusicServiceTest();

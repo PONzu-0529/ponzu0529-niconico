@@ -23,6 +23,12 @@ class AuthController extends ControllerBase
   }
 
 
+  function CheckAccessTokenByEmail()
+  {
+    return $this->common_response('check_access_token_by_email');
+  }
+
+
   private function common_response(string $function_name)
   {
     static::record_start();
@@ -42,7 +48,7 @@ class AuthController extends ControllerBase
     }
 
     // Validate Password
-    if (in_array($function_name, ['get_access_token_by_email'], true)) {
+    if (in_array($function_name, ['get_access_token_by_email', 'check_access_token_by_email'], true)) {
       if (!$this->check_body('password')) {
         return static::return_error('Parameter "password" is not set.');
       }
@@ -51,7 +57,7 @@ class AuthController extends ControllerBase
     }
 
     // Validate AccessToken
-    if (in_array($function_name, ['check_access_token'], true)) {
+    if (in_array($function_name, ['check_access_token', 'check_access_token_by_email'], true)) {
       if (!$this->check_body('accessToken')) {
         return static::return_error('Parameter "accessToken" is not set.');
       }

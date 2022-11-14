@@ -37,4 +37,19 @@ class AuthApiTest
       ]
     );
   }
+
+
+  public static function CheckAccessTokenByEmail(): ResponseStyle
+  {
+    $host = ApiTestBase::get_host();
+
+    return ApiTestBase::CommonPostApiTest(
+      static::SERVICE_NAME,
+      "$host/api/v2/auth/check-access-token-by-email",
+      [
+        'email' => 'access_token_test@tools.ponzu0529.com',
+        'accessToken' => 'test_access_token'
+      ]
+    );
+  }
 }
