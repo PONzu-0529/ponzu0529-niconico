@@ -183,4 +183,116 @@ class AuthServiceTest extends ServiceTestBase
 
     return $service_test_response;
   }
+
+
+  public function check_access_token_by_email(): ResponseStyle
+  {
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
+    $service_response = $this->auth_service->check_access_token_by_email('access_token_test@tools.ponzu0529.com', 'test_access_token');
+
+    $service_test_response = Utils::compare_response_style(
+      $service_response,
+      new ResponseStyle(
+        ResponseStatusOption::SUCCESS,
+        'Success Authorized.'
+      )
+    );
+
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      strval($service_test_response->get_data())
+    ));
+
+    return $service_test_response;
+  }
+
+
+  public function check_access_token_by_dummy_email(): ResponseStyle
+  {
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
+    $service_response = $this->auth_service->check_access_token_by_email('dummy@tools.ponzu0529.com', 'test_access_token');
+
+    $service_test_response = Utils::compare_response_style(
+      $service_response,
+      new ResponseStyle(
+        ResponseStatusOption::FAILURE,
+        'ERROR: "dummy@tools.ponzu0529.com" is not registered.'
+      )
+    );
+
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      strval($service_test_response->get_data())
+    ));
+
+    return $service_test_response;
+  }
+
+
+  public function check_dummy_access_token_by_email(): ResponseStyle
+  {
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
+    $service_response = $this->auth_service->check_access_token_by_email('access_token_test@tools.ponzu0529.com', 'dummy_access_token');
+
+    $service_test_response = Utils::compare_response_style(
+      $service_response,
+      new ResponseStyle(
+        ResponseStatusOption::FAILURE,
+        'ERROR: The AccessToken is unauthorized.'
+      )
+    );
+
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      strval($service_test_response->get_data())
+    ));
+
+    return $service_test_response;
+  }
+
+
+  public function check_old_access_token_by_email(): ResponseStyle
+  {
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      LogTypeOption::LOG,
+      'Start Service.'
+    ));
+
+    $service_response = $this->auth_service->check_access_token_by_email('access_token_test@tools.ponzu0529.com', 'old_access_token');
+
+    $service_test_response = Utils::compare_response_style(
+      $service_response,
+      new ResponseStyle(
+        ResponseStatusOption::FAILURE,
+        'ERROR: The AccessToken is unauthorized.'
+      )
+    );
+
+    $this->logging_service->record_log(new LogStyle(
+      $this::SERVICE_NAME,
+      $service_test_response->get_status() === ResponseStatusOption::SUCCESS ? LogTypeOption::LOG : LogTypeOption::ERROR,
+      strval($service_test_response->get_data())
+    ));
+
+    return $service_test_response;
+  }
 }
