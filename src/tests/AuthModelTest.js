@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/tests/apis/AuthApiModelTest.ts");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/tests/models/AuthModelTest.ts");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -578,6 +578,18 @@ eval("/**\n * Wrapper for built-in http.js to emulate the browser XMLHttpRequest
 
 /***/ }),
 
+/***/ "./src/models/AuthModel.ts":
+/*!*********************************!*\
+  !*** ./src/models/AuthModel.ts ***!
+  \*********************************/
+/*! exports provided: AuthModel */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"AuthModel\", function() { return AuthModel; });\n/* harmony import */ var _models_apis_AuthApiModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/models/apis/AuthApiModel */ \"./src/models/apis/AuthApiModel.ts\");\n\nclass AuthModel {\n    constructor() {\n        this.name = '';\n        this.email = '';\n        this.password = '';\n        this.lastAccessToken = '';\n        this.authApiModel = new _models_apis_AuthApiModel__WEBPACK_IMPORTED_MODULE_0__[\"AuthApiModel\"]();\n    }\n    async login(email, password) {\n        this.email = email;\n        this.password = password;\n        const result = await this.authApiModel.getAccessTokenByEmail(email, password);\n        if (result.status !== 'success') {\n            return {\n                status: 'failuer',\n                data: result.data\n            };\n        }\n        this.lastAccessToken = result.data;\n        return {\n            status: 'success',\n            data: ''\n        };\n    }\n    async checkAccessToken() {\n        return await this.authApiModel.checkAccessTokenByEmail(this.email, this.lastAccessToken);\n    }\n}\n\n\n//# sourceURL=webpack:///./src/models/AuthModel.ts?");
+
+/***/ }),
+
 /***/ "./src/models/apis/ApiModel.ts":
 /*!*************************************!*\
   !*** ./src/models/apis/ApiModel.ts ***!
@@ -614,27 +626,27 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ "./src/tests/apis/ApiTestBase.ts":
-/*!***************************************!*\
-  !*** ./src/tests/apis/ApiTestBase.ts ***!
-  \***************************************/
-/*! exports provided: ApiTestBase */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"ApiTestBase\", function() { return ApiTestBase; });\n/* harmony import */ var _tests_TestBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/tests/TestBase */ \"./src/tests/TestBase.ts\");\n\nclass ApiTestBase extends _tests_TestBase__WEBPACK_IMPORTED_MODULE_0__[\"TestBase\"] {\n}\n\n\n//# sourceURL=webpack:///./src/tests/apis/ApiTestBase.ts?");
-
-/***/ }),
-
-/***/ "./src/tests/apis/AuthApiModelTest.ts":
-/*!********************************************!*\
-  !*** ./src/tests/apis/AuthApiModelTest.ts ***!
-  \********************************************/
+/***/ "./src/tests/models/AuthModelTest.ts":
+/*!*******************************************!*\
+  !*** ./src/tests/models/AuthModelTest.ts ***!
+  \*******************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _tests_apis_ApiTestBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/tests/apis/ApiTestBase */ \"./src/tests/apis/ApiTestBase.ts\");\n/* harmony import */ var _models_apis_AuthApiModel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/models/apis/AuthApiModel */ \"./src/models/apis/AuthApiModel.ts\");\n\n\nclass AuthApiModelTest extends _tests_apis_ApiTestBase__WEBPACK_IMPORTED_MODULE_0__[\"ApiTestBase\"] {\n    static async getAccessTokenByEmailTest() {\n        const authApiModel = new _models_apis_AuthApiModel__WEBPACK_IMPORTED_MODULE_1__[\"AuthApiModel\"]();\n        const result = await authApiModel.getAccessTokenByEmail('test@tools.ponzu0529.com', 'test_password');\n        if (result.status !== 'success') {\n            console.error('Failure!');\n            return '';\n        }\n        else {\n            console.log(result.data);\n            return result.data;\n        }\n    }\n    static async checkAccessTokenByEmailTest(accessToken) {\n        const authApiModel = new _models_apis_AuthApiModel__WEBPACK_IMPORTED_MODULE_1__[\"AuthApiModel\"]();\n        const result = await authApiModel.checkAccessTokenByEmail('test@tools.ponzu0529.com', accessToken);\n        if (result.status !== 'success') {\n            console.error('Failure!');\n        }\n        else {\n            console.log(result.data);\n        }\n    }\n}\n(async () => {\n    console.log('GetAccessTokenByEmailTest:');\n    const accessToken = await AuthApiModelTest.getAccessTokenByEmailTest();\n    console.log('CheckAccessTokenByEmailTest:');\n    await AuthApiModelTest.checkAccessTokenByEmailTest(accessToken);\n})();\n\n\n//# sourceURL=webpack:///./src/tests/apis/AuthApiModelTest.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _tests_models_ModelTestBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/tests/models/ModelTestBase */ \"./src/tests/models/ModelTestBase.ts\");\n/* harmony import */ var _models_AuthModel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/models/AuthModel */ \"./src/models/AuthModel.ts\");\n\n\nclass AuthModelTest extends _tests_models_ModelTestBase__WEBPACK_IMPORTED_MODULE_0__[\"ModelTestBase\"] {\n    static async loginTest_Success() {\n        const authModel = new _models_AuthModel__WEBPACK_IMPORTED_MODULE_1__[\"AuthModel\"]();\n        const result = await authModel.login('test@tools.ponzu0529.com', 'test_password');\n        console.log(result);\n    }\n    static async loginTest_DummyEmail() {\n        const authModel = new _models_AuthModel__WEBPACK_IMPORTED_MODULE_1__[\"AuthModel\"]();\n        const result = await authModel.login('dummy@tools.ponzu0529.com', 'test_password');\n        console.log(result);\n    }\n    static async loginTest_DummyPassword() {\n        const authModel = new _models_AuthModel__WEBPACK_IMPORTED_MODULE_1__[\"AuthModel\"]();\n        const result = await authModel.login('test@tools.ponzu0529.com', 'dummy_password');\n        console.log(result);\n    }\n    static async checkAccessTokenTest_Success() {\n        const authModel = new _models_AuthModel__WEBPACK_IMPORTED_MODULE_1__[\"AuthModel\"]();\n        await authModel.login('test@tools.ponzu0529.com', 'test_password');\n        const result = await authModel.checkAccessToken();\n        console.log(result);\n    }\n    static async checkAccessTokenTest_OldAccessToken() {\n        const authModel = new _models_AuthModel__WEBPACK_IMPORTED_MODULE_1__[\"AuthModel\"]();\n        authModel.email = 'access_token_test@tools.ponzu0529.com';\n        authModel.lastAccessToken = 'old_access_token';\n        const result = await authModel.checkAccessToken();\n        console.log(result);\n    }\n}\n(async () => {\n    console.log('LoginTest_Success:');\n    await AuthModelTest.loginTest_Success();\n    console.log('===== ===== =====');\n    console.log('LoginTest_DummyEmail:');\n    await AuthModelTest.loginTest_DummyEmail();\n    console.log('===== ===== =====');\n    console.log('LoginTest_DummyPassword:');\n    await AuthModelTest.loginTest_DummyPassword();\n    console.log('===== ===== =====');\n    console.log('CheckAccessTokenTest_Success:');\n    await AuthModelTest.checkAccessTokenTest_Success();\n    console.log('===== ===== =====');\n    console.log('CheckAccessTokenTest_OldAccessToken:');\n    await AuthModelTest.checkAccessTokenTest_OldAccessToken();\n})();\n\n\n//# sourceURL=webpack:///./src/tests/models/AuthModelTest.ts?");
+
+/***/ }),
+
+/***/ "./src/tests/models/ModelTestBase.ts":
+/*!*******************************************!*\
+  !*** ./src/tests/models/ModelTestBase.ts ***!
+  \*******************************************/
+/*! exports provided: ModelTestBase */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"ModelTestBase\", function() { return ModelTestBase; });\n/* harmony import */ var _tests_TestBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/tests/TestBase */ \"./src/tests/TestBase.ts\");\n\nclass ModelTestBase extends _tests_TestBase__WEBPACK_IMPORTED_MODULE_0__[\"TestBase\"] {\n}\n\n\n//# sourceURL=webpack:///./src/tests/models/ModelTestBase.ts?");
 
 /***/ }),
 

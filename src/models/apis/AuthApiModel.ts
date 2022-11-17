@@ -13,10 +13,9 @@ export class AuthApiModel extends ApiModel {
     })
 
     if (callApiResult.status !== 'success') {
-      console.error(callApiResult.data)
       return {
         status: 'failuer',
-        data: ''
+        data: String(callApiResult.data)
       }
     }
 
@@ -34,7 +33,7 @@ export class AuthApiModel extends ApiModel {
   }
 
 
-  public async checkAccessTokenByEmail(email: string, accessToken: string): Promise<ResponseStyle<boolean>> {
+  public async checkAccessTokenByEmail(email: string, accessToken: string): Promise<ResponseStyle<boolean|string>> {
     const callApiResult = await this.callApi({
       url: `${ApiModel.getHost()}/api/v2/auth/check-access-token-by-email`,
       body: {
@@ -44,10 +43,9 @@ export class AuthApiModel extends ApiModel {
     })
 
     if (callApiResult.status !== 'success') {
-      console.error(callApiResult.data)
       return {
         status: 'failuer',
-        data: false
+        data: String(callApiResult.data)
       }
     } else {
       return {
