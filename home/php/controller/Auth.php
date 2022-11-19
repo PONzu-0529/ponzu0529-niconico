@@ -23,6 +23,12 @@ class AuthController extends ControllerBase
   }
 
 
+  function CheckAccessTokenByEmail()
+  {
+    return $this->common_response('check_access_token_by_email');
+  }
+
+
   private function common_response(string $function_name)
   {
     static::record_start();
@@ -33,7 +39,7 @@ class AuthController extends ControllerBase
     }
 
     // Validate Email
-    if (in_array($function_name, ['get_access_token_by_email'], true)) {
+    if (in_array($function_name, ['get_access_token_by_email', 'check_access_token_by_email'], true)) {
       if (!$this->check_body('email')) {
         return static::return_error('Parameter "email" is not set.');
       }
@@ -51,7 +57,7 @@ class AuthController extends ControllerBase
     }
 
     // Validate AccessToken
-    if (in_array($function_name, ['check_access_token'], true)) {
+    if (in_array($function_name, ['check_access_token', 'check_access_token_by_email'], true)) {
       if (!$this->check_body('accessToken')) {
         return static::return_error('Parameter "accessToken" is not set.');
       }
@@ -68,6 +74,10 @@ class AuthController extends ControllerBase
 
       case 'check_access_token':
         $get_all_data_response = $auth_service->$function_name($access_token);
+        break;
+
+      case 'check_access_token_by_email':
+        $get_all_data_response = $auth_service->$function_name($email, $access_token);
         break;
 
       default:
