@@ -7,7 +7,6 @@ export class LoginModalViewModel extends ModalBase {
   protected email = '';
   protected password = '';
   protected lastAccessToken = '';
-  protected isLogin = false;
   protected modalName = 'login-modal';
   protected isDialogOpen = false
   protected dialogMessage = ''
@@ -27,19 +26,14 @@ export class LoginModalViewModel extends ModalBase {
     authModule.setLastAccessToken(this.lastAccessToken)
   }
 
-  @Watch('isLogin')
-  protected onChangeIsLogin(): void {
-    this.reflectLoginStatus()
-  }
-
   protected async mounted(): Promise<void> {
     await this.checkAccessToken()
     this.reflectLoginStatus()
   }
 
-  protected loginAction(): void {
-    if (this.isLogin) {
-      this.logout()
+  protected async loginAction(): Promise<void> {
+    if (authModule.isLogin) {
+      await this.logout()
       this.reflectLoginStatus()
     } else {
       this.openModal()
@@ -47,38 +41,32 @@ export class LoginModalViewModel extends ModalBase {
   }
 
   protected async login(): Promise<void> {
-    const result = await authModule.login()
+    await authModule.login()
 
-    if (result.status !== 'success') {
+    if (!authModule.isLogin) {
       this.setIsDialog(true)
       this.dialogMessage = 'ログインに失敗しました。'
       return
     }
 
-    this.isLogin = true
     this.closeModal()
     this.reflectLoginStatus()
   }
 
   protected async checkAccessToken(): Promise<void> {
-    const result = await authModule.checkAccessToken()
-
-    if (result.status !== 'success') {
-      this.isLogin = false
-    } else {
-      this.isLogin = true
-    }
+    await authModule.checkAccessToken()
   }
 
-  protected logout(): void {
+  protected async logout(): Promise<void> {
     this.email = ''
     this.password = ''
-    this.lastAccessToken = ''
-    this.isLogin = false
+    this.onChangeEmail()
+    this.onChangePassword()
+    await authModule.checkAccessToken()
   }
 
   protected reflectLoginStatus(): void {
-    this.buttonLabel = !this.isLogin ? 'ログインする' : 'ログアウトする'
+    this.buttonLabel = !authModule.isLogin ? 'ログインする' : 'ログアウトする'
   }
 
   protected setIsDialog(status: boolean): void {
