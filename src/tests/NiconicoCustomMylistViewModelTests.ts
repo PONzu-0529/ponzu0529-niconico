@@ -1,4 +1,5 @@
 /* eslint-disable */
+/*
 const XMLHttpRequest = require("xmlhttprequest")
 
 import NiconicoCustomMylistViewModel from '@/viewModels/NiconicoCustomMylistViewModel'
@@ -9,3 +10,4 @@ import NiconicoCustomMylistViewModel from '@/viewModels/NiconicoCustomMylistView
   console.log(await niconicoCustomMylistViewModel.getMusicList())
 }
 )()
+*/

@@ -1,3 +1,4 @@
+/*
 import { ApiModel } from '@/models/ApiModel'
 import { VocaloidMusicStyle } from '@/models/VocaloidMusicModel'
 import Base from '@/viewModels/Base'
@@ -23,3 +24,4 @@ export default class NiconicoCustomMylistViewModel extends Base {
     }
   }
 }
+*/

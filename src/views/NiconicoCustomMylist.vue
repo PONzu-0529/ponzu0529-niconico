@@ -44,6 +44,7 @@
 </template>
 
 <script lang="ts">
+/*
 import _ from "lodash"
 import NiconicoForm from "@/components/NiconicoForm.vue"
 import { userModule } from "@/store/modules/User"
@@ -129,4 +130,5 @@ export default class NiconicoCustomMylist extends Vue {
     this.openNiconicoForm()
   }
 }
+*/
 </script>

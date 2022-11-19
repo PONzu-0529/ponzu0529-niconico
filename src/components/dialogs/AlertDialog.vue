@@ -1,5 +1,5 @@
 <template>
-  <modal :name="dialogName" :draggable="true" :clickToClose="false">
+  <modal :name="dialogName" :clickToClose="false">
     <div class="dialog">
       <div>{{ message }}</div>
       <b-button @click="closeDialog">{{ buttonLabel }}</b-button>

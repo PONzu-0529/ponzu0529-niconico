@@ -5,7 +5,7 @@ import CheckTodofuken from '@/views/CheckTodofuken.vue'
 import ConvertTransfers from '@/views/ConvertTransfers.vue'
 import CreateBibliography from '@/views/CreateBibliography.vue'
 import FilterInPokemonGo from '@/views/FilterInPokemonGo.vue'
-import NiconicoCustomMylist from '@/views/NiconicoCustomMylist.vue'
+// import NiconicoCustomMylist from '@/views/NiconicoCustomMylist.vue'
 import Error from '@/views/Error.vue'
 
 Vue.use(VueRouter)
