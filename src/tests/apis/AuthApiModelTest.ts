@@ -29,6 +29,19 @@ class AuthApiModelTest extends ApiTestBase {
       console.log(result.data)
     }
   }
+
+
+  public static async checkAccessTokenByEmailTest_EmptyEmailAndEmptyAccessToken(): Promise<void> {
+    const authApiModel = new AuthApiModel()
+
+    const result = await authApiModel.checkAccessTokenByEmail('', '')
+
+    if (result.status !== 'success') {
+      console.error('Failure!')
+    } else {
+      console.log(result.data)
+    }
+  }
 }
 
 
@@ -38,4 +51,9 @@ class AuthApiModelTest extends ApiTestBase {
 
   console.log('CheckAccessTokenByEmailTest:')
   await AuthApiModelTest.checkAccessTokenByEmailTest(accessToken)
+
+  console.log('===== ===== =====')
+
+  console.log('checkAccessTokenByEmailTest_EmptyEmailAndEmptyAccessToken:')
+  await AuthApiModelTest.checkAccessTokenByEmailTest_EmptyEmailAndEmptyAccessToken()
 })()

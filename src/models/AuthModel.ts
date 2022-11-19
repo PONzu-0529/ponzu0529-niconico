@@ -15,11 +15,8 @@ export class AuthModel implements AuthStyle {
   }
 
 
-  public async login(email: string, password: string): Promise<ResponseStyle<string>> {
-    this.email = email
-    this.password = password
-
-    const result = await this.authApiModel.getAccessTokenByEmail(email, password)
+  public async login(): Promise<ResponseStyle<string>> {
+    const result = await this.authApiModel.getAccessTokenByEmail(this.email, this.password)
 
     if (result.status !== 'success') {
       return {

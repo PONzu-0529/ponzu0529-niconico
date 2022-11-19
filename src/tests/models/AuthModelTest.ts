@@ -5,8 +5,10 @@ import { AuthModel } from '@/models/AuthModel'
 class AuthModelTest extends ModelTestBase {
   public static async loginTest_Success(): Promise<void> {
     const authModel = new AuthModel()
+    authModel.email = 'test@tools.ponzu0529.com'
+    authModel.password = 'test_password'
 
-    const result = await authModel.login('test@tools.ponzu0529.com', 'test_password')
+    const result = await authModel.login()
 
     console.log(result)
   }
@@ -14,8 +16,10 @@ class AuthModelTest extends ModelTestBase {
 
   public static async loginTest_DummyEmail(): Promise<void> {
     const authModel = new AuthModel()
+    authModel.email = 'dummy@tools.ponzu0529.com'
+    authModel.password = 'test_password'
 
-    const result = await authModel.login('dummy@tools.ponzu0529.com', 'test_password')
+    const result = await authModel.login()
 
     console.log(result)
   }
@@ -23,8 +27,10 @@ class AuthModelTest extends ModelTestBase {
 
   public static async loginTest_DummyPassword(): Promise<void> {
     const authModel = new AuthModel()
+    authModel.email = 'test@tools.ponzu0529.com'
+    authModel.password = 'dummy_password'
 
-    const result = await authModel.login('test@tools.ponzu0529.com', 'dummy_password')
+    const result = await authModel.login()
 
     console.log(result)
   }
@@ -32,8 +38,10 @@ class AuthModelTest extends ModelTestBase {
 
   public static async checkAccessTokenTest_Success(): Promise<void> {
     const authModel = new AuthModel()
+    authModel.email = 'test@tools.ponzu0529.com'
+    authModel.password = 'test_password'
 
-    await authModel.login('test@tools.ponzu0529.com', 'test_password')
+    await authModel.login()
     const result = await authModel.checkAccessToken()
 
     console.log(result)
