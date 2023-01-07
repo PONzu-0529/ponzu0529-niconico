@@ -1,7 +1,7 @@
-import { Module as Mod } from 'vuex'
-import { Module, VuexModule, Mutation, Action, getModule } from 'vuex-module-decorators'
-import store from '@/store/index'
-import { AuthModel } from '@/models/AuthModel'
+import { Module as Mod } from 'vuex';
+import { Module, VuexModule, Mutation, Action, getModule } from 'vuex-module-decorators';
+import store from '@/store/index';
+import { AuthModel } from '@/models/AuthModel';
 
 @Module({
   dynamic: true,

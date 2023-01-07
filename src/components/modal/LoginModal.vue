@@ -26,9 +26,9 @@
 </template>
 
 <script lang="ts">
-import { Component } from "vue-property-decorator"
-import AlertDialog from "@/components/dialogs/AlertDialog.vue"
-import { LoginModalViewModel } from "@/viewModels/LoginModalViewModel"
+import { Component } from 'vue-property-decorator';
+import AlertDialog from '@/components/dialogs/AlertDialog.vue';
+import { LoginModalViewModel } from '@/viewModels/LoginModalViewModel';
 
 @Component({
   components: {

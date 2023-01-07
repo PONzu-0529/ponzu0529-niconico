@@ -1,5 +1,5 @@
-import Base from '@/viewModels/Base'
-import { Component } from 'vue-property-decorator'
+import Base from '@/viewModels/Base';
+import { Component } from 'vue-property-decorator';
 
 @Component({})
 export default class ModalBase extends Base {
@@ -7,10 +7,10 @@ export default class ModalBase extends Base {
   protected modalName = '';
 
   protected openModal(): void {
-    this.$modal.show(this.modalName)
+    this.$modal.show(this.modalName);
   }
 
   protected closeModal(): void {
-    this.$modal.hide(this.modalName)
+    this.$modal.hide(this.modalName);
   }
 }

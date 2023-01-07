@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator"
-import LoginModal from '@/components/modal/LoginModal.vue'
+import { Component, Vue } from 'vue-property-decorator';
+import LoginModal from '@/components/modal/LoginModal.vue';
 
 @Component({
   components: {
@@ -20,7 +20,7 @@ import LoginModal from '@/components/modal/LoginModal.vue'
 })
 export default class AppHeader extends Vue {
   private changeHome(): void {
-    this.$router.push('/')
+    this.$router.push('/');
   }
 }
 </script>

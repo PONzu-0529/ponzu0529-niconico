@@ -24,31 +24,31 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator"
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class Home extends Vue {
-  private TITLE = "PONずの便利ツール箱";
+  private TITLE = 'PONずの便利ツール箱';
 
   private BUTTON_ITEM_LIST: Array<ButtonItemStyle> = [
     {
-      title: "乗り換え変換ツール",
-      description: "Yahooの乗り換えをコピペしやすい形に変換します。",
-      icon: "fa-train-subway",
-      url: "/convert-transfers",
+      title: '乗り換え変換ツール',
+      description: 'Yahooの乗り換えをコピペしやすい形に変換します。',
+      icon: 'fa-train-subway',
+      url: '/convert-transfers',
     },
     {
-      title: "参考文献つくーる",
-      description: "参考文献を作ります。",
-      icon: "fa-book",
-      url: "/create-bibliography",
+      title: '参考文献つくーる',
+      description: '参考文献を作ります。',
+      icon: 'fa-book',
+      url: '/create-bibliography',
     },
     {
-      title: "ポケモンGO検索フィルターつくーる",
+      title: 'ポケモンGO検索フィルターつくーる',
       description:
-        "ポケモンGOのボックス内のポケモンを検索するフィルターを作ります。",
-      icon: "fa-gamepad",
-      url: "/filter-in-pokemongo",
+        'ポケモンGOのボックス内のポケモンを検索するフィルターを作ります。',
+      icon: 'fa-gamepad',
+      url: '/filter-in-pokemongo',
     },
     // {
     //   title: "ニコ動カスタムマイリスト",
@@ -61,7 +61,7 @@ export default class Home extends Vue {
   private changePage(url: string): void {
     this.$router.push({
       path: url
-    })
+    });
   }
 }
 

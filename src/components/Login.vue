@@ -9,23 +9,23 @@
 </template>
 
 <script lang="ts">
-import { userModule } from "@/store/modules/User"
-import User from "@/User"
-import { Vue, Component, Emit } from "vue-property-decorator"
+import { userModule } from '@/store/modules/User';
+import User from '@/User';
+import { Vue, Component, Emit } from 'vue-property-decorator';
 
 @Component
 export default class Login extends Vue {
   private get loginStatus(): boolean {
-    return userModule.loginStatus
+    return userModule.loginStatus;
   }
 
-  @Emit("openLoginForm")
+  @Emit('openLoginForm')
   private openLoginForm() {
-    return
+    return;
   }
 
   private async created() {
-    await User.checkAccessToken()
+    await User.checkAccessToken();
   }
 }
 </script>

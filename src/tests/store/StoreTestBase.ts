@@ -1,4 +1,4 @@
-import { TestBase } from '@/tests/TestBase'
+import { TestBase } from '@/tests/TestBase';
 
 
 export class StoreTestBase extends TestBase {

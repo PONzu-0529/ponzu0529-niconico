@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator"
+import { Vue, Component } from 'vue-property-decorator';
 
 @Component
 export default class FilterInPokemonGo extends Vue {
@@ -66,28 +66,28 @@ export default class FilterInPokemonGo extends Vue {
   private date = 1
 
   private get output(): string {
-    let options: Array<string> = []
+    let options: Array<string> = [];
 
     if (this.statusGroup.indexOf('color') !== -1) {
-      options.push(this.isColor ? '色違い' : '!色違い')
+      options.push(this.isColor ? '色違い' : '!色違い');
     }
 
     if (this.statusGroup.indexOf('legend') !== -1) {
-      options.push(this.isLegend ? '伝説のポケモン' : '!伝説のポケモン')
+      options.push(this.isLegend ? '伝説のポケモン' : '!伝説のポケモン');
     }
 
     if (this.statusGroup.indexOf('date') !== -1) {
-      options.push(`日数-${this.date}`)
+      options.push(`日数-${this.date}`);
     }
 
-    return options.join('&')
+    return options.join('&');
   }
 
   /**
    * コピー
    */
   private async copy() {
-    await navigator.clipboard.writeText(this.output)
+    await navigator.clipboard.writeText(this.output);
   }
 }
 </script>

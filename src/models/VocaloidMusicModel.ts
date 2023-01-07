@@ -10,26 +10,26 @@ export class VocaloidMusicModel implements VocaloidMusicStyle {
   public static getFavoriteLank(favoriteLankNumber: number): string {
     switch (favoriteLankNumber) {
       case 5:
-        return '★★★★★'
+        return '★★★★★';
 
       case 4:
-        return '★★★★'
+        return '★★★★';
 
       case 3:
-        return '★★★'
+        return '★★★';
 
       case 2:
-        return '★★'
+        return '★★';
 
       case 1:
-        return '★'
+        return '★';
 
       case -1:
-        return 'スキップ'
+        return 'スキップ';
 
       case 0:
       default:
-        return '未設定'
+        return '未設定';
     }
   }
 }

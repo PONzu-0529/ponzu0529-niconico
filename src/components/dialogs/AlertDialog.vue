@@ -8,12 +8,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from "vue-property-decorator"
-import { DialogBase } from "@/viewModels/DialogBase"
+import { Component, Prop } from 'vue-property-decorator';
+import { DialogBase } from '@/viewModels/DialogBase';
 
 @Component({})
 export default class AlertDialog extends DialogBase {
-  @Prop({ default: "OK" })
+  @Prop({ default: 'OK' })
   protected buttonLabel: string;
 }
 </script>

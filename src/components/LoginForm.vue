@@ -19,35 +19,35 @@
 </template>
 
 <script lang="ts">
-import _ from "lodash"
-import axios, { AxiosRequestConfig } from "axios"
-import User from "@/User"
-import { Vue, Component, Emit } from "vue-property-decorator"
+import _ from 'lodash';
+import axios, { AxiosRequestConfig } from 'axios';
+import User from '@/User';
+import { Vue, Component, Emit } from 'vue-property-decorator';
 
 @Component
 export default class Login extends Vue {
-  @Emit("closeLoginForm")
+  @Emit('closeLoginForm')
   private closeLoginForm() {
-    return
+    return;
   }
 
   private account: AccountStyle = {
-    name: "",
-    password: "",
+    name: '',
+    password: '',
   };
 
   private get url(): string {
     switch (process.env.NODE_ENV) {
-      case "development": {
-        return "http://localhost"
+      case 'development': {
+        return 'http://localhost';
       }
 
-      case "production": {
-        return "https://tools.ponzu0529.com"
+      case 'production': {
+        return 'https://tools.ponzu0529.com';
       }
 
       default: {
-        return "http://localhost"
+        return 'http://localhost';
       }
     }
   }
@@ -55,30 +55,30 @@ export default class Login extends Vue {
   private async login() {
     const options: AxiosRequestConfig = {
       url: `${this.url}/GetAccessToken.php`,
-      method: "POST",
+      method: 'POST',
       data: {
         name: this.account.name,
         password: this.account.password,
       },
-    }
+    };
 
     await axios(options)
       .then(async (res) => {
-        const { data } = res
+        const { data } = res;
 
-        if (_.get(data, "status", "") !== "success") {
-          alert(_.get(data, "message", "Login failed."))
+        if (_.get(data, 'status', '') !== 'success') {
+          alert(_.get(data, 'message', 'Login failed.'));
         }
 
-        localStorage.setItem("accessToken", _.get(data, "access_token", ""))
+        localStorage.setItem('accessToken', _.get(data, 'access_token', ''));
 
-        this.closeLoginForm()
+        this.closeLoginForm();
 
-        await User.checkAccessToken()
+        await User.checkAccessToken();
       })
       .catch((err) => {
-        console.log("err:", err)
-      })
+        console.log('err:', err);
+      });
   }
 }
 

@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts">
-import AppHeader from '@/components/AppHeader.vue'
-import { Vue, Component } from "vue-property-decorator"
+import AppHeader from '@/components/AppHeader.vue';
+import { Vue, Component } from 'vue-property-decorator';
 
 @Component({
   components: {
@@ -22,7 +22,7 @@ export default class App extends Vue {
   private changeHome(): void {
     this.$router.push({
       path: '/'
-    })
+    });
   }
 }
 </script>
