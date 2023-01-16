@@ -10,7 +10,7 @@ ARG USER_GID=$USER_UID
 RUN apt -y update && \
     apt -y upgrade && \
     curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt -y install vim sudo tzdata git wget nodejs python3-pip && \
+    apt -y install vim sudo tzdata git wget nodejs python3-pip libzip-dev && \
     npm install -g yarn
 
 # setup composer
@@ -24,7 +24,7 @@ RUN sed -ri -e "s!/var/www/html!${DOCUMENT_ROOT}!g" /etc/apache2/sites-available
     sed -ri -e "s!/var/www/!${DOCUMENT_ROOT}!g" /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf && \
     mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     sed -ri -e 's/;extension=mysqli/extension=mysqli/g' $PHP_INI_DIR/php.ini && \
-    docker-php-ext-install mysqli
+    docker-php-ext-install mysqli zip
 
 # setup python
 COPY requirements.txt /var/requirements.txt

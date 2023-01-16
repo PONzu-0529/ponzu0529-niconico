@@ -18,6 +18,7 @@ services:
     volumes:
       - ${LOCAL_HOST_PATH}:/app
       - /app/node_modules
+      - /app/vendor
     working_dir: "/app"
   mariadb:
     image: mariadb:10.5
@@ -27,6 +28,8 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       TZ: Asia/Tokyo
+    ports:
+      - "3306:3306"
     volumes:
       - ${LOCAL_HOST_PATH}/mariadb:/docker-entrypoint-initdb.d
   phpmyadmin:
