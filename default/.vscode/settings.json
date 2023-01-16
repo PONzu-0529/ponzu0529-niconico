@@ -1,18 +1,20 @@
 {
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
-    "source.fixAll": true,
   },
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
+  "editor.renderWhitespace": "boundary",
+  "eslint.format.enable": true,
   "eslint.options": {
     "configFile": ".eslintrc.js"
   },
-  "editor.renderWhitespace": "boundary",
   "eslint.validate": [
     "typescript",
     "vue",
   ],
   "rest-client.decodeEscapedUnicodeCharacters": true,
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+  "vetur.format.defaultFormatter.ts": "vscode-typescript",
   "[html]": {
     "editor.tabSize": 2
   },
@@ -25,12 +27,14 @@
   "[php]": {
     "editor.tabSize": 2,
   },
+  "[scss]": {
+    "editor.tabSize": 2,
+  },
   "[sql]": {
     "editor.tabSize": 2,
   },
   "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.tabSize": 2,
   },
-  "vetur.validation.template": true,
-  "vetur.validation.script": true,
 }
