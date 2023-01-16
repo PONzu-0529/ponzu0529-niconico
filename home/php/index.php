@@ -1,13 +1,17 @@
 <?php
 
-// Style: {{host}}/api/{{Version}}/{{Controller File Name}}/{{Method Name}}
-// ex: {{host}}/api/v1/auth/get-access-token
+require_once __DIR__ . '/service/LoggingService.php';
+
+
+$SERVICE_NAME = 'Server';
 
 $path = $_SERVER["REQUEST_URI"];
 $path_list = explode("/", $path);
 
-// Set Host
-$host = $_SERVER["HTTP_HOST"];
+LoggingService::record($SERVICE_NAME, "Call \"$path\".");
+
+// Set Remote IP Address
+$remote_ip_address = $_SERVER["REMOTE_ADDR"];
 
 // set version
 if (isset($path_list[2])) {
@@ -32,7 +36,7 @@ if (
   $class_name = changeCamelCase($path_list[3]) . "Controller";
   $function_name = changeCamelCase($path_list[4]);
 
-  $class = new $class_name($host, $version, $body);
+  $class = new $class_name($remote_ip_address, $version, $body);
   $response = json_encode($class->$function_name());
 
   // define header

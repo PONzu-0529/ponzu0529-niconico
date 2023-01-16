@@ -28,25 +28,25 @@
 </template>
 
 <script lang="ts">
-import Niconico, { music } from "@/Niconico"
-import { Vue, Component, Emit, Prop } from "vue-property-decorator"
+import Niconico, { music } from '@/Niconico';
+import { Vue, Component, Emit, Prop } from 'vue-property-decorator';
 
 @Component
 export default class NiconicoForm extends Vue {
-  @Emit("closeNiconicoForm")
+  @Emit('closeNiconicoForm')
   private closeNiconicoForm() {
-    return
+    return;
   }
 
-  @Emit("readAllVideos")
+  @Emit('readAllVideos')
   private readAllVideos() {
-    return
+    return;
   }
 
   @Prop({
     default: {
-      video_id: "",
-      title: "",
+      video_id: '',
+      title: '',
       favorite: false,
       skip: false,
     },
@@ -57,30 +57,30 @@ export default class NiconicoForm extends Vue {
   private isUpdate: boolean;
 
   private async getOfficialInfo() {
-    if (this.video === null || this.video.video_id === "") return
+    if (this.video === null || this.video.video_id === '') return;
 
-    const result = await Niconico.getOfficialInfo(this.video.video_id)
+    const result = await Niconico.getOfficialInfo(this.video.video_id);
 
-    if (result === false) alert("失敗")
+    if (result === false) alert('失敗');
 
-    alert(typeof result === "string" && result !== "" ? "成功" : "失敗")
+    alert(typeof result === 'string' && result !== '' ? '成功' : '失敗');
 
-    if (typeof result === "string") this.video.title = result
+    if (typeof result === 'string') this.video.title = result;
   }
 
   private async changeVideo() {
-    if (this.video === null) return
+    if (this.video === null) return;
 
     if (this.isUpdate) {
-      const result = await Niconico.updateVideo(this.video)
-      alert(`${result ? "成功" : "失敗"}`)
+      const result = await Niconico.updateVideo(this.video);
+      alert(`${result ? '成功' : '失敗'}`);
     } else {
-      const result = await Niconico.createVideo(this.video)
-      alert(`${result ? "成功" : "失敗"}`)
+      const result = await Niconico.createVideo(this.video);
+      alert(`${result ? '成功' : '失敗'}`);
     }
 
-    this.closeNiconicoForm()
-    this.readAllVideos()
+    this.closeNiconicoForm();
+    this.readAllVideos();
   }
 }
 </script>

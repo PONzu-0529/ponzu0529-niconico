@@ -21,13 +21,13 @@
 </template>
 
 <script lang="ts">
-import { userModule } from "@/store/modules/User"
-import { Component, Vue } from "vue-property-decorator"
+import { userModule } from '@/store/modules/User';
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Links extends Vue {
   private get loginStatus(): boolean {
-    return userModule.loginStatus
+    return userModule.loginStatus;
   }
 }
 </script>

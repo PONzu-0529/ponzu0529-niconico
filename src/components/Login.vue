@@ -1,45 +1,31 @@
 <template>
-  <div class="nav">
-    <div class="nav-item">
-      <p v-if="loginStatus">ログインしています</p>
-      <p v-else>
-        ログインしていません
-        <button @click="openLoginForm">ログインする</button>
-      </p>
-    </div>
+  <div class="login">
+    <p v-if="loginStatus">ログインしています</p>
+    <p v-else>
+      ログインしていません
+      <b-button @click="openLoginForm">ログインする</b-button>
+    </p>
   </div>
 </template>
 
 <script lang="ts">
-import { userModule } from "@/store/modules/User"
-import User from "@/User"
-import { Vue, Component, Emit } from "vue-property-decorator"
+import { userModule } from '@/store/modules/User';
+import User from '@/User';
+import { Vue, Component, Emit } from 'vue-property-decorator';
 
 @Component
 export default class Login extends Vue {
   private get loginStatus(): boolean {
-    return userModule.loginStatus
+    return userModule.loginStatus;
   }
 
-  @Emit("openLoginForm")
+  @Emit('openLoginForm')
   private openLoginForm() {
-    return
+    return;
   }
 
   private async created() {
-    await User.checkAccessToken()
+    await User.checkAccessToken();
   }
 }
 </script>
-
-<style lang="scss">
-.nav {
-  height: 30px;
-  position: relative;
-}
-
-.nav-item {
-  position: absolute;
-  right: 0;
-}
-</style>

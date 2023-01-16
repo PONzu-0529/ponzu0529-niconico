@@ -26,6 +26,7 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      TZ: Asia/Tokyo
     volumes:
       - ${LOCAL_HOST_PATH}/mariadb:/docker-entrypoint-initdb.d
   phpmyadmin:
@@ -37,12 +38,12 @@ services:
       PMA_PASSWORD: ${DB_PASSWORD}
     ports:
       - "8888:80"
-  selenium:
-    build:
-      context: "${LOCAL_HOST_PATH}/selenium"
-      dockerfile: Dockerfile
-      args:
-        - SELENIUM_SERVER_PORT=${SELENIUM_SERVER_PORT}
-    container_name: "${PROJECT_NAME}_selenium"
-    env_file: .env
-    tty: true
+  # selenium:
+  #   build:
+  #     context: "${LOCAL_HOST_PATH}/selenium"
+  #     dockerfile: Dockerfile
+  #     args:
+  #       - SELENIUM_SERVER_PORT=${SELENIUM_SERVER_PORT}
+  #   container_name: "${PROJECT_NAME}_selenium"
+  #   env_file: .env
+  #   tty: true

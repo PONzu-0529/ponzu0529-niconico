@@ -1,5 +1,5 @@
 {
-	"name": "ponzu0529-niconico",
+	"name": "ponzu0529-tools",
 	"dockerComposeFile": [
 		"docker-compose.yml"
 	],

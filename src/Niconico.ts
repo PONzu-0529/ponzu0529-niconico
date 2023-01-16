@@ -1,76 +1,76 @@
-import _ from "lodash"
-import axios, { AxiosRequestConfig } from "axios"
+import _ from 'lodash';
+import axios, { AxiosRequestConfig } from 'axios';
 
 export default class User {
   private static get url(): string {
     switch (process.env.NODE_ENV) {
-      case "development": {
-        return "http://localhost"
+      case 'development': {
+        return 'http://localhost';
       }
 
-      case "production": {
-        return "https://tools.ponzu0529.com"
+      case 'production': {
+        return 'https://tools.ponzu0529.com';
       }
 
       default: {
-        return "http://localhost"
+        return 'http://localhost';
       }
     }
   }
 
   static async getOfficialInfo(video_id: string): Promise<string | boolean> {
-    const accessToken = localStorage.getItem("accessToken")
+    const accessToken = localStorage.getItem('accessToken');
 
-    if (!accessToken) return false
+    if (!accessToken) return false;
 
     const options: AxiosRequestConfig = {
       url: `${this.url}/api/niconico/get-official-info`,
-      method: "POST",
+      method: 'POST',
       data: {
         accessToken: accessToken,
         videoId: video_id
       },
-    }
+    };
 
-    const result = await axios(options)
+    const result = await axios(options);
 
     if (_.get(result, 'data.status', '') !== 'success') {
-      return false
+      return false;
     }
 
-    return _.get(result, 'data.title.0', '')
+    return _.get(result, 'data.title.0', '');
   }
 
   static async readAllVideos(): Promise<Array<music> | boolean> {
-    const accessToken = localStorage.getItem("accessToken")
+    const accessToken = localStorage.getItem('accessToken');
 
-    if (!accessToken) return false
+    if (!accessToken) return false;
 
     const options: AxiosRequestConfig = {
       url: `${this.url}/api/niconico/read-all-videos`,
-      method: "POST",
+      method: 'POST',
       data: {
         accessToken: accessToken,
       },
-    }
+    };
 
-    const result = await axios(options)
+    const result = await axios(options);
 
     if (_.get(result, 'data.status', '') !== 'success') {
-      return false
+      return false;
     }
 
-    return _.get(result, 'data.videos', [])
+    return _.get(result, 'data.videos', []);
   }
 
   static async createVideo(video: music): Promise<boolean> {
-    const accessToken = localStorage.getItem("accessToken")
+    const accessToken = localStorage.getItem('accessToken');
 
-    if (!accessToken) return false
+    if (!accessToken) return false;
 
     const options: AxiosRequestConfig = {
       url: `${this.url}/api/niconico/create-video`,
-      method: "POST",
+      method: 'POST',
       data: {
         accessToken: accessToken,
         videoId: video.video_id,
@@ -78,28 +78,28 @@ export default class User {
         favorite: video.favorite,
         skip: video.skip
       },
-    }
+    };
 
-    const result = await axios(options)
+    const result = await axios(options);
 
     if (_.get(result, 'data.status', '') !== 'success') {
-      return false
+      return false;
     }
 
-    return true
+    return true;
   }
 
   static async updateVideo(video: music): Promise<boolean> {
-    const accessToken = localStorage.getItem("accessToken")
+    const accessToken = localStorage.getItem('accessToken');
 
-    if (!accessToken) return false
+    if (!accessToken) return false;
 
     // Validation
-    if (!_.hasIn(video, 'id')) return false
+    if (!_.hasIn(video, 'id')) return false;
 
     const options: AxiosRequestConfig = {
       url: `${this.url}/api/niconico/update-video`,
-      method: "POST",
+      method: 'POST',
       data: {
         accessToken: accessToken,
         id: video.id,
@@ -108,15 +108,15 @@ export default class User {
         favorite: video.favorite,
         skip: video.skip
       },
-    }
+    };
 
-    const result = await axios(options)
+    const result = await axios(options);
 
     if (_.get(result, 'data.status', '') !== 'success') {
-      return false
+      return false;
     }
 
-    return true
+    return true;
   }
 }
 

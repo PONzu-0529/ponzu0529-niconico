@@ -1,19 +1,19 @@
-import _ from "lodash"
-import axios, { AxiosRequestConfig } from "axios"
+import _ from 'lodash';
+import axios, { AxiosRequestConfig } from 'axios';
 
 export default class Todofuken {
   private static get url(): string {
     switch (process.env.NODE_ENV) {
-      case "development": {
-        return "http://localhost"
+      case 'development': {
+        return 'http://localhost';
       }
 
-      case "production": {
-        return "https://tools.ponzu0529.com"
+      case 'production': {
+        return 'https://tools.ponzu0529.com';
       }
 
       default: {
-        return "http://localhost"
+        return 'http://localhost';
       }
     }
   }
@@ -21,19 +21,19 @@ export default class Todofuken {
   static async getTodofukenList(num: number): Promise<Array<todofuken> | boolean> {
     const options: AxiosRequestConfig = {
       url: `${this.url}/api/v1/get-todofuken-list`,
-      method: "POST",
+      method: 'POST',
       data: {
         num: num
       },
-    }
+    };
 
-    const result = await axios(options)
+    const result = await axios(options);
 
     if (_.get(result, 'data.status', '') !== 'success') {
-      return false
+      return false;
     }
 
-    return _.get(result, 'data.todofulen_list', [])
+    return _.get(result, 'data.todofulen_list', []);
   }
 }
 

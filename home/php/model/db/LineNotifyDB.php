@@ -29,8 +29,8 @@ class LineNotifyDB extends DBBase
           intval($line_notify['id']),
           $line_notify['type'],
           $line_notify['access_token'],
-          new DateTime($line_notify['created_at']),
-          new DateTime($line_notify['updated_at'])
+          new DateTime($line_notify['created_at'], new DateTimeZone('Asia/Tokyo')),
+          new DateTime($line_notify['updated_at'], new DateTimeZone('Asia/Tokyo'))
         )
       );
     }
