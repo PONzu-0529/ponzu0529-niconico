@@ -7,6 +7,7 @@
 	"workspaceFolder": "WORKSPACE_FOLDER",
 	"extensions": [
 		"oderwat.indent-rainbow", // indent-rainbow
+		"wmaurer.change-case", // change-case
 		"donjayamanne.githistory", // Git History
 		"eamodio.gitlens", // GitLens — Git supercharged
 		"GitHub.vscode-pull-request-github", // GitHub Pull Requests and Issues

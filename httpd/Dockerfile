@@ -10,7 +10,7 @@ ARG USER_GID=$USER_UID
 RUN apt -y update && \
     apt -y upgrade && \
     curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt -y install vim sudo tzdata git wget nodejs python3-pip && \
+    apt -y install vim sudo tzdata git wget nodejs python3-pip libzip-dev && \
     npm install -g yarn && \
     yarn global add @vue/cli
 
@@ -25,7 +25,7 @@ RUN sed -ri -e "s!/var/www/html!${DOCUMENT_ROOT}!g" /etc/apache2/sites-available
     sed -ri -e "s!/var/www/!${DOCUMENT_ROOT}!g" /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf && \
     mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     sed -ri -e 's/;extension=mysqli/extension=mysqli/g' $PHP_INI_DIR/php.ini && \
-    docker-php-ext-install mysqli
+    docker-php-ext-install mysqli pdo_mysql zip
 
 # setup python
 COPY requirements.txt /var/requirements.txt
@@ -39,5 +39,10 @@ RUN useradd --uid ${USER_UID} --create-home --shell /bin/bash -G sudo,root ${USE
 COPY setup.sh /var/setup.sh
 RUN chmod 700 /var/setup.sh && \
     chown ${USERNAME}:${USERNAME} /var/setup.sh
+
+# User Settings
+USER 1000
+ENV PATH $PATH:/home/${USERNAME}/.composer/vendor/bin
+RUN composer global require "laravel/installer=^4.0"
 
 CMD sh /var/setup.sh && sudo sudo apache2-foreground
