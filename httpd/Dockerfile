@@ -10,8 +10,9 @@ ARG USER_GID=$USER_UID
 RUN apt -y update && \
     apt -y upgrade && \
     curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt -y install vim sudo tzdata git wget nodejs python3-pip libzip-dev && \
-    npm install -g yarn
+    apt -y install vim sudo tzdata git wget nodejs python3-pip && \
+    npm install -g yarn && \
+    yarn global add @vue/cli
 
 # setup composer
 WORKDIR /var

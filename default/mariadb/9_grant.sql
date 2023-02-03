@@ -1,4 +1,4 @@
 GRANT ALL PRIVILEGES
     ON *.*
-    TO 'yusuke'@'%'
+    TO 'DB_USER'@'%'
 ;

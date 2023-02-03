@@ -4,11 +4,10 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build-dev": "vue-cli-service build --mode development && yarn copy",
-    "build": "vue-cli-service build && yarn copy",
+    "build-dev": "vue-cli-service build --mode development",
+    "build": "vue-cli-service build",
     "build-test-ts": "webpack --config webpack.config.test.js",
-    "lint": "vue-cli-service lint",
-    "copy": "cp -r dist/. home/"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
