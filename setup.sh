@@ -8,6 +8,7 @@ fi
 # Copy Default
 cp -r default/.devcontainer ./
 cp default/mariadb/* mariadb/
+cp .env.example .env
 
 # Setup Args
 echo -n "USERNAME: "
@@ -29,6 +30,13 @@ read xserver_domain
 
 echo -n "XSERVER SUBDOMAIN: "
 read xserver_subdomain
+
+# Setup .env
+sed -ri -e "s!APP_KEY=!APP_KEY=samplekeysamplekeysamplekeysampl!g" .env
+sed -ri -e "s!DB_HOST=127.0.0.1!DB_HOST=mariadb!g" .env
+sed -ri -e "s!DB_DATABASE=tmp!DB_DATABASE=${table_name}!g" .env
+sed -ri -e "s!DB_USERNAME=root!DB_USERNAME=${username}!g" .env
+sed -ri -e "s!DB_PASSWORD=!DB_PASSWORD=${password}!g" .env
 
 # Setup .env in devcontainer
 sed -ri -e "s!LOCAL_HOST_PATH=!LOCAL_HOST_PATH=${local_host_path}!g" .devcontainer/.env
