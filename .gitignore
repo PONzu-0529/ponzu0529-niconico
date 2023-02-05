@@ -35,6 +35,7 @@ pnpm-debug.log*
 # devcontainer
 .devcontainer/devcontainer.json
 .devcontainer/.env
+tmp
 
 # init SQL
 mariadb/0_init.sql
