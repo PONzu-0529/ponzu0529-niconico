@@ -1,8 +1,0 @@
-{
-  // Base tsconfig.json
-  "extends": "./tsconfig.json",
-  // Only tests
-  "include": [
-    "src/tests/*.ts",
-  ],
-}
