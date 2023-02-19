@@ -1,3 +1,0 @@
-[submodule "src/common"]
-	path = src/common
-	url = https://github.com/PONzu-0529/vue-common
