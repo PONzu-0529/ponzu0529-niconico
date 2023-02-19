@@ -31,12 +31,25 @@ read xserver_domain
 echo -n "XSERVER SUBDOMAIN: "
 read xserver_subdomain
 
+echo -n "XSERVER MAIL HOST: "
+read xserver_mail_host
+
+echo -n "XSERVER MAIL USER: "
+read xserver_mail_user
+
+echo -n "XSERVER MAIL PASSWORD: "
+read xserver_mail_password
+
 # Setup .env
 sed -ri -e "s!APP_KEY=!APP_KEY=samplekeysamplekeysamplekeysampl!g" .env
 sed -ri -e "s!DB_HOST=127.0.0.1!DB_HOST=mariadb!g" .env
-sed -ri -e "s!DB_DATABASE=tmp!DB_DATABASE=${table_name}!g" .env
+sed -ri -e "s!DB_DATABASE=!DB_DATABASE=${table_name}!g" .env
 sed -ri -e "s!DB_USERNAME=root!DB_USERNAME=${username}!g" .env
 sed -ri -e "s!DB_PASSWORD=!DB_PASSWORD=${password}!g" .env
+sed -ri -e "s!MAIL_HOST=mailhog!MAIL_HOST=${xserver_mail_host}!g" .env
+sed -ri -e "s!MAIL_USERNAME=null!MAIL_USERNAME=${xserver_mail_user}!g" .env
+sed -ri -e "s!MAIL_PASSWORD=null!MAIL_PASSWORD=${xserver_mail_password}!g" .env
+sed -ri -e "s!MAIL_FROM_ADDRESS=null!MAIL_FROM_ADDRESS=${xserver_mail_user}!g" .env
 
 # Setup .env in devcontainer
 sed -ri -e "s!LOCAL_HOST_PATH=!LOCAL_HOST_PATH=${local_host_path}!g" .devcontainer/.env
