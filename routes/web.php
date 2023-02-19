@@ -20,3 +20,21 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/laravel', function () {
+    return view('welcome');
+});
+
+Route::get('/', function () {
+    return makeVueResponse();
+});
+
+Route::get('/{any}', function () {
+    return makeVueResponse();
+});
+
+function makeVueResponse()
+{
+    return response()
+        ->file('index.html', ['Content-Type' => 'text/html']);
+}
