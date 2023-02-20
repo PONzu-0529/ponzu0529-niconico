@@ -18,19 +18,19 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/laravel', function () {
-    return view('welcome');
+  return view('welcome');
 });
 
 Route::get('/', function () {
-    return makeVueResponse();
+  return makeVueResponse();
 });
 
 Route::get('/{any}', function () {
-    return makeVueResponse();
+  return makeVueResponse();
 });
 
 function makeVueResponse()
 {
-    return response()
-        ->file('index.html', ['Content-Type' => 'text/html']);
+  return response()
+    ->file('index.html', ['Content-Type' => 'text/html']);
 }
