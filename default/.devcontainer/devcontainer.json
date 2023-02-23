@@ -11,6 +11,8 @@
 		"donjayamanne.githistory", // Git History
 		"eamodio.gitlens", // GitLens — Git supercharged
 		"GitHub.vscode-pull-request-github", // GitHub Pull Requests and Issues
+		"hediet.vscode-drawio", // Draw.io Integration
+		"george-alisson.html-preview-vscode", // HTML Preview
 		"bmewburn.vscode-intelephense-client", // PHP Intelephense
 		"neilbrayfield.php-docblocker", // PHP DocBlocker
 		"onecentlin.laravel5-snippets", // Laravel Snippets
