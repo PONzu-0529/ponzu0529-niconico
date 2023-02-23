@@ -17,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('get-user-name', function () {
   return Auth::check() ? Auth::user()['name'] : '';
 });
+
+Route::get('get-csrf-token', function () {
+  $session = app('session');
+
+  if (isset($session)) {
+    return $session->token();
+  }
+
+  throw new RuntimeException('Application session store not set.');
+});

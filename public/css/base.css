@@ -1,0 +1,45 @@
+#app {
+  height: 95vh;
+  margin: 10px;
+}
+
+.navigator {
+  height: 5%;
+  display: flex;
+  justify-content: center;
+}
+.navigator .left-navigator {
+  width: 50%;
+  display: flex;
+  gap: 5%;
+}
+.navigator .right-navigator {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 5%;
+}
+
+.main {
+  height: 95%;
+}
+.main .title {
+  height: 10%;
+  font-size: xx-large;
+  text-align: center;
+}
+.main .content {
+  height: 90%;
+  display: flex;
+  justify-content: center;
+}
+.main .content .half-content {
+  width: 50%;
+}
+
+.btn-medium {
+  height: 4vh;
+  width: 10vw;
+}
+
+/*# sourceMappingURL=base.css.map */
