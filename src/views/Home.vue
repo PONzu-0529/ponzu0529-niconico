@@ -7,7 +7,10 @@
         v-for="(item, index) in BUTTON_ITEM_LIST"
         :key="index"
       >
-        <div class="button-item" @click="changePage(item.url)">
+        <div
+          class="button-item"
+          @click="changePage(item.url)"
+        >
           <div>
             <font-awesome-icon
               class="icon-size"
@@ -24,6 +27,8 @@
 </template>
 
 <script lang="ts">
+import _ from 'lodash';
+import axios from 'axios';
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
@@ -62,6 +67,22 @@ export default class Home extends Vue {
     this.$router.push({
       path: url
     });
+  }
+
+  private async mounted() {
+    await this.auth();
+  }
+
+  private async auth(): Promise<void> {
+    const result = await axios({
+      url: 'http://localhost/api/get-user-name',
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      }
+    });
+
+    const auth = _.get(result, 'data', '');
   }
 }
 

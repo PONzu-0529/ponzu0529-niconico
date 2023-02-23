@@ -4,15 +4,16 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build-full": "yarn build && yarn build-laravel",
-    "build-dev": "vue-cli-service build --mode development",
-    "build": "vue-cli-service build",
+    "build-full": "yarn build-vue && yarn build-laravel",
+    "build-vue": "vue-cli-service build && yarn build-vue-sass",
+    "build-vue-sass": "sass sass/:public/css",
+    "build-vue-sass-watch": "sass sass/:public/css --watch",
     "build-laravel": "yarn build-laravel-js && yarn build-laravel-sass",
     "build-laravel-js": "webpack",
     "build-laravel-sass": "sass resources/sass/:dist/css",
     "build-test-ts": "webpack --config webpack.config.test.js",
-    "build-mock-sass": "sass design/sass/:design/css",
-    "build-mock-sass-watch": "sass design/sass/:design/css --watch",
+    "build-mock-sass": "sass sass/:design/css",
+    "build-mock-sass-watch": "sass sass/:design/css --watch",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

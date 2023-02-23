@@ -1,4 +1,5 @@
 import { Component, Watch } from 'vue-property-decorator';
+import Utils from '@/common/Utils';
 import ModalBase from '@/viewModels/ModalBase';
 import { authModule } from '@/store/modules/AuthStore';
 
@@ -36,7 +37,7 @@ export class LoginModalViewModel extends ModalBase {
       await this.logout();
       this.reflectLoginStatus();
     } else {
-      this.openModal();
+      Utils.changePage(this.$router, 'login', false);
     }
   }
 

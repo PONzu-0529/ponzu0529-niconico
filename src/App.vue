@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <!-- Head -->
-    <app-header />
+    <!-- Navigator -->
+    <app-navigator />
     <!-- Main -->
     <div id="app-main">
       <router-view />
@@ -10,12 +10,12 @@
 </template>
 
 <script lang="ts">
-import AppHeader from '@/components/AppHeader.vue';
+import AppNavigator from '@/Navigator/AppNavigator.vue';
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component({
   components: {
-    AppHeader
+    AppNavigator,
   },
 })
 export default class App extends Vue {
