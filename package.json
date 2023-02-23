@@ -11,6 +11,8 @@
     "build-laravel-js": "webpack",
     "build-laravel-sass": "sass resources/sass/:dist/css",
     "build-test-ts": "webpack --config webpack.config.test.js",
+    "build-mock-sass": "sass design/sass/:design/css",
+    "build-mock-sass-watch": "sass design/sass/:design/css --watch",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
