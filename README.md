@@ -51,3 +51,9 @@
     ```bash
     $ ln -s $HOME/{{ YOUR_DOMAIN }}/repos/{{ YOUR_SUBDOMAIN }}/dist $HOME/{{ YOUR_DOMAIN }}/public_html/{{ YOUR_SUBDOMAIN }}
     ```
+
+1. Set .env
+
+    ```
+    APP_URL=http://{{ YOUR_DOMAIN }}
+    ```
