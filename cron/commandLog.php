@@ -1,8 +1,9 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+preg_match('/APP_URL=.+/', file_get_contents(__DIR__ . '/../.env'), $matches);
+$host = explode('=', $matches[0])[1];
 
-$ch = curl_init(env('APP_URL', 'http://localhost') . '/api/command-log');
+$ch = curl_init("$host/api/command-log");
 $query = json_encode([
   'command' => $argv[1] ?? 'command_empty',
   'output' => $argv[2] ?? 'output_empty'
