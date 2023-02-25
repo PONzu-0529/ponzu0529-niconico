@@ -1,0 +1,7 @@
+COMMAND='git pull' && OUTPUT=`$COMMAND` && php cron/commandLog.php "$COMMAND" "$OUTPUT"
+COMMAND='composer install' && OUTPUT=`$COMMAND` && php cron/commandLog.php "$COMMAND" "$OUTPUT"
+COMMAND='yarn' && OUTPUT=`$COMMAND` && php cron/commandLog.php "$COMMAND" "$OUTPUT"
+COMMAND='php artisan key:generate' && OUTPUT=`$COMMAND` && php cron/commandLog.php "$COMMAND" "$OUTPUT"
+COMMAND='php artisan migrate' && OUTPUT=`$COMMAND` && php cron/commandLog.php "$COMMAND" "$OUTPUT"
+COMMAND='php artisan db:seed' && OUTPUT=`$COMMAND` && php cron/commandLog.php "$COMMAND" "$OUTPUT"
+COMMAND='yarn build-full' && OUTPUT=`$COMMAND` && php cron/commandLog.php "$COMMAND" "$OUTPUT"

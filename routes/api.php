@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CommandLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,5 @@ Route::get('get-csrf-token', function () {
 
   throw new RuntimeException('Application session store not set.');
 });
+
+Route::post('command-log', [CommandLogController::class, 'store']);
