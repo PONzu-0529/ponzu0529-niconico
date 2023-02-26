@@ -38,8 +38,6 @@ class CommandLogController extends Controller
      */
     public function store(Request $request)
     {
-        Log::debug($request->ip());
-
         IpAddressHelper::checkIpAddress($request->ip());
 
         $model = new CommandLog();
