@@ -5,7 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build-full": "yarn build-vue && yarn build-laravel",
+    "build-full-dev": "yarn build-vue-dev && yarn build-laravel",
     "build-vue": "vue-cli-service build && yarn build-vue-sass",
+    "build-vue-dev": "vue-cli-service build --mode development && yarn build-vue-sass",
     "build-vue-sass": "sass sass/:public/css",
     "build-vue-sass-watch": "sass sass/:public/css --watch",
     "build-laravel": "yarn build-laravel-js && yarn build-laravel-sass",
