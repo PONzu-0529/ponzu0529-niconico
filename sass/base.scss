@@ -1,0 +1,48 @@
+#app {
+  height: 95vh;
+  margin: 10px;
+}
+
+.navigator {
+  height: 5%;
+  display: flex;
+  justify-content: center;
+
+  .left-navigator {
+    width: 50%;
+    display: flex;
+    gap: 5%;
+  }
+
+  .right-navigator {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 5%;
+  }
+}
+
+.main {
+  height: 95%;
+
+  .title {
+    height: 10%;
+    font-size: xx-large;
+    text-align: center;
+  }
+
+  .content {
+    height: 90%;
+    display: flex;
+    justify-content: center;
+
+    .half-content {
+      width: 50%;
+    }
+  }
+}
+
+.btn-medium {
+  height: 4vh;
+  width: 10vw;
+}

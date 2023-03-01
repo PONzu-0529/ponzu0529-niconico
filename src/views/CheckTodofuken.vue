@@ -40,18 +40,18 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator"
-import Todofuken, { todofuken } from "@/Todofuken"
+import { Vue, Component } from 'vue-property-decorator';
+import Todofuken, { todofuken } from '@/Todofuken';
 
 @Component
 export default class CheckTodofuken extends Vue {
   private todofukenList: Array<todofuken> = [];
 
   private async updateTodofukenList() {
-    const result = await Todofuken.getTodofukenList(20)
+    const result = await Todofuken.getTodofukenList(20);
 
-    if (typeof result !== "boolean") {
-      this.todofukenList = result
+    if (typeof result !== 'boolean') {
+      this.todofukenList = result;
     }
   }
 }

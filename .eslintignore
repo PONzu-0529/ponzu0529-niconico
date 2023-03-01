@@ -1,5 +1,11 @@
 dist/*
 home/*
+tests/*
+
 src/shims-tsx.d.ts
 src/shims-vue.d.ts
+
+src/tests/*.js
+
 babel.config.js
+*config.js

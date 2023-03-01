@@ -4,7 +4,7 @@ require __DIR__ . "/Base.php";
 require __DIR__ . "/../model/Niconico.php";
 require __DIR__ . "/../model/Auth.php";
 
-class NiconicoController extends Base
+class NiconicoController extends ControllerBase
 {
   function GetVideoIdList()
   {

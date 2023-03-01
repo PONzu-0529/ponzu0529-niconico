@@ -7,8 +7,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator"
-import Links from '@/components/Links.vue'
+import { Vue, Component } from 'vue-property-decorator';
+import Links from '@/components/Links.vue';
 
 @Component({
   components: {

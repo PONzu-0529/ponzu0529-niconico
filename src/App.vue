@@ -1,29 +1,28 @@
 <template>
   <div id="app">
-    <login @openLoginForm="openLoginForm" />
-    <login-form @closeLoginForm="closeLoginForm" />
-    <router-view />
+    <!-- Navigator -->
+    <app-navigator />
+    <!-- Main -->
+    <div id="app-main">
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import Login from "@/components/Login.vue"
-import LoginForm from "@/components/LoginForm.vue"
-import { Vue, Component } from "vue-property-decorator"
+import AppNavigator from '@/Navigator/AppNavigator.vue';
+import { Vue, Component } from 'vue-property-decorator';
 
 @Component({
   components: {
-    Login,
-    LoginForm,
+    AppNavigator,
   },
 })
 export default class App extends Vue {
-  private openLoginForm() {
-    this.$modal.show("login-form")
-  }
-
-  private closeLoginForm() {
-    this.$modal.hide("login-form")
+  private changeHome(): void {
+    this.$router.push({
+      path: '/'
+    });
   }
 }
 </script>
@@ -52,6 +51,10 @@ $smartphone: 480px; // Smartphone
 }
 
 #app {
+  margin: 10px;
+}
+
+#app-main {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

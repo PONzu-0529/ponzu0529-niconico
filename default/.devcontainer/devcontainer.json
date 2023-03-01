@@ -1,18 +1,25 @@
 {
-	"name": "ponzu0529-niconico",
+	"name": "ponzu0529-tools",
 	"dockerComposeFile": [
 		"docker-compose.yml"
 	],
 	"service": "httpd",
-	"workspaceFolder": "/app",
+	"workspaceFolder": "WORKSPACE_FOLDER",
 	"extensions": [
 		"oderwat.indent-rainbow", // indent-rainbow
+		"wmaurer.change-case", // change-case
 		"donjayamanne.githistory", // Git History
 		"eamodio.gitlens", // GitLens — Git supercharged
 		"GitHub.vscode-pull-request-github", // GitHub Pull Requests and Issues
+		"hediet.vscode-drawio", // Draw.io Integration
+		"george-alisson.html-preview-vscode", // HTML Preview
 		"bmewburn.vscode-intelephense-client", // PHP Intelephense
-		"adpyke.vscode-sql-formatter", // SQL Formatter
+		"neilbrayfield.php-docblocker", // PHP DocBlocker
+		"onecentlin.laravel5-snippets", // Laravel Snippets
+		"amiralizadeh9480.laravel-extra-intellisense", // Laravel Extra Intellisense
+		"ctf0.laravel-goto-controller", // Laravel Goto Controller
 		"octref.vetur", // Vetur
+		"adpyke.vscode-sql-formatter", // SQL Formatter
 		"dbaeumer.vscode-eslint", // ESLint
 		"ms-python.python", // Python
 		"humao.rest-client" // REST Client

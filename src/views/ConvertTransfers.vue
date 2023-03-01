@@ -26,31 +26,31 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator"
+import { Vue, Component } from 'vue-property-decorator';
 
 @Component
 export default class ConvertTransfer extends Vue {
-  private input = "";
-  private output = "";
+  private input = '';
+  private output = '';
 
   private convert() {
     this.output = this.input
-      .slice(this.input.indexOf("■"), this.input.indexOf("(運賃内訳)"))
-      .replace("---\n", "")
+      .slice(this.input.indexOf('■'), this.input.indexOf('(運賃内訳)'))
+      .replace('---\n', '');
   }
 
   /**
    * 読み込み
    */
   private async read() {
-    this.input = await navigator.clipboard.readText()
+    this.input = await navigator.clipboard.readText();
   }
 
   /**
    * コピー
    */
   private async copy() {
-    await navigator.clipboard.writeText(this.output)
+    await navigator.clipboard.writeText(this.output);
   }
 }
 </script>

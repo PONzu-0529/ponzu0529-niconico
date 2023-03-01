@@ -117,123 +117,123 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from "vue-property-decorator"
-import dayjs from "dayjs"
-import Web from "@/Web"
+import { Vue, Component, Watch } from 'vue-property-decorator';
+import dayjs from 'dayjs';
+import Web from '@/Web';
 
 @Component
 export default class CreateBibliography extends Vue {
-  private baseType: "web" | "book" | "thesis" = "web";
+  private baseType: 'web' | 'book' | 'thesis' = 'web';
 
-  private convertType: "text" = "text";
+  private convertType: 'text' = 'text';
 
   private web: WebStyle = {
-    page_title: "",
-    cite_title: "",
-    url: "",
-    read: dayjs().format("YYYY-MM-DD"),
+    page_title: '',
+    cite_title: '',
+    url: '',
+    read: dayjs().format('YYYY-MM-DD'),
   };
 
   private book: BookStyle = {
-    title: "",
-    authors: [""],
-    created: dayjs("0000-00-00").format("YYYY-MM-DD"),
-    read: dayjs().format("YYYY-MM-DD"),
+    title: '',
+    authors: [''],
+    created: dayjs('0000-00-00').format('YYYY-MM-DD'),
+    read: dayjs().format('YYYY-MM-DD'),
   };
 
   private thesis: ThesisStyle = {
-    title: "",
-    authors: [""],
-    created: dayjs("0000-00-00").format("YYYY-MM-DD"),
-    read: dayjs().format("YYYY-MM-DD"),
+    title: '',
+    authors: [''],
+    created: dayjs('0000-00-00').format('YYYY-MM-DD'),
+    read: dayjs().format('YYYY-MM-DD'),
   };
 
-  @Watch("baseType")
+  @Watch('baseType')
   private onChangeType() {
-    this.initAllStyle()
+    this.initAllStyle();
   }
 
   private get output(): string {
     switch (this.baseType) {
-      case "web":
+      case 'web':
         return [
           `『${this.web.page_title}』`,
           this.web.cite_title,
           this.web.url,
           this.web.read,
-        ].join(", ")
+        ].join(', ');
 
-      case "book":
+      case 'book':
         return [
           `『${this.book.title}』`,
           this.book.authors.map((author) => {
-            return author
+            return author;
           }),
           this.book.created,
           this.book.read,
-        ].join(", ")
+        ].join(', ');
 
-      case "thesis":
+      case 'thesis':
         return [
           `『${this.thesis.title}』`,
           this.thesis.authors.map((author) => {
-            return author
+            return author;
           }),
           this.thesis.created,
           this.thesis.read,
-        ].join(", ")
+        ].join(', ');
 
       default:
-        return ""
+        return '';
     }
   }
 
   private created() {
-    this.initAllStyle()
+    this.initAllStyle();
   }
 
   private initAllStyle() {
-    this.initWebStyle()
-    this.initBookStyle()
-    this.initThesisStyle()
+    this.initWebStyle();
+    this.initBookStyle();
+    this.initThesisStyle();
   }
 
   private initWebStyle() {
-    this.web.page_title = ""
-    this.web.cite_title = ""
-    this.web.url = ""
-    this.web.read = dayjs().format("YYYY-MM-DD")
+    this.web.page_title = '';
+    this.web.cite_title = '';
+    this.web.url = '';
+    this.web.read = dayjs().format('YYYY-MM-DD');
   }
 
   private initBookStyle() {
-    this.book.title = ""
-    this.book.authors = [""]
-    this.book.created = dayjs("0000-00-00").format("YYYY-MM-DD")
-    this.book.read = dayjs().format("YYYY-MM-DD")
+    this.book.title = '';
+    this.book.authors = [''];
+    this.book.created = dayjs('0000-00-00').format('YYYY-MM-DD');
+    this.book.read = dayjs().format('YYYY-MM-DD');
   }
 
   private initThesisStyle() {
-    this.thesis.title = ""
-    this.thesis.authors = [""]
-    this.thesis.created = dayjs("0000-00-00").format("YYYY-MM-DD")
-    this.thesis.read = dayjs().format("YYYY-MM-DD")
+    this.thesis.title = '';
+    this.thesis.authors = [''];
+    this.thesis.created = dayjs('0000-00-00').format('YYYY-MM-DD');
+    this.thesis.read = dayjs().format('YYYY-MM-DD');
   }
 
   /**
    * URL変換
    */
   private encodeUrl() {
-    this.web.url = decodeURI(this.web.url)
+    this.web.url = decodeURI(this.web.url);
   }
 
   /**
    * Web情報取得
    */
   private async getWebInfo() {
-    const result = await Web.getWebInfo(this.web.url)
+    const result = await Web.getWebInfo(this.web.url);
 
-    if (typeof result !== "boolean") {
-      this.web.page_title = result
+    if (typeof result !== 'boolean') {
+      this.web.page_title = result;
     }
   }
 
@@ -241,14 +241,14 @@ export default class CreateBibliography extends Vue {
    * クリア
    */
   private clear() {
-    this.initAllStyle()
+    this.initAllStyle();
   }
 
   /**
    * コピー
    */
   private copy() {
-    navigator.clipboard.writeText(this.output)
+    navigator.clipboard.writeText(this.output);
   }
 }
 

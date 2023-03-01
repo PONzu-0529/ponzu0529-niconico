@@ -1,3 +1,15 @@
+# Laravel
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.phpunit.result.cache
+docker-compose.override.yml
+Homestead.json
+Homestead.yaml
+
 .DS_Store
 node_modules
 /dist
@@ -14,21 +26,20 @@ pnpm-debug.log*
 
 # Editor directories and files
 .idea
-.vscode
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-# custom
-.devcontainer/
-mariadb/
-vendor/
+# devcontainer
+.devcontainer/devcontainer.json
+.devcontainer/.env
+tmp
 
-!default/*
-
-config.php
+# init SQL
+mariadb/0_init.sql
+mariadb/9_grant.sql
 
 # Python
 __pycache__
