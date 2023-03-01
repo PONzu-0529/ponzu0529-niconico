@@ -68,22 +68,6 @@ export default class Home extends Vue {
       path: url
     });
   }
-
-  private async mounted() {
-    await this.auth();
-  }
-
-  private async auth(): Promise<void> {
-    const result = await axios({
-      url: 'http://localhost/api/get-user-name',
-      method: 'GET',
-      headers: {
-        Accept: 'application/json'
-      }
-    });
-
-    const auth = _.get(result, 'data', '');
-  }
 }
 
 interface ButtonItemStyle {
