@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+require_once __DIR__ . '/helper.php';
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,15 +24,9 @@ Route::get('/laravel', function () {
 });
 
 Route::get('/', function () {
-  return makeVueResponse();
+  return RouteHelper::makeVueResponse();
 });
 
 Route::get('/{any}', function () {
-  return makeVueResponse();
+  return RouteHelper::makeVueResponse();
 });
-
-function makeVueResponse()
-{
-  return response()
-    ->file('index.html', ['Content-Type' => 'text/html']);
-}
