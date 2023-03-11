@@ -2,12 +2,23 @@
 
 namespace App\Helpers;
 
+use App\Services\IpAddressService;
+
 class IpAddressHelper
 {
-  public static function checkIpAddress(string $ip): void
+  /**
+   * Check IP Address
+   *
+   * @param string $function_id FunctionID
+   * @param string $ip IP Address
+   * @return boolean
+   */
+  public static function checkIpAddress(string $function_id, string $ip): bool
   {
-    if ($ip !== env('ACCEPT_IP_ADDRESS', '127.0.0.1')) {
-      abort(403, 'This IP Address is unauthorized.');
-    }
+    $service = new IpAddressService();
+
+    $ip_address_list = $service->getIpAddressList($function_id);
+
+    return in_array($ip, $ip_address_list);
   }
 }
