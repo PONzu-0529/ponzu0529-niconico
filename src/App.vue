@@ -3,10 +3,7 @@
     <!-- Navigator -->
     <app-navigator />
     <!-- Main -->
-    <div
-      id="app-main"
-      class="main"
-    >
+    <div id="app-main">
       <router-view />
     </div>
     <!-- Overlay -->

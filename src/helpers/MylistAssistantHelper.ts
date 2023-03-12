@@ -7,6 +7,18 @@ export default class MylistAssistantHelper {
     return await ApiHelper.get(`${Utils.getHostWithProtocol()}/api/auth/mylist-assistant`);
   }
 
+  public static async getAuthOfView(): Promise<boolean> {
+    return await ApiHelper.get(`${Utils.getHostWithProtocol()}/api/auth/mylist-assistant?level=VIEW`);
+  }
+
+  public static async getAuthOfEdit(): Promise<boolean> {
+    return await ApiHelper.get(`${Utils.getHostWithProtocol()}/api/auth/mylist-assistant?level=EDIT`);
+  }
+
+  public static async getAuthOfMasterEdit(): Promise<boolean> {
+    return await ApiHelper.get(`${Utils.getHostWithProtocol()}/api/auth/mylist-assistant?level=MASTER_EDIT`);
+  }
+
   public static async getAll(): Promise<Array<MusicStyle>> {
     return await ApiHelper.get(`${Utils.getHostWithProtocol()}/api/mylist-assistant`);
   }

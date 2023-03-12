@@ -18,6 +18,10 @@ td {
   margin: 10px;
 }
 
+#app-main {
+  height: 100%;
+}
+
 .navigator {
   height: 5%;
   display: flex;
@@ -142,6 +146,12 @@ td {
   .field-content {
     width: 70%;
   }
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  gap: 5%;
 }
 
 .overlay {

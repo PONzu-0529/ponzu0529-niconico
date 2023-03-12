@@ -15,13 +15,16 @@ class MylistAssistantController extends Controller
     /**
      * Authentication
      *
+     * @param  \Illuminate\Http\Request|null $request
      * @return \Illuminate\Http\Response
      */
-    public function authentication()
+    public function authentication(Request $request)
     {
+        $level = $request->query('level') ?? AuthenticationLevelConstant::VIEW;
+
         return AuthenticationHelper::checkAuthentication(
             MylistAssistantConstant::FUNCTION_ID,
-            AuthenticationLevelConstant::VIEW
+            $level
         ) ? 'true' : 'false';
     }
 

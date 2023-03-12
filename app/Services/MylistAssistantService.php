@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use Auth;
+use App\Constants\AuthenticationLevelConstant;
+use App\Constants\MylistAssistantConstant;
+use App\Helpers\AuthenticationHelper;
 use App\Models\Music;
 use App\Models\UserMusic;
 use App\Models\UserMusicView;
@@ -14,6 +17,15 @@ class MylistAssistantService
 {
     public function getAll()
     {
+        if (
+            !AuthenticationHelper::checkAuthentication(
+                MylistAssistantConstant::FUNCTION_ID,
+                AuthenticationLevelConstant::VIEW
+            )
+        ) {
+            abort(403, 'This User is unauthorized.');
+        }
+
         return UserMusicView::where([
             UserMusicViewConstant::USER_ID => Auth::user()['id']
         ])
@@ -24,6 +36,15 @@ class MylistAssistantService
 
     public function getById(int $id): Music
     {
+        if (
+            !AuthenticationHelper::checkAuthentication(
+                MylistAssistantConstant::FUNCTION_ID,
+                AuthenticationLevelConstant::VIEW
+            )
+        ) {
+            abort(403, 'This User is unauthorized.');
+        }
+
         return UserMusicView::where([
             UserMusicViewConstant::USER_ID => Auth::user()['id'],
             UserMusicViewConstant::MUSIC_ID => $id
@@ -32,6 +53,15 @@ class MylistAssistantService
 
     public function add(string $title, string $niconico_id, bool $favorite, bool $skip)
     {
+        if (
+            !AuthenticationHelper::checkAuthentication(
+                MylistAssistantConstant::FUNCTION_ID,
+                AuthenticationLevelConstant::MASTER_EDIT
+            )
+        ) {
+            abort(403, 'This User is unauthorized.');
+        }
+
         $model = new Music();
 
         $model[MusicConstant::TITLE] = $title;
@@ -53,13 +83,29 @@ class MylistAssistantService
 
     public function update(int $music_id, string $title, string $niconico_id, bool $favorite, bool $skip)
     {
-        $model = Music::where(MusicConstant::ID, $music_id)
-            ->first();
+        if (
+            !AuthenticationHelper::checkAuthentication(
+                MylistAssistantConstant::FUNCTION_ID,
+                AuthenticationLevelConstant::EDIT
+            )
+        ) {
+            abort(403, 'This User is unauthorized.');
+        }
 
-        $model[MusicConstant::TITLE] = $title;
-        $model[MusicConstant::NICONICO_ID] = $niconico_id;
+        if (
+            AuthenticationHelper::checkAuthentication(
+                MylistAssistantConstant::FUNCTION_ID,
+                AuthenticationLevelConstant::MASTER_EDIT
+            )
+        ) {
+            $model = Music::where(MusicConstant::ID, $music_id)
+                ->first();
 
-        $model->save();
+            $model[MusicConstant::TITLE] = $title;
+            $model[MusicConstant::NICONICO_ID] = $niconico_id;
+
+            $model->save();
+        }
 
         $object = UserMusic::where([
             UserMusicConstant::USER_ID => Auth::user()['id'],
@@ -82,6 +128,15 @@ class MylistAssistantService
 
     public function delete(int $id)
     {
+        if (
+            !AuthenticationHelper::checkAuthentication(
+                MylistAssistantConstant::FUNCTION_ID,
+                AuthenticationLevelConstant::MASTER_EDIT
+            )
+        ) {
+            abort(403, 'This User is unauthorized.');
+        }
+
         Music::where(MusicConstant::ID, $id)
             ->delete();
     }

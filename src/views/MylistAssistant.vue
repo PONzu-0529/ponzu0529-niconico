@@ -1,5 +1,5 @@
 <template>
-  <div class="mylist-assistant">
+  <div class="main">
     <div class="title">Mylist Assistant</div>
     <div class="content">
       <div class="upper-content">
@@ -7,6 +7,7 @@
         <div class="upper-right-content">
           <button
             @click="clickAdd"
+            :disabled="!hasMasterEditAuth"
             class="btn-medium"
           >Add</button>
         </div>
@@ -30,10 +31,18 @@
                 <td>{{ music.favorite === 1 }}</td>
                 <td>{{ music.skip === 1 }}</td>
                 <td>
-                  <button
-                    @click="clickEdit(index)"
-                    class="btn-medium"
-                  >Edit</button>
+                  <div class="flex">
+                    <button
+                      @click="clickEdit(index)"
+                      :disabled="!hasEditAuth"
+                      class="btn-medium"
+                    >Edit</button>
+                    <button
+                      @click="clickDelete(music.music_id)"
+                      :disabled="!hasMasterEditAuth"
+                      class="btn-medium"
+                    >Delete</button>
+                  </div>
                 </td>
               </tr>
             </template>
@@ -52,6 +61,7 @@
             <div class="field-lavel">ID</div>
             <input
               v-model="music.niconico_id"
+              :disabled="!hasMasterEditAuth"
               class="field-content"
             />
           </div>
@@ -59,6 +69,7 @@
             <div class="field-lavel">Title</div>
             <input
               v-model="music.title"
+              :disabled="!hasMasterEditAuth"
               class="field-content"
             />
           </div>
@@ -96,14 +107,17 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { MusicStyle } from '@/models/MylistAssistantModel';
+import Utils from '@/common/Utils';
 import MylistAssistantHelper from '@/helpers/MylistAssistantHelper';
+import { MusicStyle } from '@/models/MylistAssistantModel';
 
 @Component({})
 export default class MylistAssistant extends Vue {
   private musicList: Array<MusicStyle>;
   private music: MusicStyle;
   private isModalOpen: boolean;
+  private hasEditAuth: boolean;
+  private hasMasterEditAuth: boolean;
 
   constructor() {
     super();
@@ -116,13 +130,24 @@ export default class MylistAssistant extends Vue {
       skip: false
     };
     this.isModalOpen = false;
+    this.hasEditAuth = false;
+    this.hasMasterEditAuth = false;
   }
 
   private async mounted(): Promise<void> {
+    if (!await MylistAssistantHelper.getAuthOfView()) {
+      await Utils.changePage(this.$router, '/');
+    }
+
+    this.hasEditAuth = await MylistAssistantHelper.getAuthOfEdit();
+    this.hasMasterEditAuth = await MylistAssistantHelper.getAuthOfMasterEdit();
+
     this.musicList = await MylistAssistantHelper.getAll();
   }
 
   private clickAdd(): void {
+    if (!this.hasMasterEditAuth) return;
+
     this.music = {
       title: '',
       niconico_id: '',
@@ -133,16 +158,27 @@ export default class MylistAssistant extends Vue {
   }
 
   private clickEdit(index: number): void {
+    if (!this.hasEditAuth) return;
+
     this.music = this.musicList[index];
     this.isModalOpen = true;
+  }
+
+  private async clickDelete(index: number): Promise<void> {
+    if (!this.hasMasterEditAuth) return;
+
+    await MylistAssistantHelper.delete(index);
+    this.musicList = await MylistAssistantHelper.getAll();
   }
 
   private async clickDialogApply(): Promise<void> {
     this.music.favorite = [1, true].indexOf(this.music.favorite) !== -1;
     this.music.skip = [1, true].indexOf(this.music.skip) !== -1;
     if (this.music.music_id !== undefined) {
+      if (!this.hasEditAuth) return;
       await MylistAssistantHelper.update(this.music.music_id, this.music);
     } else {
+      if (!this.hasMasterEditAuth) return;
       await MylistAssistantHelper.add(this.music);
     }
     this.isModalOpen = false;
