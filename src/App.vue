@@ -3,9 +3,17 @@
     <!-- Navigator -->
     <app-navigator />
     <!-- Main -->
-    <div id="app-main">
+    <div
+      id="app-main"
+      class="main"
+    >
       <router-view />
     </div>
+    <!-- Overlay -->
+    <div
+      class="overlay"
+      style="display: none;"
+    />
   </div>
 </template>
 

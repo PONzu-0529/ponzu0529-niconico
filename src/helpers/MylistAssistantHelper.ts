@@ -20,7 +20,7 @@ export default class MylistAssistantHelper {
       `${Utils.getHostWithProtocol()}/api/mylist-assistant`,
       {
         title: music.title,
-        niconico_id: music.niconicoId
+        niconico_id: music.niconico_id
       }
     );
   }
@@ -30,7 +30,7 @@ export default class MylistAssistantHelper {
       `${Utils.getHostWithProtocol()}/api/mylist-assistant/${id}`,
       {
         title: music.title,
-        niconico_id: music.niconicoId
+        niconico_id: music.niconico_id
       }
     );
   }

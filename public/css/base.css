@@ -1,3 +1,10 @@
+table,
+th,
+td {
+  border: 1px solid;
+  white-space: nowrap;
+}
+
 #app {
   height: 95vh;
   margin: 10px;
@@ -30,16 +37,102 @@
 }
 .main .content {
   height: 90%;
+}
+.main .content .upper-content {
+  height: 5vh;
+  display: flex;
+}
+.main .content .upper-content .upper-left-content {
+  width: 50%;
+  display: flex;
+  gap: 5%;
+}
+.main .content .upper-content .upper-right-content {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 5%;
+}
+.main .content .main-content {
+  height: calc(100% - 5vh);
+  overflow-y: scroll;
+}
+@media (max-width: 480px) {
+  .main .content .main-content {
+    overflow-x: scroll;
+  }
+}
+.main .flex-content {
+  height: 90%;
   display: flex;
   justify-content: center;
 }
-.main .content .half-content {
+.main .flex-content .half-flex-content {
   width: 50%;
 }
 
 .btn-medium {
   height: 4vh;
   width: 10vw;
+}
+@media (max-width: 480px) {
+  .btn-medium {
+    width: 20vw;
+  }
+}
+
+.dialog {
+  position: absolute;
+  top: 5%;
+  left: calc(20% + 18px);
+  width: calc(60% - 36px);
+  background-color: white;
+  border: 1px solid;
+  z-index: 30;
+}
+@media (max-width: 480px) {
+  .dialog {
+    left: 18px;
+    width: calc(100% - 36px);
+  }
+}
+.dialog .dialog-title {
+  height: 10%;
+  font-size: xx-large;
+  text-align: center;
+}
+.dialog .dialog-content {
+  height: 90%;
+}
+.dialog .dialog-content .dialog-lower-content {
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+  gap: 5%;
+}
+
+.field {
+  display: flex;
+  margin: 5px;
+  gap: 1%;
+}
+.field .field-lavel {
+  width: 30%;
+  text-align: center;
+}
+.field .field-content {
+  width: 70%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  opacity: 0.6;
+  z-index: 10;
 }
 
 /*# sourceMappingURL=base.css.map */

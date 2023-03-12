@@ -1,6 +1,7 @@
 export default class MylistAssistantModel {}
 
 export interface MusicStyle {
+  id?: number;
   title: string
-  niconicoId: string
+  niconico_id: string
 }
