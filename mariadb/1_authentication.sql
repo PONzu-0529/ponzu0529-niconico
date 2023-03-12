@@ -15,3 +15,24 @@ CREATE TABLE IF NOT EXISTS `authentication` (
 TRUNCATE TABLE `authentication`;
 
 -- Insert Data
+INSERT INTO
+  `authentication` (
+    `user_id`,
+    `function_id`,
+    `authentication_level`,
+    `created_at`,
+    `updated_at`
+  )
+VALUES
+  ('1', 'MYLIST_ASSISTANT', 'VIEW', now(), now()),
+  ('1', 'MYLIST_ASSISTANT', 'EDIT', now(), now()),
+  (
+    '1',
+    'MYLIST_ASSISTANT',
+    'MASTER_EDIT',
+    now(),
+    now()
+  ),
+  ('2', 'MYLIST_ASSISTANT', 'VIEW', now(), now()),
+  ('2', 'MYLIST_ASSISTANT', 'EDIT', now(), now()),
+  ('3', 'MYLIST_ASSISTANT', 'VIEW', now(), now());

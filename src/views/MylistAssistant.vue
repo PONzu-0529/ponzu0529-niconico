@@ -16,10 +16,10 @@
           <thead>
             <tr>
               <th>ID</th>
-              <th>タイトル</th>
-              <!-- <th>お気に入り</th> -->
-              <!-- <th>スキップ</th> -->
-              <th>オプション</th>
+              <th>Title</th>
+              <th>Favorite</th>
+              <th>Skip</th>
+              <th>Option</th>
             </tr>
           </thead>
           <tbody>
@@ -27,8 +27,8 @@
               <tr :key="index">
                 <td>{{ music.niconico_id }}</td>
                 <td>{{ music.title }}</td>
-                <!-- <td>True</td> -->
-                <!-- <td>False</td> -->
+                <td>{{ music.favorite === 1 }}</td>
+                <td>{{ music.skip === 1 }}</td>
                 <td>
                   <button
                     @click="clickEdit(index)"
@@ -66,6 +66,7 @@
             <div class="field-lavel">Favorite</div>
             <input
               type="checkbox"
+              v-model="music.favorite"
               class="field-content"
             />
           </div>
@@ -73,6 +74,7 @@
             <div class="field-lavel">Skip</div>
             <input
               type="checkbox"
+              v-model="music.skip"
               class="field-content"
             />
           </div>
@@ -108,8 +110,10 @@ export default class MylistAssistant extends Vue {
 
     this.musicList = [];
     this.music = {
-      'title': '',
-      'niconico_id': ''
+      title: '',
+      niconico_id: '',
+      favorite: false,
+      skip: false
     };
     this.isModalOpen = false;
   }
@@ -121,7 +125,9 @@ export default class MylistAssistant extends Vue {
   private clickAdd(): void {
     this.music = {
       title: '',
-      niconico_id: ''
+      niconico_id: '',
+      favorite: false,
+      skip: false
     };
     this.isModalOpen = true;
   }
@@ -132,8 +138,10 @@ export default class MylistAssistant extends Vue {
   }
 
   private async clickDialogApply(): Promise<void> {
-    if (this.music.id !== undefined) {
-      await MylistAssistantHelper.update(this.music.id, this.music);
+    this.music.favorite = [1, true].indexOf(this.music.favorite) !== -1;
+    this.music.skip = [1, true].indexOf(this.music.skip) !== -1;
+    if (this.music.music_id !== undefined) {
+      await MylistAssistantHelper.update(this.music.music_id, this.music);
     } else {
       await MylistAssistantHelper.add(this.music);
     }

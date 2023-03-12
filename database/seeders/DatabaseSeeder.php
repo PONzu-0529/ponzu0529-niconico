@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
 use App\Models\Music;
 use App\Models\Constants\MusicConstant;
 
@@ -15,6 +16,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        User::create([
+            'name' => 'User1',
+            'email' => 'test1@sample.com',
+            'password' => bcrypt('password')
+        ]);
+        User::create([
+            'name' => 'User2',
+            'email' => 'test2@sample.com',
+            'password' => bcrypt('password')
+        ]);
+        User::create([
+            'name' => 'User3',
+            'email' => 'test3@sample.com',
+            'password' => bcrypt('password')
+        ]);
+        User::create([
+            'name' => 'User4',
+            'email' => 'test4@sample.com',
+            'password' => bcrypt('password')
+        ]);
+
         Music::create([
             MusicConstant::TITLE => 'Title1',
             MusicConstant::NICONICO_ID => 'NiconicoID1'

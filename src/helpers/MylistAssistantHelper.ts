@@ -16,23 +16,11 @@ export default class MylistAssistantHelper {
   }
 
   public static async add(music: MusicStyle): Promise<void> {
-    return await ApiHelper.post(
-      `${Utils.getHostWithProtocol()}/api/mylist-assistant`,
-      {
-        title: music.title,
-        niconico_id: music.niconico_id
-      }
-    );
+    return await ApiHelper.post(`${Utils.getHostWithProtocol()}/api/mylist-assistant`, music);
   }
 
   public static async update(id: number, music: MusicStyle): Promise<void> {
-    return await ApiHelper.put(
-      `${Utils.getHostWithProtocol()}/api/mylist-assistant/${id}`,
-      {
-        title: music.title,
-        niconico_id: music.niconico_id
-      }
-    );
+    return await ApiHelper.put(`${Utils.getHostWithProtocol()}/api/mylist-assistant/${id}`, music);
   }
 
   public static async delete(id: number): Promise<void> {

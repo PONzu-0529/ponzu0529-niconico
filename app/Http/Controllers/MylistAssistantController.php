@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Constants\AuthenticationLevelConstant;
 use App\Constants\MylistAssistantConstant;
 use App\Models\Constants\MusicConstant;
+use App\Models\Constants\UserMusicConstant;
 use App\Services\MylistAssistantService;
 use App\Helpers\AuthenticationHelper;
 
@@ -46,7 +47,9 @@ class MylistAssistantController extends Controller
         $service = new MylistAssistantService();
         $service->add(
             $request->input(MusicConstant::TITLE),
-            $request->input(MusicConstant::NICONICO_ID)
+            $request->input(MusicConstant::NICONICO_ID),
+            $request->input(UserMusicConstant::FAVORITE),
+            $request->input(UserMusicConstant::SKIP)
         );
     }
 
@@ -75,7 +78,9 @@ class MylistAssistantController extends Controller
         $service->update(
             $id,
             $request->input(MusicConstant::TITLE),
-            $request->input(MusicConstant::NICONICO_ID)
+            $request->input(MusicConstant::NICONICO_ID),
+            $request->input(UserMusicConstant::FAVORITE),
+            $request->input(UserMusicConstant::SKIP)
         );
     }
 
