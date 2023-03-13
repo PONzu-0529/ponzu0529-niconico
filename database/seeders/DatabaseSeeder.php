@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        User::truncate();
         User::create([
             'name' => 'User1',
             'email' => 'test1@sample.com',
@@ -37,6 +38,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password')
         ]);
 
+        Music::truncate();
         Music::create([
             MusicConstant::TITLE => 'Title1',
             MusicConstant::NICONICO_ID => 'NiconicoID1'
