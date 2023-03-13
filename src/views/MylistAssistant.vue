@@ -26,7 +26,13 @@
           <tbody>
             <template v-for="(music, index) in musicList">
               <tr :key="index">
-                <td>{{ music.niconico_id }}</td>
+                <td>
+                  <a
+                    :href="`https://www.nicovideo.jp/watch/${music.niconico_id}`"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >{{ music.niconico_id }}</a>
+                </td>
                 <td>{{ music.title }}</td>
                 <td>{{ music.favorite === 1 }}</td>
                 <td>{{ music.skip === 1 }}</td>
