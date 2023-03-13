@@ -22,4 +22,12 @@ export default class Utils {
   public static getHostWithProtocol(): string {
     return `${location.protocol}//${location.hostname}`;
   }
+
+  public static overlay(): void {
+    (<HTMLElement> document.getElementsByClassName('overlay')[0]).style.removeProperty('display');
+  }
+
+  public static clearOverlay(): void {
+    (<HTMLElement> document.getElementsByClassName('overlay')[0]).style.display = 'none';
+  }
 }

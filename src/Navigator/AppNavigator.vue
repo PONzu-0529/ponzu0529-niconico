@@ -48,14 +48,12 @@ import Utils from '@/common/Utils';
 @Component({})
 export default class AppNavigator extends Vue {
   private csrfToken: string;
-  // private isLogin: boolean;
   private userName: string;
 
   constructor() {
     super();
 
     this.csrfToken = '';
-    // this.isLogin = false;
     this.userName = '';
   }
 
@@ -68,9 +66,12 @@ export default class AppNavigator extends Vue {
   }
 
   private async mounted(): Promise<void> {
+    Utils.overlay();
+
     this.csrfToken = await AuthHelper.getCsrfToken();
     this.userName = await AuthHelper.getUserName();
-    // this.isLogin = this.userName !== '';
+
+    Utils.clearOverlay();
   }
 
   private async clickHome(): Promise<void> {

@@ -6,6 +6,11 @@
     <div id="app-main">
       <router-view />
     </div>
+    <!-- Overlay -->
+    <div
+      class="overlay"
+      style="display: none;"
+    />
   </div>
 </template>
 

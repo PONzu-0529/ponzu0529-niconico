@@ -5,7 +5,7 @@ import CheckTodofuken from '@/views/CheckTodofuken.vue';
 import ConvertTransfers from '@/views/ConvertTransfers.vue';
 import CreateBibliography from '@/views/CreateBibliography.vue';
 import FilterInPokemonGo from '@/views/FilterInPokemonGo.vue';
-// import NiconicoCustomMylist from '@/views/NiconicoCustomMylist.vue'
+import MylistAssistant from '@/views/MylistAssistant.vue';
 import Error from '@/views/Error.vue';
 
 Vue.use(VueRouter);
@@ -36,11 +36,10 @@ const routes: Array<RouteConfig> = [
     name: 'FilterInPokemonGo',
     component: FilterInPokemonGo
   },
-  // {
-  //   path: '/niconico-custom-mylist',
-  //   name: 'NiconicoCustomMylist',
-  //   component: NiconicoCustomMylist
-  // },
+  {
+    path: '/mylist-assistant',
+    component: MylistAssistant
+  },
   {
     path: '*',
     name: 'error',
