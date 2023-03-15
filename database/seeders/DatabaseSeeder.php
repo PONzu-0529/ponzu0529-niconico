@@ -3,9 +3,18 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
+use App\Models\Authentication;
+use App\Models\IpAddress;
+use App\Models\IpAddressAuthentication;
 use App\Models\Music;
+use App\Models\User;
+use App\Models\Constants\AuthenticationConstant;
+use App\Models\Constants\IpAddressAuthenticationConstant;
 use App\Models\Constants\MusicConstant;
+use App\Constants\AuthenticationLevelConstant;
+use App\Constants\CommandLogConstant;
+use App\Constants\IpAddressConstant;
+use App\Constants\MylistAssistantConstant;
 
 class DatabaseSeeder extends Seeder
 {
@@ -36,6 +45,50 @@ class DatabaseSeeder extends Seeder
             'name' => 'User4',
             'email' => 'test4@sample.com',
             'password' => bcrypt('password')
+        ]);
+
+        Authentication::truncate();
+        Authentication::create([
+            AuthenticationConstant::USER_ID => '1',
+            AuthenticationConstant::FUNCTION_ID => MylistAssistantConstant::FUNCTION_ID,
+            AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::VIEW
+        ]);
+        Authentication::create([
+            AuthenticationConstant::USER_ID => '1',
+            AuthenticationConstant::FUNCTION_ID => MylistAssistantConstant::FUNCTION_ID,
+            AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::EDIT
+        ]);
+        Authentication::create([
+            AuthenticationConstant::USER_ID => '1',
+            AuthenticationConstant::FUNCTION_ID => MylistAssistantConstant::FUNCTION_ID,
+            AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::MASTER_EDIT
+        ]);
+        Authentication::create([
+            AuthenticationConstant::USER_ID => '2',
+            AuthenticationConstant::FUNCTION_ID => MylistAssistantConstant::FUNCTION_ID,
+            AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::VIEW
+        ]);
+        Authentication::create([
+            AuthenticationConstant::USER_ID => '2',
+            AuthenticationConstant::FUNCTION_ID => MylistAssistantConstant::FUNCTION_ID,
+            AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::EDIT
+        ]);
+        Authentication::create([
+            AuthenticationConstant::USER_ID => '3',
+            AuthenticationConstant::FUNCTION_ID => MylistAssistantConstant::FUNCTION_ID,
+            AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::VIEW
+        ]);
+
+        IpAddress::truncate();
+        IpAddress::create([
+            IpAddressConstant::IP_ADDRESS => '127.0.0.1',
+            IpAddressConstant::MEMO => 'local'
+        ]);
+
+        IpAddressAuthentication::truncate();
+        IpAddressAuthentication::create([
+            IpAddressAuthenticationConstant::FUNCTION_ID => CommandLogConstant::FUNCTION_ID,
+            IpAddressAuthenticationConstant::IP_ADDRESSE_ID => 1
         ]);
 
         Music::truncate();
