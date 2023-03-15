@@ -79,11 +79,11 @@ class DatabaseSeeder extends Seeder
             AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::VIEW
         ]);
 
-        IpAddress::truncate();
-        IpAddress::create([
-            IpAddressConstant::IP_ADDRESS => '127.0.0.1',
-            IpAddressConstant::MEMO => 'local'
-        ]);
+        // IpAddress::truncate();
+        // IpAddress::create([
+        //     IpAddressConstant::IP_ADDRESS => '127.0.0.1',
+        //     IpAddressConstant::MEMO => 'local'
+        // ]);
 
         IpAddressAuthentication::truncate();
         IpAddressAuthentication::create([
