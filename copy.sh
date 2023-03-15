@@ -7,7 +7,9 @@ cp mariadb/0_init.sql default/mariadb/0_init.sql
 cp mariadb/9_grant.sql default/mariadb/9_grant.sql
 
 # Setup .env
+TARGET_FILE="default/.devcontainer/.env"
 sed -ri -e "s!LOCAL_HOST_PATH=.*!LOCAL_HOST_PATH=!g" default/.devcontainer/.env
+sed -ri -e "s!DB_NAME=.*!DB_NAME=!g" $TARGET_FILE
 sed -ri -e "s!DB_USER=.*!DB_USER=!g" default/.devcontainer/.env
 sed -ri -e "s!DB_PASSWORD=.*!DB_PASSWORD=!g" default/.devcontainer/.env
 sed -ri -e "s!DB_ROOT_PASSWORD=.*!DB_ROOT_PASSWORD=!g" default/.devcontainer/.env

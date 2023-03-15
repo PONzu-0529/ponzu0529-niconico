@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommandLogController;
+use App\Http\Controllers\MylistAssistantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,6 @@ Route::get('get-csrf-token', function () {
 });
 
 Route::post('command-log', [CommandLogController::class, 'store']);
+
+Route::resource('mylist-assistant', MylistAssistantController::class, ['except' => ['create', 'edit']]);
+Route::get('auth/mylist-assistant', [MylistAssistantController::class, 'authentication']);

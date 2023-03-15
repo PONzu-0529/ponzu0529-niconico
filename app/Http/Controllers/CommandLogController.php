@@ -38,7 +38,9 @@ class CommandLogController extends Controller
      */
     public function store(Request $request)
     {
-        IpAddressHelper::checkIpAddress($request->ip());
+        if (!IpAddressHelper::checkIpAddress(CommandLogConstant::FUNCTION_ID, $request->ip())) {
+            abort(403, 'This IP Address is unauthorized.');
+        };
 
         $model = new CommandLog();
 

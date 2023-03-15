@@ -26,7 +26,26 @@ export default class ApiHelper {
     const result = await axios({
       url: url,
       method: 'POST',
-      data: data,
+      data: data
+    });
+
+    return _.get(result, 'data', null);
+  }
+
+  public static async put(url: string, data?: any): Promise<any> {
+    const result = await axios({
+      url: url,
+      method: 'PUT',
+      data: data
+    });
+
+    return _.get(result, 'data', null);
+  }
+
+  public static async delete(url: string): Promise<any> {
+    const result = await axios({
+      url: url,
+      method: 'DELETE'
     });
 
     return _.get(result, 'data', null);

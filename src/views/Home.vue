@@ -9,6 +9,7 @@
       >
         <div
           class="button-item"
+          v-if="!item.disabled"
           @click="changePage(item.url)"
         >
           <div>
@@ -27,9 +28,9 @@
 </template>
 
 <script lang="ts">
-import _ from 'lodash';
-import axios from 'axios';
 import { Component, Vue } from 'vue-property-decorator';
+import Utils from '@/common/Utils';
+import MylistAssistantHelper from '@/helpers/MylistAssistantHelper';
 
 @Component({})
 export default class Home extends Vue {
@@ -55,26 +56,38 @@ export default class Home extends Vue {
       icon: 'fa-gamepad',
       url: '/filter-in-pokemongo',
     },
-    // {
-    //   title: "ニコ動カスタムマイリスト",
-    //   description: "ニコニコ動画のお気に入りの動画を確認できます。",
-    //   icon: "fa-music",
-    //   url: "/niconico-custom-mylist",
-    // },
+    {
+      functionId: 'MYLIST_ASSISTANT',
+      title: 'マイリストアシスタント',
+      description: 'マイリストのサポートをします。',
+      icon: 'fa-music',
+      url: '/mylist-assistant',
+      disabled: true
+    },
   ];
 
-  private changePage(url: string): void {
-    this.$router.push({
-      path: url
-    });
+  private async mounted(): Promise<void> {
+    if (await MylistAssistantHelper.getAuth()) {
+      this.BUTTON_ITEM_LIST.forEach((item, index) => {
+        if (item.functionId === 'MYLIST_ASSISTANT') {
+          this.BUTTON_ITEM_LIST[index].disabled = false;
+        }
+      });
+    }
+  }
+
+  private async changePage(url: string): Promise<void> {
+    await Utils.changePage(this.$router, url);
   }
 }
 
 interface ButtonItemStyle {
+  functionId?: string;
   title: string;
   description: string;
   icon: string;
   url: string;
+  disabled?: boolean
 }
 </script>
 

@@ -40,9 +40,6 @@ read xserver_mail_user
 echo -n "XSERVER MAIL PASSWORD: "
 read xserver_mail_password
 
-echo -n "XSERVER IP ADDRESS: "
-read xserver_ip_address
-
 # Setup .env
 sed -ri -e "s!APP_KEY=!APP_KEY=samplekeysamplekeysamplekeysampl!g" .env
 sed -ri -e "s!DB_HOST=127.0.0.1!DB_HOST=mariadb!g" .env
@@ -53,10 +50,11 @@ sed -ri -e "s!MAIL_HOST=mailhog!MAIL_HOST=${xserver_mail_host}!g" .env
 sed -ri -e "s!MAIL_USERNAME=null!MAIL_USERNAME=${xserver_mail_user}!g" .env
 sed -ri -e "s!MAIL_PASSWORD=null!MAIL_PASSWORD=${xserver_mail_password}!g" .env
 sed -ri -e "s!MAIL_FROM_ADDRESS=null!MAIL_FROM_ADDRESS=${xserver_mail_user}!g" .env
-sed -ri -e "s!ACCEPT_IP_ADDRESS=127.0.0.1!ACCEPT_IP_ADDRESS=${xserver_ip_address}!g" .env
 
 # Setup .env in devcontainer
+TARGET_FILE=".devcontainer/.env"
 sed -ri -e "s!LOCAL_HOST_PATH=!LOCAL_HOST_PATH=${local_host_path}!g" .devcontainer/.env
+sed -ri -e "s!DB_NAME=!DB_NAME=${table_name}!g" $TARGET_FILE
 sed -ri -e "s!DB_USER=!DB_USER=${username}!g" .devcontainer/.env
 sed -ri -e "s!DB_PASSWORD=!DB_PASSWORD=${password}!g" .devcontainer/.env
 sed -ri -e "s!DB_ROOT_PASSWORD=!DB_ROOT_PASSWORD=${password}!g" .devcontainer/.env
