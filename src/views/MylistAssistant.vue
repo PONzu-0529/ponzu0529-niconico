@@ -67,7 +67,7 @@
             <div class="field-lavel">ID</div>
             <input
               v-model="music.niconico_id"
-              disabled
+              :disabled="music.music_id"
               class="field-content"
             />
           </div>
@@ -98,7 +98,13 @@
         </div>
         <div class="dialog-lower-content">
           <button
+            @click="clickNowPlaying"
+            :disabled="!hasMasterEditAuth"
+            class="btn-medium"
+          >GetNowPlaying</button>
+          <button
             @click="clickGetInfo(music.niconico_id)"
+            :disabled="!hasMasterEditAuth"
             class="btn-medium"
           >GetInfo</button>
           <button
@@ -179,6 +185,14 @@ export default class MylistAssistant extends Vue {
 
     await MylistAssistantHelper.delete(index);
     this.musicList = await MylistAssistantHelper.getAll();
+  }
+
+  private async clickNowPlaying(): Promise<void> {
+    if (!this.hasMasterEditAuth) return;
+
+    const music = await MylistAssistantHelper.getNowPlayingInfo();
+    this.music.niconico_id = music.video_id;
+    this.music.title = music.title;
   }
 
   private async clickGetInfo(id: string): Promise<void> {

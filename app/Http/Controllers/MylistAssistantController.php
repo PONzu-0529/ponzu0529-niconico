@@ -112,4 +112,15 @@ class MylistAssistantController extends Controller
         $service = new MylistAssistantService();
         return $service->getNiconicoInfo($niconico_id);
     }
+
+    /**
+     * Get Kiite NowPlaying Info
+     *
+     * @return JsonResponse
+     */
+    public function getNowPlayingInfo(): JsonResponse
+    {
+        $service = new MylistAssistantService();
+        return $service->getNowPlayingInfo();
+    }
 }
