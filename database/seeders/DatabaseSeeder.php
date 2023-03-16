@@ -8,6 +8,7 @@ use App\Models\IpAddress;
 use App\Models\IpAddressAuthentication;
 use App\Models\Music;
 use App\Models\User;
+use App\Models\UserMusic;
 use App\Models\Constants\AuthenticationConstant;
 use App\Models\Constants\IpAddressAuthenticationConstant;
 use App\Models\Constants\MusicConstant;
@@ -93,6 +94,10 @@ class DatabaseSeeder extends Seeder
 
         Music::truncate();
         Music::create([
+            MusicConstant::TITLE => 'いいねってYEAH!',
+            MusicConstant::NICONICO_ID => 'sm40663116'
+        ]);
+        Music::create([
             MusicConstant::TITLE => 'Title1',
             MusicConstant::NICONICO_ID => 'NiconicoID1'
         ]);
@@ -168,5 +173,7 @@ class DatabaseSeeder extends Seeder
             MusicConstant::TITLE => 'Title19',
             MusicConstant::NICONICO_ID => 'NiconicoID19'
         ]);
+
+        UserMUsic::truncate();
     }
 }

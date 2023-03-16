@@ -1,6 +1,8 @@
 import Utils from '@/common/Utils';
 import ApiHelper from '@/common/ApiHelper';
 import { MusicStyle } from '@/models/MylistAssistantModel';
+import { NowPlayingStyle } from '@/interfaces/KiiteInfoStyle';
+import { NiconicoInfo } from '@/interfaces/NiconicoInfoStyle';
 
 export default class MylistAssistantHelper {
   public static async getAuth(): Promise<boolean> {
@@ -37,5 +39,13 @@ export default class MylistAssistantHelper {
 
   public static async delete(id: number): Promise<void> {
     return await ApiHelper.delete(`${Utils.getHostWithProtocol()}/api/mylist-assistant/${id}`);
+  }
+
+  public static async getNiconicoInfo(id: string): Promise<NiconicoInfo> {
+    return await ApiHelper.get(`${Utils.getHostWithProtocol()}/api/mylist-assistant/get-niconico-info?id=${id}`);
+  }
+
+  public static async getNowPlayingInfo(): Promise<NowPlayingStyle> {
+    return await ApiHelper.get(`${Utils.getHostWithProtocol()}/api/mylist-assistant/get-now-playing-info`);
   }
 }

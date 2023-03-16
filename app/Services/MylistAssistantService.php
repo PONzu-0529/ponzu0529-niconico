@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use Illuminate\Http\JsonResponse;
 use Auth;
 use App\Constants\AuthenticationLevelConstant;
 use App\Constants\MylistAssistantConstant;
 use App\Helpers\AuthenticationHelper;
+use App\Helpers\ResponseHelper;
 use App\Models\Music;
 use App\Models\UserMusic;
 use App\Models\UserMusicView;
@@ -60,6 +62,10 @@ class MylistAssistantService
             )
         ) {
             abort(403, 'This User is unauthorized.');
+        }
+
+        if ($this->checkIdDuplication($niconico_id)) {
+            return ResponseHelper::errorJsonResponse('This ID is already registered.');
         }
 
         $model = new Music();
@@ -139,5 +145,63 @@ class MylistAssistantService
 
         Music::where(MusicConstant::ID, $id)
             ->delete();
+    }
+
+    /**
+     * Get Niconico Info
+     *
+     * @param string $niconico_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getNiconicoInfo(string $niconico_id): \Illuminate\Http\JsonResponse
+    {
+        $xml = simplexml_load_file("https://ext.nicovideo.jp/api/getthumbinfo/" . $niconico_id);
+
+        if ($xml === false) {
+            return ResponseHelper::errorJsonResponse('Failure getting info.');
+        }
+
+        if (isset($xml->error)) {
+            return ResponseHelper::errorJsonResponse('Not Found or Invalid.');
+        }
+
+        return ResponseHelper::jsonResponse([
+            'video_id' => $niconico_id,
+            'title' => (string)$xml->thumb->title,
+            'description' => (string)$xml->thumb->description,
+            'user_nickname' => (string)$xml->thumb->user_nickname
+        ]);
+    }
+
+    /**
+     * Get Kiite NowPlaying Info
+     *
+     * @return JsonResponse
+     */
+    public function getNowPlayingInfo(): JsonResponse
+    {
+        $ch = curl_init("https://cafe.kiite.jp/api/cafe/now_playing");
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $response_obj = json_decode($response, true);
+        return ResponseHelper::jsonResponse($response_obj);
+    }
+
+    /**
+     * Check Niconico ID Duplication
+     *
+     * @param string $niconico_id
+     * @return boolean
+     */
+    private function checkIdDuplication(string $niconico_id): bool
+    {
+        return Music::where([
+            MusicConstant::NICONICO_ID => $niconico_id
+        ])->exists();
     }
 }

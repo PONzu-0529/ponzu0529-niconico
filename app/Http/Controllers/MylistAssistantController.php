@@ -9,6 +9,7 @@ use App\Models\Constants\MusicConstant;
 use App\Models\Constants\UserMusicConstant;
 use App\Services\MylistAssistantService;
 use App\Helpers\AuthenticationHelper;
+use Illuminate\Http\JsonResponse;
 
 class MylistAssistantController extends Controller
 {
@@ -48,7 +49,7 @@ class MylistAssistantController extends Controller
     public function store(Request $request)
     {
         $service = new MylistAssistantService();
-        $service->add(
+        return $service->add(
             $request->input(MusicConstant::TITLE),
             $request->input(MusicConstant::NICONICO_ID),
             $request->input(UserMusicConstant::FAVORITE),
@@ -97,5 +98,29 @@ class MylistAssistantController extends Controller
     {
         $service = new MylistAssistantService();
         $service->delete($id);
+    }
+
+    /**
+     * Get Niconico Info
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return JsonResponse
+     */
+    public function getNiconicoInfo(Request $request): JsonResponse
+    {
+        $niconico_id = $request->query('id');
+        $service = new MylistAssistantService();
+        return $service->getNiconicoInfo($niconico_id);
+    }
+
+    /**
+     * Get Kiite NowPlaying Info
+     *
+     * @return JsonResponse
+     */
+    public function getNowPlayingInfo(): JsonResponse
+    {
+        $service = new MylistAssistantService();
+        return $service->getNowPlayingInfo();
     }
 }

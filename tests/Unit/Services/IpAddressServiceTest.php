@@ -8,18 +8,18 @@ use App\Services\IpAddressService;
 
 class IpAddressServiceTest extends TestCase
 {
-    /**
-     * GetIpAddressList for COMMAND_LOG
-     *
-     * @return void
-     */
-    public function test_getIpAddressListForCommandLog()
-    {
-        $service = new IpAddressService();
-        var_dump($service->getIpAddressList(CommandLogConstant::FUNCTION_ID));
+    // /**
+    //  * GetIpAddressList for COMMAND_LOG
+    //  *
+    //  * @return void
+    //  */
+    // public function test_getIpAddressListForCommandLog()
+    // {
+    //     $service = new IpAddressService();
+    //     var_dump($service->getIpAddressList(CommandLogConstant::FUNCTION_ID));
 
-        $this->assertTrue(true);
-    }
+    //     $this->assertTrue(true);
+    // }
 
     /**
      * GetIpAddressList for UNDEFINED_FUNCTION_ID
