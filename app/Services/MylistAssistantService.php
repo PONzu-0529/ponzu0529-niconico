@@ -147,6 +147,32 @@ class MylistAssistantService
     }
 
     /**
+     * Get Niconico Info
+     *
+     * @param string $niconico_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getNiconicoInfo(string $niconico_id): \Illuminate\Http\JsonResponse
+    {
+        $xml = simplexml_load_file("https://ext.nicovideo.jp/api/getthumbinfo/" . $niconico_id);
+
+        if ($xml === false) {
+            return ResponseHelper::errorJsonResponse('Failure getting info.');
+        }
+
+        if (isset($xml->error)) {
+            return ResponseHelper::errorJsonResponse('Not Found or Invalid.');
+        }
+
+        return ResponseHelper::jsonResponse([
+            'video_id' => $niconico_id,
+            'title' => (string)$xml->thumb->title,
+            'description' => (string)$xml->thumb->description,
+            'user_nickname' => (string)$xml->thumb->user_nickname
+        ]);
+    }
+
+    /**
      * Check Niconico ID Duplication
      *
      * @param string $niconico_id
