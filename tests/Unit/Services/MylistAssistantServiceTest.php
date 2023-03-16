@@ -7,6 +7,18 @@ use App\Services\MylistAssistantService;
 
 class MylistAssistantServiceTest extends TestCase
 {
+    // /**
+    //  * Get Niconico Info
+    //  *
+    //  * @return void
+    //  */
+    // public function test_getNiconicoInfo()
+    // {
+    //     $service = new MylistAssistantService();
+    //     $result = $service->getNiconicoInfo('sm40663116');
+    //     var_dump($result);
+    // }
+
     /**
      * Check Unique Music ID
      *

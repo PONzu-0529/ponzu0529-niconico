@@ -32,5 +32,6 @@ Route::get('get-csrf-token', function () {
 
 Route::post('command-log', [CommandLogController::class, 'store']);
 
-Route::resource('mylist-assistant', MylistAssistantController::class, ['except' => ['create', 'edit']]);
 Route::get('auth/mylist-assistant', [MylistAssistantController::class, 'authentication']);
+Route::get('mylist-assistant/get-niconico-info', [MylistAssistantController::class, 'getNiconicoInfo']);
+Route::resource('mylist-assistant', MylistAssistantController::class, ['except' => ['create', 'edit']]);

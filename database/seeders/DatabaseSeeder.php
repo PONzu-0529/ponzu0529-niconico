@@ -93,6 +93,10 @@ class DatabaseSeeder extends Seeder
 
         Music::truncate();
         Music::create([
+            MusicConstant::TITLE => 'いいねってYEAH!',
+            MusicConstant::NICONICO_ID => 'sm40663116'
+        ]);
+        Music::create([
             MusicConstant::TITLE => 'Title1',
             MusicConstant::NICONICO_ID => 'NiconicoID1'
         ]);
