@@ -17,7 +17,7 @@ class CreateMusicsTable extends Migration
         Schema::create('musics', function (Blueprint $table) {
             $table->id();
             $table->string(MusicConstant::TITLE);
-            $table->string(MusicConstant::NICONICO_ID);
+            $table->string(MusicConstant::NICONICO_ID)->unique();
             $table->timestamps();
 
             $table->softDeletes();

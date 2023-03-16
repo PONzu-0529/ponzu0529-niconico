@@ -6,6 +6,7 @@ use Auth;
 use App\Constants\AuthenticationLevelConstant;
 use App\Constants\MylistAssistantConstant;
 use App\Helpers\AuthenticationHelper;
+use App\Helpers\ResponseHelper;
 use App\Models\Music;
 use App\Models\UserMusic;
 use App\Models\UserMusicView;
@@ -60,6 +61,10 @@ class MylistAssistantService
             )
         ) {
             abort(403, 'This User is unauthorized.');
+        }
+
+        if ($this->checkIdDuplication($niconico_id)) {
+            return ResponseHelper::errorJsonResponse('This ID is already registered.');
         }
 
         $model = new Music();
@@ -139,5 +144,18 @@ class MylistAssistantService
 
         Music::where(MusicConstant::ID, $id)
             ->delete();
+    }
+
+    /**
+     * Check Niconico ID Duplication
+     *
+     * @param string $niconico_id
+     * @return boolean
+     */
+    private function checkIdDuplication(string $niconico_id): bool
+    {
+        return Music::where([
+            MusicConstant::NICONICO_ID => $niconico_id
+        ])->exists();
     }
 }

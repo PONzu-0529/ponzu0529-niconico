@@ -48,7 +48,7 @@ class MylistAssistantController extends Controller
     public function store(Request $request)
     {
         $service = new MylistAssistantService();
-        $service->add(
+        return $service->add(
             $request->input(MusicConstant::TITLE),
             $request->input(MusicConstant::NICONICO_ID),
             $request->input(UserMusicConstant::FAVORITE),
