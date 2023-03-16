@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Http\JsonResponse;
 use Auth;
 use App\Constants\AuthenticationLevelConstant;
 use App\Constants\MylistAssistantConstant;
@@ -170,6 +171,25 @@ class MylistAssistantService
             'description' => (string)$xml->thumb->description,
             'user_nickname' => (string)$xml->thumb->user_nickname
         ]);
+    }
+
+    /**
+     * Get Kiite NowPlaying Info
+     *
+     * @return JsonResponse
+     */
+    public function getNowPlayingInfo(): JsonResponse
+    {
+        $ch = curl_init("https://cafe.kiite.jp/api/cafe/now_playing");
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $response_obj = json_decode($response, true);
+        return ResponseHelper::jsonResponse($response_obj);
     }
 
     /**

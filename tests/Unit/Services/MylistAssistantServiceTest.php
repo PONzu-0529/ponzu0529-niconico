@@ -19,6 +19,18 @@ class MylistAssistantServiceTest extends TestCase
     //     var_dump($result);
     // }
 
+    // /**
+    //  * Get NowPlaying Info
+    //  *
+    //  * @return void
+    //  */
+    // public function test_getNowPlayingInfo()
+    // {
+    //     $service = new MylistAssistantService();
+    //     $result = $service->getNowPlayingInfo();
+    //     var_dump($result);
+    // }
+
     /**
      * Check Unique Music ID
      *
