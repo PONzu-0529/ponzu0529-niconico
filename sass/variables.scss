@@ -1,0 +1,63 @@
+$smartphone: 480px; // Smartphone
+
+$scroll-bar-height: 20px;
+
+$app-margin: 10px;
+
+$app-height: calc(100vh - ($app-margin * 2) - $scroll-bar-height);
+$app-height-smartphone: calc(100svh - ($app-margin * 2));
+$app-width: calc(100vw - ($app-margin * 2));
+$app-width-smartphone: calc(100vw - ($app-margin * 2));
+
+$navigator-height: calc($app-height * 0.05);
+$navigator-height-smartphone: calc($app-height-smartphone * 0.05);
+$navigator-half-width: calc($app-width / 2);
+$navigator-gap-width: 10px;
+
+$main-height: calc($app-height * 0.95);
+$main-height-smartphone: calc($app-height-smartphone * 0.95);
+$main-width: $app-width;
+$main-width-smartphone: $app-width-smartphone;
+
+$title-height: calc($main-height * 0.1);
+$title-height-smartphone: calc($main-height-smartphone * 0.1);
+$title-width: $main-width;
+$title-width-smartphone: $main-width-smartphone;
+
+$content-height: calc($main-height * 0.9);
+$content-height-smartphone: calc($main-height-smartphone * 0.8);
+$content-width: calc($main-width * 0.8);
+$content-width-smartphone: $main-width-smartphone;
+
+$content-half-title-height: calc($content-height * 0.1);
+$content-half-title-height-smartphone: calc($content-height-smartphone * 0.1);
+$content-half-title-width: calc($content-width / 2);
+$content-half-title-width-smartphone: calc($content-width-smartphone / 2);
+
+$content-half-content-height: calc($content-height * 0.9);
+$content-half-content-height-smartphone: calc($content-height-smartphone * 0.9);
+$content-half-content-width: calc($content-width / 2);
+$content-half-content-width-smartphone: $content-width-smartphone;
+
+$adsense-height: $content-height;
+$adsense-height-smartphone: calc($main-height-smartphone * 0.1);
+$adsense-width: calc($main-width * 0.1);
+$adsense-width-smartphone: $content-width-smartphone;
+
+$dialog-margin: 10px;
+$dialog-padding: 10px;
+
+$dialog-height: calc($content-height - $dialog-margin * 2);
+$dialog-height-smartphone: calc($content-height-smartphone - $dialog-margin * 2);
+$dialog-width: calc($content-width - $dialog-margin * 2);
+$dialog-width-smartphone: calc($content-width-smartphone - $dialog-margin * 2);
+
+$dialog-title-height: calc($dialog-height * 0.1);
+$dialog-title-height-smartphone: calc($dialog-height-smartphone * 0.1);
+$dialog-title-width: $dialog-width;
+$dialog-title-width-smartphone: $dialog-width-smartphone;
+
+$dialog-content-height: calc($dialog-height * 0.9);
+$dialog-content-height-smartphone: calc($dialog-height-smartphone * 0.9);
+$dialog-content-width: $dialog-width;
+$dialog-content-width-smartphone: $dialog-width-smartphone;

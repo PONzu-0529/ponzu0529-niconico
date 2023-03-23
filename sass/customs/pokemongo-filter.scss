@@ -1,0 +1,167 @@
+@import '../common';
+@import '../variables';
+
+$pokemongo-filter-content-margin: 5px;
+
+$pokemongo-filter-content-height: $content-half-content-height;
+$pokemongo-filter-content-height-smartphone: $content-half-content-height-smartphone;
+$pokemongo-filter-content-width: $content-half-content-width;
+$pokemongo-filter-content-width-smartphone: $content-half-content-width-smartphone;
+
+$pokemongo-filter-top-height: calc($pokemongo-filter-content-height * 0.1);
+$pokemongo-filter-top-height-smartphone: calc($pokemongo-filter-content-height-smartphone * 0.1);
+$pokemongo-filter-top-width: calc($pokemongo-filter-content-width - ($scroll-bar-height + 5px));
+$pokemongo-filter-top-width-smartphone: calc($pokemongo-filter-content-width-smartphone - $convert-transfers-content-margin * 2);
+
+$pokemongo-filter-main-height: calc($pokemongo-filter-content-height * 0.8);
+$pokemongo-filter-main-height-smartphone: calc($pokemongo-filter-content-height-smartphone * 0.8);
+$pokemongo-filter-main-width: calc($pokemongo-filter-content-width - ($scroll-bar-height + 5px));
+$pokemongo-filter-main-width-smartphone: calc($pokemongo-filter-content-width-smartphone - $convert-transfers-content-margin * 2);
+
+$pokemongo-filter-main-column-height: calc($pokemongo-filter-content-height * 0.1);
+$pokemongo-filter-main-column-height-smartphone: calc($pokemongo-filter-content-height-smartphone * 0.1);
+
+$pokemongo-filter-main-key-width: calc($pokemongo-filter-main-width * 0.3);
+$pokemongo-filter-main-key-width-smartphone: calc($pokemongo-filter-main-width-smartphone * 0.5);
+
+$pokemongo-filter-main-value-width: calc($pokemongo-filter-main-width * 0.7);
+$pokemongo-filter-main-value-width-smartphone: $pokemongo-filter-main-width-smartphone;
+
+$pokemongo-filter-option-height: calc($pokemongo-filter-content-height * 0.1);
+$pokemongo-filter-option-height-smartphone: calc($pokemongo-filter-content-height-smartphone * 0.1);
+$pokemongo-filter-option-width: calc($pokemongo-filter-content-width - ($scroll-bar-height + 5px));
+$pokemongo-filter-option-width-smartphone: calc($pokemongo-filter-content-width-smartphone - $convert-transfers-content-margin * 2);
+
+$pokemongo-filter-option-gap-width: 10px;
+
+.l-pokemongo-filter-content {
+  height: $pokemongo-filter-content-height;
+  width: $pokemongo-filter-content-width;
+
+  @include smartphone {
+    height: $pokemongo-filter-content-height-smartphone;
+    width: $pokemongo-filter-content-width-smartphone;
+  }
+
+  margin: $pokemongo-filter-content-margin;
+
+  overflow-y: scroll;
+
+  @include smartphone {
+    overflow-x: scroll;
+  }
+
+  .l-pokemongo-filter-top {
+    height: $pokemongo-filter-top-height;
+    width: $pokemongo-filter-top-width;
+
+    @include smartphone {
+      height: $pokemongo-filter-top-height-smartphone;
+      width: $pokemongo-filter-top-width-smartphone;
+    }
+
+    display: flex;
+    justify-content: center;
+    gap: $pokemongo-filter-option-gap-width;
+  }
+
+  .l-pokemongo-filter-main {
+    height: $pokemongo-filter-main-height;
+    width: $pokemongo-filter-main-width;
+
+    @include smartphone {
+      height: $pokemongo-filter-main-height-smartphone;
+      width: $pokemongo-filter-main-width-smartphone;
+    }
+
+    &.left {
+      height: calc($pokemongo-filter-main-height + $pokemongo-filter-option-height );
+
+      @include smartphone {
+        height: calc($pokemongo-filter-main-height-smartphone + $pokemongo-filter-option-height-smartphone);
+      }
+    }
+
+    &.right {
+      height: calc($pokemongo-filter-top-height + $pokemongo-filter-main-height );
+
+      @include smartphone {
+        height: calc($pokemongo-filter-top-height-smartphone + $pokemongo-filter-main-height-smartphone);
+      }
+    }
+
+    textarea {
+      height: calc($pokemongo-filter-main-width / 2);
+      width: calc($pokemongo-filter-main-width - 5px);
+
+      @include smartphone {
+        height: $pokemongo-filter-main-width-smartphone;
+        width: calc($pokemongo-filter-main-width-smartphone - 5px);
+      }
+    }
+
+    .l-pokemongo-filter-main-column {
+      height: $pokemongo-filter-main-column-height;
+
+      @include smartphone {
+        height: calc($pokemongo-filter-main-column-height-smartphone * 2);
+      }
+
+      display: flex;
+      flex-wrap: wrap;
+
+      .l-pokemongo-filter-main-key,
+      .l-pokemongo-filter-main-value {
+        height: $pokemongo-filter-main-column-height;
+
+        @include smartphone {
+          height: $pokemongo-filter-main-column-height-smartphone;
+        }
+      }
+
+      .l-pokemongo-filter-main-key {
+        width: $pokemongo-filter-main-key-width;
+
+        @include smartphone {
+          width: $pokemongo-filter-main-key-width-smartphone;
+        }
+
+        text-align: center;
+
+        @include smartphone {
+          text-align: left;
+        }
+      }
+
+      .l-pokemongo-filter-main-value {
+        width: $pokemongo-filter-main-value-width;
+
+        @include smartphone {
+          width: $pokemongo-filter-main-value-width-smartphone;
+        }
+
+        input {
+          width: calc($pokemongo-filter-main-value-width - 10px);
+
+          @include smartphone {
+            width: calc($pokemongo-filter-main-value-width-smartphone - 10px);
+          }
+        }
+      }
+    }
+  }
+
+  .l-pokemongo-filter-option {
+    height: $pokemongo-filter-option-height;
+    width: $pokemongo-filter-option-width;
+
+    @include smartphone {
+      height: $pokemongo-filter-option-height-smartphone;
+      width: $pokemongo-filter-option-width-smartphone;
+    }
+
+    display: flex;
+    justify-content: center;
+    gap: $pokemongo-filter-option-gap-width;
+  }
+}
