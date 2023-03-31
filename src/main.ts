@@ -5,7 +5,8 @@ import VueHead from 'vue-head';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import 'buefy/dist/buefy.css';
+
+import TitleHelper from './helpers/TitleHelper';
 
 // FontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -21,6 +22,12 @@ Vue.use(VueHead);
 // FontAwesome
 library.add(faMusic, faTrainSubway, faBook, faGamepad);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
+
+router.beforeEach((to, from, next) => {
+  TitleHelper.setTitleByPath(to.path);
+
+  next();
+});
 
 new Vue({
   router,

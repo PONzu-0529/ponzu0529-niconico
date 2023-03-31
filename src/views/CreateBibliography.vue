@@ -1,128 +1,203 @@
 <template>
-  <div class="create-bibliography">
-    <h1 class="title">参考文献つくーる</h1>
-    <div class="flex-container">
-      <div class="flex-item">
-        <h2 class="subtitle">変換元</h2>
-        <b-field>
-          <b-select v-model="baseType">
-            <option value="web">webページ</option>
-            <option value="book">書籍</option>
-            <option value="thesis">論文</option>
-          </b-select>
-        </b-field>
-        <template v-if="baseType === 'web'">
-          <b-field horizontal label="URL">
-            <b-input type="url" key="web.url" v-model="web.url"></b-input>
-          </b-field>
-          <b-field horizontal label="ページ名" message="参照したページの名称">
-            <b-input
-              type="text"
-              key="web.page_title"
-              v-model="web.page_title"
-            ></b-input>
-          </b-field>
-          <b-field
-            horizontal
-            label="サイト名"
-            message="参照したページ元のサイトの名称"
-          >
-            <b-input
-              type="text"
-              key="web.cite_title"
-              v-model="web.cite_title"
-            ></b-input>
-          </b-field>
-          <b-field horizontal label="閲覧日">
-            <b-input type="date" key="web.read" v-model="web.read"></b-input>
-          </b-field>
-        </template>
-        <template v-if="baseType === 'book'">
-          <b-field horizontal label="タイトル">
-            <b-input
-              type="text"
-              key="book.title"
-              v-model="book.title"
-            ></b-input>
-          </b-field>
-          <b-field horizontal label="著者">
-            <b-input
-              type="text"
-              key="book.authors[0]"
-              v-model="book.authors[0]"
-            ></b-input>
-          </b-field>
-          <b-field horizontal label="作成日">
-            <b-input
-              type="date"
-              key="book.created"
-              v-model="book.created"
-            ></b-input>
-          </b-field>
-          <b-field horizontal label="閲覧日">
-            <b-input type="date" key="book.read" v-model="book.read"></b-input>
-          </b-field>
-        </template>
-        <template v-if="baseType === 'thesis'">
-          <b-field horizontal label="タイトル">
-            <b-input
-              type="text"
-              key="thesis.title"
-              v-model="thesis.title"
-            ></b-input>
-          </b-field>
-          <b-field horizontal label="著者">
-            <b-input
-              type="text"
-              key="thesis.authors[0]"
-              v-model="thesis.authors[0]"
-            ></b-input>
-          </b-field>
-          <b-field horizontal label="作成日">
-            <b-input
-              type="date"
-              key="thesis.created"
-              v-model="thesis.created"
-            ></b-input>
-          </b-field>
-          <b-field horizontal label="閲覧日">
-            <b-input
-              type="date"
-              key="thesis.read"
-              v-model="thesis.read"
-            ></b-input>
-          </b-field>
-        </template>
-        <b-field horizontal>
-          <b-button v-if="baseType === 'web'" @click="encodeUrl">
-            URL変換
-          </b-button>
-          <b-button v-if="baseType === 'web'" @click="getWebInfo">
-            Web情報取得
-          </b-button>
-          <b-button @click="clear">クリア</b-button>
-        </b-field>
+  <div class="l-content half">
+    <div
+      class="l-half-left-title"
+      @click="leftClick"
+    >変換元</div>
+    <div
+      class="l-half-right-title"
+      @click="rightClick"
+    >変換先</div>
+    <template v-if="!(isSmartphone && !isLeft)">
+      <div class="l-half-left-content">
+        <div class="l-create-bibliography-content">
+          <div class="l-create-bibliography-top">
+            <select
+              class="select-medium"
+              v-model="baseType"
+            >
+              <option value="web">webページ</option>
+              <option value="book">書籍</option>
+              <option value="thesis">論文</option>
+            </select>
+          </div>
+          <template v-if="baseType === 'web'">
+            <div class="l-create-bibliography-main">
+              <div class="l-create-bibliography-main-column">
+                <div class="l-create-bibliography-main-key">URL</div>
+                <div class="l-create-bibliography-main-value">
+                  <input
+                    type="url"
+                    key="web.url"
+                    v-model="web.url"
+                  >
+                </div>
+              </div>
+              <div class="l-create-bibliography-main-column">
+                <div class="l-create-bibliography-main-key">Page</div>
+                <div class="l-create-bibliography-main-value">
+                  <input
+                    type="text"
+                    key="web.page_title"
+                    v-model="web.page_title"
+                  >
+                </div>
+              </div>
+              <div class="l-create-bibliography-main-column">
+                <div class="l-create-bibliography-main-key">Site</div>
+                <div class="l-create-bibliography-main-value">
+                  <input
+                    type="text"
+                    key="web.cite_title"
+                    v-model="web.cite_title"
+                  >
+                </div>
+              </div>
+              <div class="l-create-bibliography-main-column">
+                <div class="l-create-bibliography-main-key">View</div>
+                <div class="l-create-bibliography-main-value">
+                  <input
+                    type="date"
+                    key="web.read"
+                    v-model="web.read"
+                  >
+                </div>
+              </div>
+            </div>
+          </template>
+          <template v-if="baseType === 'book'">
+            <div class="l-create-bibliography-main">
+              <div class="l-create-bibliography-main-column">
+                <div class="l-create-bibliography-main-key">Title</div>
+                <div class="l-create-bibliography-main-value">
+                  <input
+                    type="text"
+                    key="book.title"
+                    v-model="book.title"
+                  >
+                </div>
+              </div>
+              <div class="l-create-bibliography-main-column">
+                <div class="l-create-bibliography-main-key">Author</div>
+                <div class="l-create-bibliography-main-value">
+                  <input
+                    type="text"
+                    key="book.authors[0]"
+                    v-model="book.authors[0]"
+                  >
+                </div>
+              </div>
+              <div class="l-create-bibliography-main-column">
+                <div class="l-create-bibliography-main-key">Create</div>
+                <div class="l-create-bibliography-main-value">
+                  <input
+                    type="date"
+                    key="book.created"
+                    v-model="book.created"
+                  >
+                </div>
+              </div>
+              <div class="l-create-bibliography-main-column">
+                <div class="l-create-bibliography-main-key">View</div>
+                <div class="l-create-bibliography-main-value">
+                  <input
+                    type="date"
+                    key="book.read"
+                    v-model="book.read"
+                  >
+                </div>
+              </div>
+            </div>
+          </template>
+          <template v-if="baseType === 'thesis'">
+            <div class="l-create-bibliography-main">
+              <div class="l-create-bibliography-main-column">
+                <div class="l-create-bibliography-main-key">Title</div>
+                <div class="l-create-bibliography-main-value">
+                  <input
+                    type="text"
+                    key="thesis.title"
+                    v-model="thesis.title"
+                  >
+                </div>
+              </div>
+              <div class="l-create-bibliography-main-column">
+                <div class="l-create-bibliography-main-key">Author</div>
+                <div class="l-create-bibliography-main-value">
+                  <input
+                    type="text"
+                    key="thesis.authors[0]"
+                    v-model="thesis.authors[0]"
+                  >
+                </div>
+              </div>
+              <div class="l-create-bibliography-main-column">
+                <div class="l-create-bibliography-main-key">Create</div>
+                <div class="l-create-bibliography-main-value">
+                  <input
+                    type="date"
+                    key="thesis.created"
+                    v-model="thesis.created"
+                  >
+                </div>
+              </div>
+              <div class="l-create-bibliography-main-column">
+                <div class="l-create-bibliography-main-key">View</div>
+                <div class="l-create-bibliography-main-value">
+                  <input
+                    type="date"
+                    key="thesis.read"
+                    v-model="thesis.read"
+                  >
+                </div>
+              </div>
+            </div>
+          </template>
+          <div class="l-create-bibliography-option">
+            <button
+              class="btn-medium"
+              v-if="baseType === 'web'"
+              @click="encodeUrl"
+            >Convert</button>
+            <!-- <button
+              class="btn-medium"
+              v-if="baseType === 'web'"
+              @click="getWebInfo"
+            >Info</button> -->
+            <button
+              class="btn-medium"
+              @click="clear"
+            >Clear</button>
+          </div>
+        </div>
       </div>
-      <div class="flex-item">
-        <h2 class="subtitle">変換先</h2>
-        <b-field>
-          <b-input type="textarea" v-model="output"></b-input>
-        </b-field>
-        <b-field horizontal>
-          <b-button @click="copy">コピー</b-button>
-        </b-field>
+    </template>
+    <template v-if="!(isSmartphone && isLeft)">
+      <div class="l-half-right-content">
+        <div class="l-create-bibliography-content">
+          <div class="l-create-bibliography-main right">
+            <textarea v-model="output"></textarea>
+          </div>
+          <div class="l-create-bibliography-option">
+            <button
+              class="btn-medium"
+              @click="copy"
+            >Copy</button>
+          </div>
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import dayjs from 'dayjs';
 import Web from '@/Web';
+import BaseView from '@/views/BaseView.vue';
 
 @Component
-export default class CreateBibliography extends Vue {
+export default class CreateBibliography extends BaseView {
   private baseType: 'web' | 'book' | 'thesis' = 'web';
 
   private convertType: 'text' = 'text';

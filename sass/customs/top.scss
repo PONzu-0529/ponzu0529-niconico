@@ -7,7 +7,7 @@ $top-content-width: calc($content-width - $scroll-bar-height);
 $top-content-width-smartphone: $content-width-smartphone;
 $top-content-gap-width: 10px;
 
-$top-btn-width: calc(($top-content-width - $top-content-gap-width * 3) / 4);
+$top-btn-width: calc(($top-content-width - $top-content-gap-width * 3) / 4 - 5px);
 $top-btn-width-smartphone: calc(($top-content-width-smartphone - $top-content-gap-width) / 2);
 $top-btn-height: $top-btn-width;
 $top-btn-height-smartphone: $top-btn-width-smartphone;

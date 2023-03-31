@@ -1,5 +1,132 @@
 <template>
-  <div class="main">
+  <div class="l-content">
+    <div
+      class="dialog"
+      v-if="isModalOpen"
+    >
+      <div class="dialog-title">Edit</div>
+      <div class="dialog-content">
+        <div class="l-mylist-assistant-dialog-main">
+          <div class="l-mylist-assistant-dialog-main-column">
+            <div class="l-mylist-assistant-dialog-main-key">ID</div>
+            <div class="l-mylist-assistant-dialog-main-value">
+              <input
+                class="field-content"
+                :disabled="music.music_id"
+                v-model="music.niconico_id"
+              >
+            </div>
+          </div>
+          <div class="l-mylist-assistant-dialog-main-column">
+            <div class="l-mylist-assistant-dialog-main-key">Title</div>
+            <div class="l-mylist-assistant-dialog-main-value">
+              <input
+                class="field-content"
+                :disabled="!hasMasterEditAuth"
+                v-model="music.title"
+              >
+            </div>
+          </div>
+          <div class="l-mylist-assistant-dialog-main-column">
+            <div class="l-mylist-assistant-dialog-main-key">Favorite</div>
+            <div class="l-mylist-assistant-dialog-main-value">
+              <input
+                class="field-content"
+                type="checkbox"
+                v-model="music.favorite"
+              >
+            </div>
+          </div>
+          <div class="l-mylist-assistant-dialog-main-column">
+            <div class="l-mylist-assistant-dialog-main-key">Skip</div>
+            <div class="l-mylist-assistant-dialog-main-value">
+              <input
+                class="field-content"
+                type="checkbox"
+                v-model="music.skip"
+              >
+            </div>
+          </div>
+        </div>
+        <div class="l-mylist-assistant-dialog-option">
+          <button
+            class="btn-medium"
+            :disabled="!hasMasterEditAuth"
+            @click="clickNowPlaying"
+          >Kiite</button>
+          <button
+            class="btn-medium"
+            :disabled="!hasMasterEditAuth"
+            @click="clickGetInfo(music.niconico_id)"
+          >Info</button>
+          <button
+            class="btn-medium"
+            @click="clickDialogApply"
+          >Apply</button>
+          <button
+            class="btn-medium"
+            @click="clickDialogCancel"
+          >Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="overlay"
+      v-if="isModalOpen"
+    ></div>
+
+    <div class="l-mylist-assistant-option">
+      <button
+        class="btn-medium"
+        :disabled="!hasMasterEditAuth"
+        @click="clickAdd"
+      >Add</button>
+    </div>
+
+    <div class="l-mylist-assistant-main">
+      <table>
+        <thead>
+          <tr>
+            <th class="id">ID</th>
+            <th class="title">タイトル</th>
+            <th class="status">お気に入り</th>
+            <th class="status">スキップ</th>
+            <th class="option">オプション</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="(music, index) in musicList">
+            <tr :key="index">
+              <td class="id">
+                <a
+                  :href="`https://www.nicovideo.jp/watch/${music.niconico_id}`"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >{{ music.niconico_id }}</a>
+              </td>
+              <td class="title">{{ music.title }}</td>
+              <td class="status">{{ music.favorite === 1 }}</td>
+              <td class="status">{{ music.skip === 1 }}</td>
+              <td class="option">
+                <button
+                  class="btn-medium"
+                  :disabled="!hasEditAuth"
+                  @click="clickEdit(index)"
+                >Edit</button>
+                <button
+                  class="btn-medium"
+                  :disabled="!hasMasterEditAuth"
+                  @click="clickDelete(music.music_id)"
+                >Delete</button>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- <div class="main">
     <div class="title">Mylist Assistant</div>
     <div class="content">
       <div class="upper-content">
@@ -118,7 +245,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
@@ -126,9 +253,10 @@ import { Vue, Component } from 'vue-property-decorator';
 import Utils from '@/common/Utils';
 import MylistAssistantHelper from '@/helpers/MylistAssistantHelper';
 import { MusicStyle } from '@/models/MylistAssistantModel';
+import BaseView from '@/views/BaseView.vue';
 
 @Component({})
-export default class MylistAssistant extends Vue {
+export default class MylistAssistant extends BaseView {
   private musicList: Array<MusicStyle>;
   private music: MusicStyle;
   private isModalOpen: boolean;

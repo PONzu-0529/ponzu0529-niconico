@@ -1,82 +1,131 @@
 <template>
-  <div class="filter-in-pokemongo">
-    <h1 class="title">ポケモンGO検索フィルターつくーる</h1>
-    <p>※非公式ツールです</p>
-    <div class="flex-container">
-      <div class="flex-item">
-        <h2 class="subtitle">条件</h2>
-        <div>
-          <b-checkbox v-model="statusGroup" native-value="color">
-            色違い
-          </b-checkbox>
-          <b-checkbox v-model="statusGroup" native-value="legend">
-            伝説
-          </b-checkbox>
-          <b-checkbox v-model="statusGroup" native-value="date">
-            日付
-          </b-checkbox>
-        </div>
-        <div class="left">
-          <b-field>
-            <b-switch
-              v-if="statusGroup.indexOf('color') !== -1"
-              v-model="isColor"
+  <div class="l-content half">
+    <div
+      class="l-half-left-title"
+      @click="leftClick"
+    >Condition</div>
+    <div
+      class="l-half-right-title"
+      @click="rightClick"
+    >Result</div>
+    <template v-if="!(isSmartphone && !isLeft)">
+      <div class="l-half-left-content">
+        <div class="l-pokemongo-filter-content">
+          <div class="l-pokemongo-filter-top">
+            <div>
+              <input
+                type="checkbox"
+                v-model="checkColor"
+              >
+              <label>色違い</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                v-model="checkLegend"
+              >
+              <label>伝説</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                v-model="checkDate"
+              >
+              <label>日付</label>
+            </div>
+          </div>
+          <div class="l-pokemongo-filter-main left">
+            <div
+              class="l-pokemongo-filter-main-column"
+              v-if="checkColor"
             >
-              色違い
-            </b-switch>
-          </b-field>
-          <b-field>
-            <b-switch
-              v-if="statusGroup.indexOf('legend') !== -1"
-              v-model="isLegend"
+              <div class="l-pokemongo-filter-main-key">色違い</div>
+              <div class="l-pokemongo-filter-main-value">
+                <input
+                  type="checkbox"
+                  v-model="isColor"
+                >
+              </div>
+            </div>
+            <div
+              class="l-pokemongo-filter-main-column"
+              v-if="checkLegend"
             >
-              伝説
-            </b-switch>
-          </b-field>
-          <b-field
-            v-if="statusGroup.indexOf('date') !== -1"
-            horizontal
-            label="日付"
-          >
-            <b-input v-model="date" type="number" />
-          </b-field>
+              <div class="l-pokemongo-filter-main-key">伝説</div>
+              <div class="l-pokemongo-filter-main-value">
+                <input
+                  type="checkbox"
+                  v-model="isLegend"
+                >
+              </div>
+            </div>
+            <div
+              class="l-pokemongo-filter-main-column"
+              v-if="checkDate"
+            >
+              <div class="l-pokemongo-filter-main-key">Date</div>
+              <div class="l-pokemongo-filter-main-value">
+                <input
+                  v-model="date"
+                  type="number"
+                >
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="flex-item">
-        <h2 class="subtitle">結果</h2>
-        <b-field>
-          <b-input type="textarea" v-model="output" />
-        </b-field>
-        <b-field>
-          <b-button class="success-button" @click="copy">コピー</b-button>
-        </b-field>
+    </template>
+    <template v-if="!(isSmartphone && isLeft)">
+      <div class="l-half-right-content">
+        <div class="l-pokemongo-filter-content">
+          <div class="l-pokemongo-filter-main right">
+            <textarea v-model="output"></textarea>
+          </div>
+          <div class="l-pokemongo-filter-option">
+            <button
+              class="btn-medium"
+              @click="copy"
+            >Copy</button>
+          </div>
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
+import BaseView from '@/views/BaseView.vue';
 
 @Component
-export default class FilterInPokemonGo extends Vue {
-  private statusGroup: Array<string> = []
+export default class FilterInPokemonGo extends BaseView {
+  private checkColor: boolean;
+  private checkLegend: boolean;
+  private checkDate: boolean;
   private isColor = false
   private isLegend = false
   private date = 1
 
+  public constructor() {
+    super();
+
+    this.checkColor = false;
+    this.checkLegend = false;
+    this.checkDate = false;
+  }
+
   private get output(): string {
     let options: Array<string> = [];
 
-    if (this.statusGroup.indexOf('color') !== -1) {
+    if (this.checkColor) {
       options.push(this.isColor ? '色違い' : '!色違い');
     }
 
-    if (this.statusGroup.indexOf('legend') !== -1) {
+    if (this.checkLegend) {
       options.push(this.isLegend ? '伝説のポケモン' : '!伝説のポケモン');
     }
 
-    if (this.statusGroup.indexOf('date') !== -1) {
+    if (this.checkDate) {
       options.push(`日数-${this.date}`);
     }
 

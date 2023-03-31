@@ -1,11 +1,25 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+    class="l-app"
+  >
     <!-- Navigator -->
     <app-navigator />
+
     <!-- Main -->
-    <div id="app-main">
+    <div class="l-main">
+      <div
+        id="ponzu-tools-title"
+        class="l-title"
+      >Top</div>
+
+      <div class="l-adsense-1"></div>
+
       <router-view />
+
+      <div class="l-adsense-2"></div>
     </div>
+
     <!-- Overlay -->
     <div
       class="overlay"
@@ -17,6 +31,7 @@
 <script lang="ts">
 import AppNavigator from '@/Navigator/AppNavigator.vue';
 import { Vue, Component } from 'vue-property-decorator';
+import TitleHelper from '@/helpers/TitleHelper';
 
 @Component({
   components: {
@@ -24,6 +39,10 @@ import { Vue, Component } from 'vue-property-decorator';
   },
 })
 export default class App extends Vue {
+  private mounted(): void {
+    TitleHelper.setTitleByPath(location.pathname);
+  }
+
   private changeHome(): void {
     this.$router.push({
       path: '/'

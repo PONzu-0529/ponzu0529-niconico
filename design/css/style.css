@@ -1,4 +1,5 @@
 body,
+div,
 input {
   margin: 0;
   padding: 0;
@@ -103,11 +104,6 @@ td {
     width: calc(100vw - 20px);
     position: absolute;
     top: calc((100vh - 20px - 20px) * 0.95 * 0.9 * 0.1);
-  }
-}
-@media (max-width: 480px) {
-  .l-app .l-main .l-content .l-half-right-content {
-    display: none;
   }
 }
 .l-app .l-main .l-adsense-1,
@@ -228,7 +224,7 @@ td {
 }
 
 .l-button-title {
-  height: calc(((100vw - 20px) * 0.8 - 20px - 30px) / 4 * 0.3);
+  height: calc((((100vw - 20px) * 0.8 - 20px - 30px) / 4 - 5px) * 0.3);
   word-break: break-word;
   font-size: x-large;
   text-align: center;
@@ -240,7 +236,7 @@ td {
 }
 
 .l-button-description {
-  height: calc(((100vw - 20px) * 0.8 - 20px - 30px) / 4 * 0.5);
+  height: calc((((100vw - 20px) * 0.8 - 20px - 30px) / 4 - 5px) * 0.5);
   word-break: break-word;
 }
 @media (max-width: 480px) {
@@ -250,8 +246,8 @@ td {
 }
 
 .btn-top {
-  height: calc(((100vw - 20px) * 0.8 - 20px - 30px) / 4);
-  width: calc(((100vw - 20px) * 0.8 - 20px - 30px) / 4);
+  height: calc(((100vw - 20px) * 0.8 - 20px - 30px) / 4 - 5px);
+  width: calc(((100vw - 20px) * 0.8 - 20px - 30px) / 4 - 5px);
 }
 @media (max-width: 480px) {
   .btn-top {
