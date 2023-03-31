@@ -1,12 +1,13 @@
 <template>
-  <div class="navigator">
-    <div class="left-navigator">
+  <div class="l-navigator">
+    <div class="l-left-navigator">
       <button
         class="btn-medium"
         @click="clickHome"
       >Home</button>
     </div>
-    <div class="right-navigator">
+
+    <div class="l-right-navigator">
       <template v-if="isLogin">
         <button
           class="btn-medium"

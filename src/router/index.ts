@@ -17,11 +17,6 @@ const routes: Array<RouteConfig> = [
     component: Home
   },
   {
-    path: '/check-todofuken',
-    name: 'CheckTodofuken',
-    component: CheckTodofuken
-  },
-  {
     path: '/convert-transfers',
     name: 'ConvertTransfers',
     component: ConvertTransfers

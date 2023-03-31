@@ -1,0 +1,73 @@
+@import '../common';
+@import '../variables';
+
+$convert-transfers-content-margin: 5px;
+
+$convert-transfers-content-height: $content-half-content-height;
+$convert-transfers-content-height-smartphone: $content-half-content-height-smartphone;
+$convert-transfers-content-width: $content-half-content-width;
+$convert-transfers-content-width-smartphone: $content-half-content-width-smartphone;
+
+$convert-transfers-main-height: calc($convert-transfers-content-height * 0.9);
+$convert-transfers-main-height-smartphone: calc($convert-transfers-content-height-smartphone * 0.9);
+$convert-transfers-main-width: calc($convert-transfers-content-width - ($scroll-bar-height + 5px));
+$convert-transfers-main-width-smartphone: calc($convert-transfers-content-width-smartphone - $convert-transfers-content-margin * 2);
+
+$convert-transfers-option-height: calc($convert-transfers-content-height * 0.1);
+$convert-transfers-option-height-smartphone: calc($convert-transfers-content-height-smartphone * 0.1);
+$convert-transfers-option-width: calc($convert-transfers-content-width - ($scroll-bar-height + 5px));
+$convert-transfers-option-width-smartphone: calc($convert-transfers-content-width-smartphone - $convert-transfers-content-margin * 2);
+
+$convert-transfers-option-gap-width: 10px;
+
+.l-convert-transfers-content {
+  height: $convert-transfers-content-height;
+  width: $convert-transfers-content-width;
+
+  @include smartphone {
+    height: $convert-transfers-content-height-smartphone;
+    width: $convert-transfers-content-width-smartphone;
+  }
+
+  margin: $convert-transfers-content-margin;
+
+  overflow-y: scroll;
+
+  @include smartphone {
+    overflow-x: scroll;
+  }
+
+  .l-convert-transfers-main {
+    height: $convert-transfers-main-height;
+    width: $convert-transfers-main-width;
+
+    @include smartphone {
+      height: $convert-transfers-main-height-smartphone;
+      width: $convert-transfers-main-width-smartphone;
+    }
+
+    textarea {
+      height: calc($convert-transfers-main-width / 2);
+      width: calc($convert-transfers-main-width - 5px);
+
+      @include smartphone {
+        height: $convert-transfers-main-width-smartphone;
+        width: calc($convert-transfers-main-width-smartphone - 5px);
+      }
+    }
+  }
+
+  .l-convert-transfers-option {
+    height: $convert-transfers-option-height;
+    width: $convert-transfers-option-width;
+
+    @include smartphone {
+      height: $convert-transfers-option-height-smartphone;
+      width: $convert-transfers-option-width-smartphone;
+    }
+
+    display: flex;
+    justify-content: center;
+    gap: $convert-transfers-option-gap-width;
+  }
+}

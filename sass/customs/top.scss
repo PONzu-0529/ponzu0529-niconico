@@ -1,0 +1,72 @@
+@import '../common';
+@import '../variables';
+
+$top-content-height: $content-height;
+$top-content-height-smartphone: $content-height-smartphone;
+$top-content-width: calc($content-width - $scroll-bar-height);
+$top-content-width-smartphone: $content-width-smartphone;
+$top-content-gap-width: 10px;
+
+$top-btn-width: calc(($top-content-width - $top-content-gap-width * 3) / 4 - 5px);
+$top-btn-width-smartphone: calc(($top-content-width-smartphone - $top-content-gap-width) / 2);
+$top-btn-height: $top-btn-width;
+$top-btn-height-smartphone: $top-btn-width-smartphone;
+
+$top-btn-title-height: calc($top-btn-height * 0.3);
+$top-btn-title-height-smartphone: calc($top-btn-height-smartphone * 0.4);
+
+$top-btn-description-height: calc($top-btn-height * 0.5);
+$top-btn-description-height-smartphone: calc($top-btn-height-smartphone * 0.5);
+
+.l-top-content {
+  height: $top-content-height;
+  width: $top-content-width;
+
+  @include smartphone {
+    height: $top-content-height-smartphone;
+    width: $top-content-width-smartphone;
+  }
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: $top-content-gap-width;
+
+  overflow-y: scroll;
+
+  @include smartphone {
+    overflow-x: scroll;
+  }
+}
+
+.l-button-title {
+  height: $top-btn-title-height;
+
+  @include smartphone {
+    height: $top-btn-title-height-smartphone;
+  }
+
+  word-break: break-word;
+
+  font-size: x-large;
+  text-align: center;
+}
+
+.l-button-description {
+  height: $top-btn-description-height;
+
+  @include smartphone {
+    height: $top-btn-description-height-smartphone;
+  }
+
+  word-break: break-word;
+}
+
+.btn-top {
+  height: $top-btn-height;
+  width: $top-btn-width;
+
+  @include smartphone {
+    height: $top-btn-height-smartphone;
+    width: $top-btn-width-smartphone;
+  }
+}

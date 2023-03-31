@@ -1,28 +1,17 @@
 <template>
-  <div class="home">
-    <h1 class="title is-1">{{ TITLE }}</h1>
-    <div class="button-container">
-      <div
-        class="button-area"
-        v-for="(item, index) in BUTTON_ITEM_LIST"
-        :key="index"
-      >
-        <div
-          class="button-item"
+  <div class="l-content">
+    <div class="l-top-content">
+      <template v-for="(item, index) in BUTTON_ITEM_LIST">
+        <button
+          class="btn-top"
           v-if="!item.disabled"
+          :key="index"
           @click="changePage(item.url)"
         >
-          <div>
-            <font-awesome-icon
-              class="icon-size"
-              :icon="['fa-solid', item.icon]"
-            />
-          </div>
-          <br />
-          <div class="subtitle is-4">{{ item.title }}</div>
-          <div>{{ item.description }}</div>
-        </div>
-      </div>
+          <div class="l-button-title">{{ item.title }}</div>
+          <div class="l-button-description">{{ item.description }}</div>
+        </button>
+      </template>
     </div>
   </div>
 </template>
@@ -50,7 +39,7 @@ export default class Home extends Vue {
       url: '/create-bibliography',
     },
     {
-      title: 'ポケモンGO検索フィルターつくーる',
+      title: 'ポケGO検索アシスト',
       description:
         'ポケモンGOのボックス内のポケモンを検索するフィルターを作ります。',
       icon: 'fa-gamepad',

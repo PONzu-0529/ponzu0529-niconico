@@ -1,0 +1,94 @@
+@import 'common';
+@import 'variables';
+
+.btn-medium,
+.select-medium {
+  height: 4vh;
+  width: 10vw;
+
+  @include smartphone {
+    width: 20vw;
+  }
+}
+
+$overlay-height: 100vh;
+$overlay-height-smartphone: 100svh;
+$overlay-width: 100vw;
+$overlay-width-smartphone: 100vw;
+
+$overlay-top-margin: calc(0px - ($app-margin + $navigator-height + $title-height));
+$overlay-top-margin-smartphone: calc(0px - ($app-margin + $navigator-height-smartphone + $title-height-smartphone));
+$overlay-left-margin: calc(0px - ($app-margin + $adsense-width));
+$overlay-left-margin-smartphone: calc(0px - ($app-margin));
+
+.overlay {
+  height: $overlay-height;
+  width: $overlay-width;
+
+  @include smartphone {
+    height: $overlay-height-smartphone;
+    width: $overlay-width-smartphone;
+  }
+
+  position: absolute;
+
+  top: $overlay-top-margin;
+  left: $overlay-left-margin;
+
+  @include smartphone {
+    top: $overlay-top-margin-smartphone;
+    left: $overlay-left-margin-smartphone;
+  }
+
+  z-index: 10;
+
+  background-color: white;
+  opacity: 0.6;
+}
+
+.dialog {
+  height: $dialog-height;
+  width: $dialog-width;
+
+  @include smartphone {
+    height: $dialog-height-smartphone;
+    width: $dialog-width-smartphone;
+  }
+
+  padding: $dialog-padding;
+
+  position: absolute;
+  z-index: 30;
+
+  border: 1px solid;
+  background-color: white;
+
+  .dialog-title {
+    height: $dialog-title-height;
+    width: $dialog-title-width;
+
+    @include smartphone {
+      height: $dialog-title-height-smartphone;
+      width: $dialog-title-width-smartphone;
+    }
+
+    font-size: xx-large;
+    text-align: center;
+  }
+
+  .dialog-content {
+    height: $dialog-content-height;
+    width: $dialog-content-width;
+
+    @include smartphone {
+      height: $dialog-content-height-smartphone;
+      width: $dialog-content-width-smartphone;
+    }
+
+    overflow-y: scroll;
+
+    @include smartphone {
+      overflow-x: scroll;
+    }
+  }
+}
