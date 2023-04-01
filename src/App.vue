@@ -13,11 +13,31 @@
         class="l-title"
       >Top</div>
 
-      <div class="l-adsense-1"></div>
+      <div class="l-adsense-1">
+        <!-- 汎用 -->
+        <ins
+          class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-4659079858937716"
+          data-ad-slot="2987492895"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        ></ins>
+      </div>
 
       <router-view />
 
-      <div class="l-adsense-2"></div>
+      <div class="l-adsense-2">
+        <!-- 汎用 -->
+        <ins
+          class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-4659079858937716"
+          data-ad-slot="2987492895"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        ></ins>
+      </div>
     </div>
 
     <!-- Overlay -->
