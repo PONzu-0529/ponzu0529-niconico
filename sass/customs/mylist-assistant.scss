@@ -1,0 +1,175 @@
+@import '../common';
+@import '../variables';
+
+$mylist-assistant-gap: 10px;
+
+$mylist-assistant-option-height: $navigator-height;
+$mylist-assistant-option-height-smartphone: $navigator-height-smartphone;
+
+$mylist-assistant-main-height: calc($content-height - $mylist-assistant-option-height);
+$mylist-assistant-main-height-smartphone: calc($content-height-smartphone - $mylist-assistant-option-height-smartphone);
+$mylist-assistant-main-width: calc($content-width - $scroll-bar-height);
+$mylist-assistant-main-width-smartphone: $content-width-smartphone;
+
+.l-mylist-assistant-option {
+  height: $mylist-assistant-option-height;
+
+  @include smartphone {
+    height: $mylist-assistant-option-height-smartphone;
+  }
+
+  display: flex;
+  justify-content: flex-end;
+  gap: $mylist-assistant-gap;
+}
+
+.l-mylist-assistant-main {
+  height: $mylist-assistant-main-height;
+
+  @include smartphone {
+    height: $mylist-assistant-main-height-smartphone;
+  }
+
+  overflow-y: scroll;
+
+  @include smartphone {
+    overflow-x: scroll;
+  }
+
+  th,
+  td {
+    &.id {
+      min-width: calc($mylist-assistant-main-width * 0.1);
+
+      @include smartphone {
+        min-width: calc($mylist-assistant-main-width-smartphone * 0.1);
+      }
+
+      text-align: center;
+    }
+
+    &.title {
+      min-width: calc($mylist-assistant-main-width * 0.4);
+
+      @include smartphone {
+        min-width: calc($mylist-assistant-main-width-smartphone * 0.4);
+      }
+    }
+
+    &.status {
+      min-width: calc($mylist-assistant-main-width * 0.1);
+
+      @include smartphone {
+        min-width: calc($mylist-assistant-main-width-smartphone * 0.1);
+      }
+
+      text-align: center;
+    }
+
+    &.option {
+      min-width: calc($mylist-assistant-main-width * 0.3);
+
+      @include smartphone {
+        min-width: calc($mylist-assistant-main-width-smartphone * 0.3);
+      }
+
+      display: flex;
+      justify-content: center;
+      gap: $mylist-assistant-gap;
+    }
+  }
+}
+
+$mylist-assistant-dialog-main-height: calc($dialog-content-height * 0.9);
+$mylist-assistant-dialog-main-height-smartphone: calc($dialog-content-height-smartphone * 0.9);
+$mylist-assistant-dialog-main-width: calc($dialog-content-width - $scroll-bar-height);
+$mylist-assistant-dialog-main-width-smartphone: $dialog-content-width-smartphone;
+
+$mylist-assistant-dialog-main-column-height: calc($dialog-content-height * 0.1);
+$mylist-assistant-dialog-main-column-height-smartphone: calc($dialog-content-height-smartphone * 0.1);
+
+$mylist-assistant-dialog-main-key-width: calc($mylist-assistant-dialog-main-width * 0.3);
+$mylist-assistant-dialog-main-key-width-smartphone: calc($mylist-assistant-dialog-main-width-smartphone * 0.5);
+
+$mylist-assistant-dialog-main-value-width: calc($mylist-assistant-dialog-main-width * 0.7);
+$mylist-assistant-dialog-main-value-width-smartphone: $mylist-assistant-dialog-main-width-smartphone;
+
+.l-mylist-assistant-dialog-main {
+  min-height: $mylist-assistant-dialog-main-height;
+  width: $mylist-assistant-dialog-main-width;
+
+  @include smartphone {
+    min-height: $mylist-assistant-dialog-main-height-smartphone;
+    width: $mylist-assistant-dialog-main-width-smartphone;
+  }
+
+  .l-mylist-assistant-dialog-main-column {
+    height: $mylist-assistant-dialog-main-column-height;
+
+    @include smartphone {
+      height: calc($mylist-assistant-dialog-main-column-height-smartphone * 2);
+    }
+
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .l-mylist-assistant-dialog-main-key,
+  .l-mylist-assistant-dialog-main-value {
+    height: $mylist-assistant-dialog-main-column-height;
+
+    @include smartphone {
+      height: $mylist-assistant-dialog-main-column-height-smartphone;
+    }
+  }
+
+  .l-mylist-assistant-dialog-main-key {
+    width: $mylist-assistant-dialog-main-key-width;
+
+    @include smartphone {
+      width: $mylist-assistant-dialog-main-key-width-smartphone;
+    }
+
+    text-align: center;
+
+    @include smartphone {
+      text-align: left;
+    }
+  }
+
+  .l-mylist-assistant-dialog-main-value {
+    width: $mylist-assistant-dialog-main-value-width;
+
+    @include smartphone {
+      width: $mylist-assistant-dialog-main-value-width-smartphone;
+    }
+
+    input {
+      width: calc($mylist-assistant-dialog-main-value-width - 10px);
+
+      @include smartphone {
+        width: calc($mylist-assistant-dialog-main-value-width-smartphone - 10px);
+      }
+    }
+  }
+}
+
+$mylist-assistant-dialog-option-height: calc($dialog-content-height * 0.1);
+$mylist-assistant-dialog-option-height-smartphone: calc($dialog-content-height-smartphone * 0.1);
+$mylist-assistant-dialog-option-width: calc($dialog-content-width - $scroll-bar-height);
+$mylist-assistant-dialog-option-width-smartphone: $dialog-content-width-smartphone;
+$mylist-assistant-dialog-option-gap: 10px;
+
+.l-mylist-assistant-dialog-option {
+  height: $mylist-assistant-dialog-option-height;
+  width: $mylist-assistant-dialog-option-width;
+
+  @include smartphone {
+    height: $mylist-assistant-dialog-option-height-smartphone;
+    width: $mylist-assistant-dialog-option-width-smartphone;
+  }
+
+  display: flex;
+  justify-content: center;
+  gap: $top-content-gap-width;
+}

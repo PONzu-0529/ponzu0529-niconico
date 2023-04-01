@@ -1,0 +1,158 @@
+@import '../common';
+@import '../variables';
+
+$create-bibliography-content-margin: 5px;
+
+$create-bibliography-content-height: $content-half-content-height;
+$create-bibliography-content-height-smartphone: $content-half-content-height-smartphone;
+$create-bibliography-content-width: $content-half-content-width;
+$create-bibliography-content-width-smartphone: $content-half-content-width-smartphone;
+
+$create-bibliography-top-height: calc($create-bibliography-content-height * 0.1);
+$create-bibliography-top-height-smartphone: calc($create-bibliography-content-height-smartphone * 0.1);
+$create-bibliography-top-width: calc($create-bibliography-content-width - ($scroll-bar-height + 5px));
+$create-bibliography-top-width-smartphone: calc($create-bibliography-content-width-smartphone - $convert-transfers-content-margin * 2);
+
+$create-bibliography-main-height: calc($create-bibliography-content-height * 0.8);
+$create-bibliography-main-height-smartphone: calc($create-bibliography-content-height-smartphone * 0.8);
+$create-bibliography-main-width: calc($create-bibliography-content-width - ($scroll-bar-height + 5px));
+$create-bibliography-main-width-smartphone: calc($create-bibliography-content-width-smartphone - $convert-transfers-content-margin * 2);
+
+$create-bibliography-main-column-height: calc($create-bibliography-content-height * 0.1);
+$create-bibliography-main-column-height-smartphone: calc($create-bibliography-content-height-smartphone * 0.1);
+
+$create-bibliography-main-key-width: calc($create-bibliography-main-width * 0.3);
+$create-bibliography-main-key-width-smartphone: calc($create-bibliography-main-width-smartphone * 0.5);
+
+$create-bibliography-main-value-width: calc($create-bibliography-main-width * 0.7);
+$create-bibliography-main-value-width-smartphone: $create-bibliography-main-width-smartphone;
+
+$create-bibliography-option-height: calc($create-bibliography-content-height * 0.1);
+$create-bibliography-option-height-smartphone: calc($create-bibliography-content-height-smartphone * 0.1);
+$create-bibliography-option-width: calc($create-bibliography-content-width - ($scroll-bar-height + 5px));
+$create-bibliography-option-width-smartphone: calc($create-bibliography-content-width-smartphone - $convert-transfers-content-margin * 2);
+
+$create-bibliography-option-gap-width: 10px;
+
+.l-create-bibliography-content {
+  height: $create-bibliography-content-height;
+  width: $create-bibliography-content-width;
+
+  @include smartphone {
+    height: $create-bibliography-content-height-smartphone;
+    width: $create-bibliography-content-width-smartphone;
+  }
+
+  margin: $create-bibliography-content-margin;
+
+  overflow-y: scroll;
+
+  @include smartphone {
+    overflow-x: scroll;
+  }
+
+  .l-create-bibliography-top {
+    height: $create-bibliography-top-height;
+    width: $create-bibliography-top-width;
+
+    @include smartphone {
+      height: $create-bibliography-top-height-smartphone;
+      width: $create-bibliography-top-width-smartphone;
+    }
+
+    display: flex;
+    justify-content: center;
+  }
+
+  .l-create-bibliography-main {
+    height: $create-bibliography-main-height;
+    width: $create-bibliography-main-width;
+
+    @include smartphone {
+      height: $create-bibliography-main-height-smartphone;
+      width: $create-bibliography-main-width-smartphone;
+    }
+
+    &.right {
+      height: calc($create-bibliography-top-height + $create-bibliography-main-height );
+
+      @include smartphone {
+        height: calc($create-bibliography-top-height-smartphone + $create-bibliography-main-height-smartphone);
+      }
+    }
+
+    textarea {
+      height: calc($create-bibliography-main-width / 2);
+      width: calc($create-bibliography-main-width - 5px);
+
+      @include smartphone {
+        height: $create-bibliography-main-width-smartphone;
+        width: calc($create-bibliography-main-width-smartphone - 5px);
+      }
+    }
+
+    .l-create-bibliography-main-column {
+      height: $create-bibliography-main-column-height;
+
+      @include smartphone {
+        height: calc($create-bibliography-main-column-height-smartphone * 2);
+      }
+
+      display: flex;
+      flex-wrap: wrap;
+
+      .l-create-bibliography-main-key,
+      .l-create-bibliography-main-value {
+        height: $create-bibliography-main-column-height;
+
+        @include smartphone {
+          height: $create-bibliography-main-column-height-smartphone;
+        }
+      }
+
+      .l-create-bibliography-main-key {
+        width: $create-bibliography-main-key-width;
+
+        @include smartphone {
+          width: $create-bibliography-main-key-width-smartphone;
+        }
+
+        text-align: center;
+
+        @include smartphone {
+          text-align: left;
+        }
+      }
+
+      .l-create-bibliography-main-value {
+        width: $create-bibliography-main-value-width;
+
+        @include smartphone {
+          width: $create-bibliography-main-value-width-smartphone;
+        }
+
+        input {
+          width: calc($create-bibliography-main-value-width - 10px);
+
+          @include smartphone {
+            width: calc($create-bibliography-main-value-width-smartphone - 10px);
+          }
+        }
+      }
+    }
+  }
+
+  .l-create-bibliography-option {
+    height: $create-bibliography-option-height;
+    width: $create-bibliography-option-width;
+
+    @include smartphone {
+      height: $create-bibliography-option-height-smartphone;
+      width: $create-bibliography-option-width-smartphone;
+    }
+
+    display: flex;
+    justify-content: center;
+    gap: $create-bibliography-option-gap-width;
+  }
+}

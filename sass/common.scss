@@ -1,0 +1,7 @@
+@import 'variables';
+
+@mixin smartphone {
+  @media (max-width: ($smartphone)) {
+    @content;
+  }
+}

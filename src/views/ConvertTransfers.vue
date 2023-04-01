@@ -1,35 +1,56 @@
 <template>
-  <div class="convert_transfer">
-    <h1 class="title">乗り換え変換ツール</h1>
-    <div class="flex-container">
-      <div class="flex-item">
-        <b-field>
-          <b-input id="input" type="textarea" v-model="input"></b-input>
-        </b-field>
-        <b-field>
-          <div>
-            <b-button class="normal-button" @click="read">読み込み</b-button>
-            <b-button class="success-button" @click="convert">変換</b-button>
+  <div class="l-content half">
+    <div
+      class="l-half-left-title"
+      @click="leftClick"
+    >Before</div>
+    <div
+      class="l-half-right-title"
+      @click="rightClick"
+    >After</div>
+    <template v-if="!(isSmartphone && !isLeft)">
+      <div class="l-half-left-content">
+        <div class="l-convert-transfers-content">
+          <div class="l-convert-transfers-main">
+            <textarea v-model="input"></textarea>
           </div>
-        </b-field>
+          <div class="l-convert-transfers-option">
+            <button
+              class="btn-medium"
+              @click="read"
+            >Read</button>
+            <button
+              class="btn-medium"
+              @click="convert"
+            >Convert</button>
+          </div>
+        </div>
       </div>
-      <div class="flex-item">
-        <b-field>
-          <b-input id="output" type="textarea" v-model="output"></b-input>
-        </b-field>
-        <b-field>
-          <b-button class="success-button" @click="copy">コピー</b-button>
-        </b-field>
+    </template>
+    <template v-if="!(isSmartphone && isLeft)">
+      <div class="l-half-right-content">
+        <div class="l-convert-transfers-content">
+          <div class="l-convert-transfers-main">
+            <textarea v-model="output"></textarea>
+          </div>
+          <div class="l-convert-transfers-option">
+            <button
+              class="btn-medium"
+              @click="copy"
+            >Copy</button>
+          </div>
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
+import BaseView from '@/views/BaseView.vue';
 
 @Component
-export default class ConvertTransfer extends Vue {
+export default class ConvertTransfer extends BaseView {
   private input = '';
   private output = '';
 

@@ -1,0 +1,131 @@
+@import 'common';
+@import 'variables';
+
+.l-app {
+  height: $app-height;
+  width: $app-width;
+
+  @include smartphone {
+    height: $app-height-smartphone;
+    width: $app-width-smartphone;
+  }
+
+  margin: $app-margin;
+
+  .l-navigator {
+    height: $navigator-height;
+
+    @include smartphone {
+      height: $navigator-height-smartphone;
+    }
+
+    display: flex;
+
+    .l-left-navigator,
+    .l-right-navigator {
+      width: $navigator-half-width;
+      display: flex;
+      gap: $navigator-gap-width;
+    }
+
+    .l-right-navigator {
+      justify-content: flex-end;
+    }
+  }
+
+  .l-main {
+    height: $main-height;
+
+    @include smartphone {
+      height: $main-height-smartphone;
+    }
+
+    display: flex;
+    flex-wrap: wrap;
+
+    .l-title {
+      height: $title-height;
+      width: $main-width;
+
+      @include smartphone {
+        height: $title-height-smartphone;
+        width: $main-width-smartphone;
+      }
+
+      font-size: xx-large;
+      text-align: center;
+    }
+
+    .l-content {
+      height: $content-height;
+      width: $content-width;
+
+      @include smartphone {
+        height: $content-height-smartphone;
+        width: $content-width-smartphone;
+      }
+
+      position: relative;
+
+      &.half {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .l-half-left-title,
+      .l-half-right-title {
+        height: $content-half-title-height;
+        width: $content-half-title-width;
+
+        @include smartphone {
+          height: $content-half-title-height-smartphone;
+          width: $content-half-title-width-smartphone;
+        }
+
+        font-size: x-large;
+        text-align: center;
+      }
+
+      .l-half-left-content,
+      .l-half-right-content {
+        height: $content-half-content-height;
+        width: $content-half-content-width;
+
+        @include smartphone {
+          height: $content-half-content-height-smartphone;
+          width: $content-half-content-width-smartphone;
+
+          position: absolute;
+          top: $content-half-title-height;
+        }
+      }
+
+      @include smartphone {
+        // .l-half-left-content {
+        //   display: none;
+        // }
+
+        // .l-half-right-content {
+        //   display: none;
+        // }
+      }
+    }
+
+    .l-adsense-1,
+    .l-adsense-2 {
+      height: $adsense-height;
+      width: $adsense-width;
+
+      @include smartphone {
+        height: $adsense-height-smartphone;
+        width: $adsense-width-smartphone;
+      }
+    }
+
+    @include smartphone {
+      .l-adsense-1 {
+        display: none;
+      }
+    }
+  }
+}

@@ -5,6 +5,19 @@ export default class AuthHelper {
   private static host = Utils.getHostWithProtocol();
 
   /**
+   * Login
+   * @param email 
+   * @param password 
+   * @returns 
+   */
+  public static async login(email: string, password: string): Promise<void> {
+    return await ApiHelper.post(`${this.host}/login`, {
+      email: email,
+      password: password
+    });
+  }
+
+  /**
    * Get UserName
    * @returns UserName
    */
