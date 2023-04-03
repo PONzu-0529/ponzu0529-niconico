@@ -7,11 +7,13 @@ use App\Models\Authentication;
 use App\Models\IpAddress;
 use App\Models\IpAddressAuthentication;
 use App\Models\Music;
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserMusic;
 use App\Models\Constants\AuthenticationConstant;
 use App\Models\Constants\IpAddressAuthenticationConstant;
 use App\Models\Constants\MusicConstant;
+use App\Models\Constants\SettingConstant;
 use App\Constants\AuthenticationLevelConstant;
 use App\Constants\CommandLogConstant;
 use App\Constants\IpAddressConstant;
@@ -26,6 +28,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Setting::truncate();
+        Setting::insert([
+            [
+                SettingConstant::KEY => 'ADSENCE_CLIENT_ID',
+                SettingConstant::VALUE => 'ca-pub-1234567890123456'
+            ],
+            [
+                SettingConstant::KEY => 'ADSENCE_SLOT_NUM1',
+                SettingConstant::VALUE => '1234567890'
+            ],
+            [
+                SettingConstant::KEY => 'ADSENCE_SLOT_NUM2',
+                SettingConstant::VALUE => '2345678901'
+            ]
+        ]);
+
         User::truncate();
         User::create([
             'name' => 'User1',

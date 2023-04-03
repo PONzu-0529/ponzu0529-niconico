@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommandLogController;
 use App\Http\Controllers\MylistAssistantController;
+use App\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +31,14 @@ Route::get('get-csrf-token', function () {
   throw new RuntimeException('Application session store not set.');
 });
 
+// Command Log
 Route::post('command-log', [CommandLogController::class, 'store']);
 
+// Mylist Assistant
 Route::get('auth/mylist-assistant', [MylistAssistantController::class, 'authentication']);
 Route::get('mylist-assistant/get-niconico-info', [MylistAssistantController::class, 'getNiconicoInfo']);
 Route::get('mylist-assistant/get-now-playing-info', [MylistAssistantController::class, 'getNowPlayingInfo']);
 Route::resource('mylist-assistant', MylistAssistantController::class, ['except' => ['create', 'edit']]);
+
+// Setting
+Route::post('setting', [SettingController::class, 'show']);
