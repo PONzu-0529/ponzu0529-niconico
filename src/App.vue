@@ -14,29 +14,19 @@
       >Top</div>
 
       <div class="l-adsense-1">
-        <!-- 汎用 -->
-        <ins
-          class="adsbygoogle"
-          style="display:block"
-          data-ad-client="ca-pub-4659079858937716"
-          data-ad-slot="2987492895"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        ></ins>
+        <adsense
+          :clientId="clientId"
+          :slotNum="slotNum1"
+        />
       </div>
 
       <router-view />
 
       <div class="l-adsense-2">
-        <!-- 汎用 -->
-        <ins
-          class="adsbygoogle"
-          style="display:block"
-          data-ad-client="ca-pub-4659079858937716"
-          data-ad-slot="2987492895"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        ></ins>
+        <adsense
+          :clientId="clientId"
+          :slotNum="slotNum2"
+        />
       </div>
     </div>
 
@@ -51,14 +41,35 @@
 <script lang="ts">
 import AppNavigator from '@/Navigator/AppNavigator.vue';
 import { Vue, Component } from 'vue-property-decorator';
+import Adsense from '@/components/Adsense.vue';
+import SettingHelper from '@/helpers/SettingHelper';
 import TitleHelper from '@/helpers/TitleHelper';
 
 @Component({
   components: {
+    Adsense,
     AppNavigator,
   },
 })
 export default class App extends Vue {
+  private clientId: string;
+  private slotNum1: string;
+  private slotNum2: string;
+
+  public constructor() {
+    super();
+
+    this.clientId = '';
+    this.slotNum1 = '';
+    this.slotNum2 = '';
+  }
+
+  private async created(): Promise<void> {
+    this.clientId = await SettingHelper.getSetting('ADSENCE_CLIENT_ID');
+    this.slotNum1 = await SettingHelper.getSetting('ADSENCE_SLOT_NUM1');
+    this.slotNum2 = await SettingHelper.getSetting('ADSENCE_SLOT_NUM2');
+  }
+
   private mounted(): void {
     TitleHelper.setTitleByPath(location.pathname);
   }
