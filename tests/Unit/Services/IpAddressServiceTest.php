@@ -29,8 +29,6 @@ class IpAddressServiceTest extends TestCase
     public function test_getIpAddressListForNotDefined()
     {
         $service = new IpAddressService();
-        var_dump($service->getIpAddressList('UNDEFINED_FUNCTION_ID'));
-
-        $this->assertTrue(true);
+        $this->assertEquals($service->getIpAddressList('UNDEFINED_FUNCTION_ID'), []);
     }
 }
