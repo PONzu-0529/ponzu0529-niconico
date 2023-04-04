@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="l-adsense"
-    :class="className"
-  >
+  <div class="l-adsense">
     <template v-if="!isDev">
       <component
         :is="'script'"
@@ -30,11 +27,6 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 
 @Component({})
 export default class Adsense extends Vue {
-  @Prop({
-    default: ''
-  })
-  private className: string;
-
   @Prop({
     default: ''
   })

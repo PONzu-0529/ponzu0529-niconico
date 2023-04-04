@@ -14,16 +14,15 @@
       >Top</div>
 
       <adsense
-        className="first"
         :clientId="clientId"
         :isDev="isDev"
         :slotNum="slotNum1"
+        v-if="!isSmartphone"
       />
 
       <router-view />
 
       <adsense
-        className="second"
         :clientId="clientId"
         :isDev="isDev"
         :slotNum="slotNum2"
@@ -75,7 +74,15 @@ export default class App extends Vue {
   }
 
   private mounted(): void {
+    window.addEventListener('resize', () => {
+      window.location.reload();
+    });
+
     TitleHelper.setTitleByPath(location.pathname);
+  }
+
+  private get isSmartphone(): boolean {
+    return Utils.isSmartphone();
   }
 
   private changeHome(): void {
@@ -85,100 +92,3 @@ export default class App extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-$pc: 1024px; // PC
-$tablet: 680px; // Tablet
-$smartphone: 480px; // Smartphone
-
-@mixin pc {
-  @media (max-width: ($pc)) {
-    @content;
-  }
-}
-
-@mixin tablet {
-  @media (max-width: ($tablet)) {
-    @content;
-  }
-}
-
-@mixin smartphone {
-  @media (max-width: ($smartphone)) {
-    @content;
-  }
-}
-
-#app {
-  margin: 10px;
-}
-
-#app-main {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-.flex-container {
-  display: flex;
-  justify-content: center;
-
-  @include smartphone {
-    display: block;
-  }
-}
-
-.flex-item {
-  margin: 0 auto;
-  width: 500px;
-
-  @include pc {
-    width: 330px;
-  }
-
-  @include tablet {
-    width: 230px;
-  }
-
-  @include smartphone {
-    margin: 0 auto 50px;
-  }
-}
-
-.normal-button {
-  background-color: lime !important;
-  margin: 10px !important;
-}
-
-.success-button {
-  background-color: lightskyblue !important;
-  margin: 10px !important;
-}
-
-.danger-button {
-  background-color: lightcoral !important;
-  margin: 10px !important;
-}
-
-.custom-modal {
-  padding: 10px;
-}
-
-.vm--modal {
-  height: initial !important;
-
-  @include tablet {
-    left: 0px !important;
-    margin: auto;
-    width: 480px !important;
-  }
-
-  @include smartphone {
-    left: 0px !important;
-    margin: auto;
-    width: 100% !important;
-  }
-}
-</style>

@@ -31,6 +31,14 @@ export default class Utils {
     return process.env.NODE_ENV ?? 'development';
   }
 
+  /**
+   * Check Width for Smartphone
+   * @returns true or false
+   */
+  public static isSmartphone(): boolean {
+    return document.body.clientWidth < 480;
+  }
+
   public static overlay(): void {
     (<HTMLElement> document.getElementsByClassName('overlay')[0]).style.removeProperty('display');
   }
