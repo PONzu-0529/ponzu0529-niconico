@@ -19,6 +19,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import Utils from '@/common/Utils';
 
 @Component({})
 export default class BaseView extends Vue {
@@ -31,7 +32,7 @@ export default class BaseView extends Vue {
   }
 
   protected get isSmartphone(): boolean {
-    return document.body.clientWidth < 480;
+    return Utils.isSmartphone();
   }
 
   protected leftClick(): void {

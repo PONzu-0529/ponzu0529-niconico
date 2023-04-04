@@ -118,10 +118,6 @@
       @include smartphone {
         height: $adsense-height-smartphone;
         width: $adsense-width-smartphone;
-
-        &.first {
-          display: none;
-        }
       }
     }
   }

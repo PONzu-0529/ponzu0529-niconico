@@ -115,9 +115,6 @@ td {
     height: calc((100svh - 20px) * 0.95 * 0.1);
     width: calc(100vw - 20px);
   }
-  .l-app .l-main .l-adsense.first {
-    display: none;
-  }
 }
 
 .btn-medium,
