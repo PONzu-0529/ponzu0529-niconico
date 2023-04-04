@@ -106,20 +106,16 @@ td {
     top: calc((100vh - 20px - 20px) * 0.95 * 0.9 * 0.1);
   }
 }
-.l-app .l-main .l-adsense-1,
-.l-app .l-main .l-adsense-2 {
+.l-app .l-main .l-adsense {
   height: calc((100vh - 20px - 20px) * 0.95 * 0.9);
   width: calc((100vw - 20px) * 0.1);
 }
 @media (max-width: 480px) {
-  .l-app .l-main .l-adsense-1,
-  .l-app .l-main .l-adsense-2 {
+  .l-app .l-main .l-adsense {
     height: calc((100svh - 20px) * 0.95 * 0.1);
     width: calc(100vw - 20px);
   }
-}
-@media (max-width: 480px) {
-  .l-app .l-main .l-adsense-1 {
+  .l-app .l-main .l-adsense.first {
     display: none;
   }
 }
