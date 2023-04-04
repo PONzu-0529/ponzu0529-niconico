@@ -13,21 +13,21 @@
         class="l-title"
       >Top</div>
 
-      <div class="l-adsense-1">
-        <adsense
-          :clientId="clientId"
-          :slotNum="slotNum1"
-        />
-      </div>
+      <adsense
+        className="first"
+        :clientId="clientId"
+        :isDev="isDev"
+        :slotNum="slotNum1"
+      />
 
       <router-view />
 
-      <div class="l-adsense-2">
-        <adsense
-          :clientId="clientId"
-          :slotNum="slotNum2"
-        />
-      </div>
+      <adsense
+        className="second"
+        :clientId="clientId"
+        :isDev="isDev"
+        :slotNum="slotNum2"
+      />
     </div>
 
     <!-- Overlay -->
@@ -42,6 +42,7 @@
 import AppNavigator from '@/Navigator/AppNavigator.vue';
 import { Vue, Component } from 'vue-property-decorator';
 import Adsense from '@/components/Adsense.vue';
+import Utils from '@/common/Utils';
 import SettingHelper from '@/helpers/SettingHelper';
 import TitleHelper from '@/helpers/TitleHelper';
 
@@ -55,6 +56,7 @@ export default class App extends Vue {
   private clientId: string;
   private slotNum1: string;
   private slotNum2: string;
+  private isDev: boolean;
 
   public constructor() {
     super();
@@ -62,12 +64,14 @@ export default class App extends Vue {
     this.clientId = '';
     this.slotNum1 = '';
     this.slotNum2 = '';
+    this.isDev = true;
   }
 
   private async created(): Promise<void> {
     this.clientId = await SettingHelper.getSetting('ADSENCE_CLIENT_ID');
     this.slotNum1 = await SettingHelper.getSetting('ADSENCE_SLOT_NUM1');
     this.slotNum2 = await SettingHelper.getSetting('ADSENCE_SLOT_NUM2');
+    this.isDev = Utils.getEnv() === 'development';
   }
 
   private mounted(): void {
