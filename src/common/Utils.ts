@@ -23,6 +23,14 @@ export default class Utils {
     return `${location.protocol}//${location.hostname}`;
   }
 
+  /**
+   * Get Environment
+   * @returns development or production (or test)
+   */
+  public static getEnv(): string {
+    return process.env.NODE_ENV ?? 'development';
+  }
+
   public static overlay(): void {
     (<HTMLElement> document.getElementsByClassName('overlay')[0]).style.removeProperty('display');
   }

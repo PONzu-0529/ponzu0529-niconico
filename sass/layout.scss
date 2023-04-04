@@ -111,20 +111,17 @@
       }
     }
 
-    .l-adsense-1,
-    .l-adsense-2 {
+    .l-adsense {
       height: $adsense-height;
       width: $adsense-width;
 
       @include smartphone {
         height: $adsense-height-smartphone;
         width: $adsense-width-smartphone;
-      }
-    }
 
-    @include smartphone {
-      .l-adsense-1 {
-        display: none;
+        &.first {
+          display: none;
+        }
       }
     }
   }
