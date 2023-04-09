@@ -43,3 +43,10 @@ mariadb/9_grant.sql
 
 # Python
 __pycache__
+
+# For Develop
+.devcontainer
+.vecode
+default
+httpd
+selenium
