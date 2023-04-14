@@ -2,11 +2,73 @@
 
 namespace Tests\Unit\Services;
 
+use Auth, Exception;
 use Tests\TestCase;
 use App\Services\MylistAssistantService;
 
 class MylistAssistantServiceTest extends TestCase
 {
+    public function test_getAll_unauthorized()
+    {
+        $service = new MylistAssistantService();
+        try {
+            $service->getAll();
+        } catch (Exception $ex) {
+            $this->assertEquals($ex->getMessage(), 'This User is unauthorized.');
+        }
+    }
+
+    public function test_getAll()
+    {
+        Auth::attempt(
+            [
+                'email' => 'test1@sample.com',
+                'password' => 'password'
+            ]
+        );
+
+        $service = new MylistAssistantService();
+        $result = $service->getAll();
+
+        $this->assertArrayHasKey('music_id', $result[0]);
+        $this->assertArrayHasKey('title', $result[0]);
+        $this->assertArrayHasKey('niconico_id', $result[0]);
+        $this->assertArrayHasKey('user_id', $result[0]);
+        $this->assertArrayHasKey('favorite', $result[0]);
+        $this->assertArrayHasKey('skip', $result[0]);
+        $this->assertArrayHasKey('memo', $result[0]);
+    }
+    public function test_getById_unauthorized()
+    {
+        $service = new MylistAssistantService();
+        try {
+            $service->getById(1);
+        } catch (Exception $ex) {
+            $this->assertEquals($ex->getMessage(), 'This User is unauthorized.');
+        }
+    }
+
+    public function test_getById()
+    {
+        Auth::attempt(
+            [
+                'email' => 'test1@sample.com',
+                'password' => 'password'
+            ]
+        );
+
+        $service = new MylistAssistantService();
+        $result = $service->getById(1);
+
+        $this->assertArrayHasKey('music_id', $result);
+        $this->assertArrayHasKey('title', $result);
+        $this->assertArrayHasKey('niconico_id', $result);
+        $this->assertArrayHasKey('user_id', $result);
+        $this->assertArrayHasKey('favorite', $result);
+        $this->assertArrayHasKey('skip', $result);
+        $this->assertArrayHasKey('memo', $result);
+    }
+
     // /**
     //  * Get Niconico Info
     //  *

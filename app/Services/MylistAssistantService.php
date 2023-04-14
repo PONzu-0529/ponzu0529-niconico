@@ -10,10 +10,10 @@ use App\Helpers\AuthenticationHelper;
 use App\Helpers\ResponseHelper;
 use App\Models\Music;
 use App\Models\UserMusic;
-use App\Models\UserMusicView;
+use App\Models\UserMusic2View;
 use App\Models\Constants\MusicConstant;
 use App\Models\Constants\UserMusicConstant;
-use App\Models\Constants\UserMusicViewConstant;
+use App\Models\Constants\UserMusic2ViewConstant;
 
 class MylistAssistantService
 {
@@ -28,15 +28,15 @@ class MylistAssistantService
             abort(403, 'This User is unauthorized.');
         }
 
-        return UserMusicView::where([
-            UserMusicViewConstant::USER_ID => Auth::user()['id']
+        return UserMusic2View::where([
+            UserMusic2ViewConstant::USER_ID => Auth::user()['id']
         ])
-            ->orderBy(UserMusicViewConstant::MUSIC_ID, 'asc')
+            ->orderBy(UserMusic2ViewConstant::MUSIC_ID, 'asc')
             ->get()
             ->toArray();
     }
 
-    public function getById(int $id): Music
+    public function getById(int $id): UserMusic2View
     {
         if (
             !AuthenticationHelper::checkAuthentication(
@@ -47,9 +47,9 @@ class MylistAssistantService
             abort(403, 'This User is unauthorized.');
         }
 
-        return UserMusicView::where([
-            UserMusicViewConstant::USER_ID => Auth::user()['id'],
-            UserMusicViewConstant::MUSIC_ID => $id
+        return UserMusic2View::where([
+            UserMusic2ViewConstant::USER_ID => Auth::user()['id'],
+            UserMusic2ViewConstant::MUSIC_ID => $id
         ])->first();
     }
 
