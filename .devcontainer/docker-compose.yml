@@ -39,8 +39,6 @@ services:
       TZ: Asia/Tokyo
     ports:
       - "3306:3306"
-    volumes:
-      - ${LOCAL_HOST_PATH}/mariadb:/docker-entrypoint-initdb.d
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:4.7
     container_name: "${PROJECT_NAME}_phpmyadmin"
