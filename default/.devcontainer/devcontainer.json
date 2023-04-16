@@ -12,6 +12,7 @@
 		"eamodio.gitlens", // GitLens — Git supercharged
 		"GitHub.vscode-pull-request-github", // GitHub Pull Requests and Issues
 		"hediet.vscode-drawio", // Draw.io Integration
+		"bierner.markdown-mermaid", // Markdown Preview Mermaid Support
 		"george-alisson.html-preview-vscode", // HTML Preview
 		"bmewburn.vscode-intelephense-client", // PHP Intelephense
 		"neilbrayfield.php-docblocker", // PHP DocBlocker
