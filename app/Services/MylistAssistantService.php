@@ -9,9 +9,11 @@ use App\Constants\MylistAssistantConstant;
 use App\Helpers\AuthenticationHelper;
 use App\Helpers\ResponseHelper;
 use App\Models\Music;
+use App\Models\MusicMemo;
 use App\Models\UserMusic;
 use App\Models\UserMusic2View;
 use App\Models\Constants\MusicConstant;
+use App\Models\Constants\MusicMemoConstant;
 use App\Models\Constants\UserMusicConstant;
 use App\Models\Constants\UserMusic2ViewConstant;
 
@@ -53,7 +55,17 @@ class MylistAssistantService
         ])->first();
     }
 
-    public function add(string $title, string $niconico_id, bool $favorite, bool $skip)
+    /**
+     * Add
+     *
+     * @param string $title
+     * @param string $niconico_id
+     * @param boolean $favorite
+     * @param boolean $skip
+     * @param string $memo
+     * @return (integer | JsonResponse) music_id | Error Json Rersponse
+     */
+    public function add(string $title, string $niconico_id, bool $favorite, bool $skip, string $memo)
     {
         if (
             !AuthenticationHelper::checkAuthentication(
@@ -85,9 +97,19 @@ class MylistAssistantService
         $model[UserMusicConstant::SKIP] = $skip;
 
         $model->save();
+
+        $model = new MusicMemo();
+
+        $model[MusicMemoConstant::USER_ID] = Auth::user()['id'];
+        $model[MusicMemoConstant::MUSIC_ID] = $music_id;
+        $model[MusicMemoConstant::MEMO] = $memo;
+
+        $model->save();
+
+        return intval($music_id);
     }
 
-    public function update(int $music_id, string $title, string $niconico_id, bool $favorite, bool $skip)
+    public function update(int $music_id, string $title, string $niconico_id, bool $favorite, bool $skip, string $memo)
     {
         if (
             !AuthenticationHelper::checkAuthentication(
@@ -128,6 +150,23 @@ class MylistAssistantService
         $model[UserMusicConstant::MUSIC_ID] = $music_id;
         $model[UserMusicConstant::FAVORITE] = $favorite;
         $model[UserMusicConstant::SKIP] = $skip;
+
+        $model->save();
+
+        $object = MusicMemo::where([
+            MusicMemoConstant::USER_ID => Auth::user()['id'],
+            MusicMemoConstant::MUSIC_ID => $music_id
+        ]);
+
+        if ($object->exists()) {
+            $model = $object->first();
+        } else {
+            $model = new MusicMemo();
+        }
+
+        $model[MusicMemoConstant::USER_ID] = Auth::user()['id'];
+        $model[MusicMemoConstant::MUSIC_ID] = $music_id;
+        $model[MusicMemoConstant::MEMO] = $memo;
 
         $model->save();
     }
