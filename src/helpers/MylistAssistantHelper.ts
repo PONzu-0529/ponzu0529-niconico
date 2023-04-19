@@ -29,7 +29,7 @@ export default class MylistAssistantHelper {
     return await ApiHelper.get(`${Utils.getHostWithProtocol()}/api/mylist-assistant/${id}`);
   }
 
-  public static async add(music: MusicStyle): Promise<void> {
+  public static async add(music: MusicStyle): Promise<number> {
     return await ApiHelper.post(`${Utils.getHostWithProtocol()}/api/mylist-assistant`, music);
   }
 

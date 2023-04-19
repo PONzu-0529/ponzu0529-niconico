@@ -128,7 +128,7 @@ class MylistAssistantServiceTest extends TestCase
         );
 
         $title = 'TEST_TITLE';
-        $id = 'TEST_NICONICO_ID_' . time();
+        $id = 'TEST_NICONICO_ID_UPDATE_' . time();
         $favorite = false;
         $skip = true;
         $memo = 'TEST_MEMO';
@@ -137,7 +137,7 @@ class MylistAssistantServiceTest extends TestCase
         $music_id = $service->add($title, $id, $favorite, $skip, $memo);
 
         $title = 'TEST_TITLE_NEW';
-        $id = 'TEST_NICONICO_ID_NEW_' . time();
+        $id = 'TEST_NICONICO_ID_UPDATE_NEW_' . time();
         $favorite = true;
         $skip = false;
         $memo = 'TEST_MEMO_NEW';

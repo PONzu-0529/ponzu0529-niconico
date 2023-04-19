@@ -55,7 +55,7 @@ class MylistAssistantController extends Controller
             $request->input(MusicConstant::NICONICO_ID),
             $request->input(UserMusicConstant::FAVORITE),
             $request->input(UserMusicConstant::SKIP),
-            $request->input(MusicMemoConstant::MEMO)
+            $request->input(MusicMemoConstant::MEMO) ?? ''
         );
     }
 
@@ -87,7 +87,7 @@ class MylistAssistantController extends Controller
             $request->input(MusicConstant::NICONICO_ID),
             $request->input(UserMusicConstant::FAVORITE),
             $request->input(UserMusicConstant::SKIP),
-            $request->input(MusicMemoConstant::MEMO)
+            $request->input(MusicMemoConstant::MEMO) ?? ''
         );
     }
 
