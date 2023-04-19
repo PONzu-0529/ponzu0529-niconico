@@ -47,6 +47,12 @@
               >
             </div>
           </div>
+          <div class="l-mylist-assistant-dialog-main-l-column">
+            <div class="l-mylist-assistant-dialog-main-key">Memo</div>
+            <div class="l-mylist-assistant-dialog-main-l-value">
+              <textarea v-model="music.memo"></textarea>
+            </div>
+          </div>
         </div>
         <div class="l-mylist-assistant-dialog-option">
           <button
@@ -249,7 +255,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import Utils from '@/common/Utils';
 import MylistAssistantHelper from '@/helpers/MylistAssistantHelper';
 import { MusicStyle } from '@/models/MylistAssistantModel';
@@ -271,11 +277,19 @@ export default class MylistAssistant extends BaseView {
       title: '',
       niconico_id: '',
       favorite: false,
-      skip: false
+      skip: false,
+      memo: ''
     };
     this.isModalOpen = false;
     this.hasEditAuth = false;
     this.hasMasterEditAuth = false;
+  }
+
+  @Watch('music.niconico_id')
+  private onChangeNiconicoId() {
+    if (this.checkExist(this.music.niconico_id)) {
+      this.music = this.musicList.filter(music => music.niconico_id === this.music.niconico_id)[0];
+    }
   }
 
   private async mounted(): Promise<void> {
@@ -296,7 +310,8 @@ export default class MylistAssistant extends BaseView {
       title: '',
       niconico_id: '',
       favorite: false,
-      skip: false
+      skip: false,
+      memo: ''
     };
     this.isModalOpen = true;
   }
@@ -313,6 +328,15 @@ export default class MylistAssistant extends BaseView {
 
     await MylistAssistantHelper.delete(index);
     this.musicList = await MylistAssistantHelper.getAll();
+  }
+
+  /**
+   * Check Exist Music by NiconicoID
+   * @param niconico_id NiconicoID
+   * @returns Exist: true, Not Exist: false
+   */
+  private checkExist(niconico_id: string): boolean {
+    return this.musicList.filter(music => music.niconico_id === niconico_id).length !== 0;
   }
 
   private async clickNowPlaying(): Promise<void> {

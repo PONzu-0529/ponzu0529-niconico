@@ -6,4 +6,5 @@ export interface MusicStyle {
   niconico_id: string
   favorite: boolean
   skip: boolean
+  memo: string
 }
