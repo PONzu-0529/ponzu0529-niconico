@@ -114,12 +114,39 @@ $mylist-assistant-dialog-main-value-width-smartphone: $mylist-assistant-dialog-m
     flex-wrap: wrap;
   }
 
+  .l-mylist-assistant-dialog-main-l-column {
+    height: calc($mylist-assistant-dialog-main-column-height * 3);
+
+    @include smartphone {
+      height: calc($mylist-assistant-dialog-main-column-height-smartphone * 4);
+    }
+
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   .l-mylist-assistant-dialog-main-key,
   .l-mylist-assistant-dialog-main-value {
     height: $mylist-assistant-dialog-main-column-height;
 
     @include smartphone {
       height: $mylist-assistant-dialog-main-column-height-smartphone;
+    }
+  }
+
+  .l-mylist-assistant-dialog-main-l-value {
+    height: calc($mylist-assistant-dialog-main-column-height * 3);
+
+    @include smartphone {
+      height: calc($mylist-assistant-dialog-main-column-height-smartphone * 3);
+    }
+
+    textarea {
+      height: calc($mylist-assistant-dialog-main-column-height * 2.8);
+
+      @include smartphone {
+        height: calc($mylist-assistant-dialog-main-column-height-smartphone * 2.8);
+      }
     }
   }
 
@@ -137,14 +164,16 @@ $mylist-assistant-dialog-main-value-width-smartphone: $mylist-assistant-dialog-m
     }
   }
 
-  .l-mylist-assistant-dialog-main-value {
+  .l-mylist-assistant-dialog-main-value,
+  .l-mylist-assistant-dialog-main-l-value {
     width: $mylist-assistant-dialog-main-value-width;
 
     @include smartphone {
       width: $mylist-assistant-dialog-main-value-width-smartphone;
     }
 
-    input {
+    input,
+    textarea {
       width: calc($mylist-assistant-dialog-main-value-width - 10px);
 
       @include smartphone {
