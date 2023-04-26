@@ -110,7 +110,6 @@ erDiagram
 
   expenses {
     bigint id PK
-    bigint user_id
     varchar title
     int money
     date date
