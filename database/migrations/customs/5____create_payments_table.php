@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Constants\PaymentConstant;
+use App\Models\Constants\PaymentModelConstant;
 
 class CreatePaymentsTable extends Migration
 {
@@ -14,10 +14,10 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create(PaymentConstant::TABLE_NAME, function (Blueprint $table) {
+        Schema::create(PaymentModelConstant::TABLE_NAME, function (Blueprint $table) {
             $table->id();
-            $table->bigInteger(PaymentConstant::USER_ID);
-            $table->string(PaymentConstant::TITLE);
+            $table->bigInteger(PaymentModelConstant::USER_ID);
+            $table->string(PaymentModelConstant::TITLE);
             $table->timestamps();
 
             $table->softDeletes();
@@ -31,6 +31,6 @@ class CreatePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(PaymentConstant::TABLE_NAME);
+        Schema::dropIfExists(PaymentModelConstant::TABLE_NAME);
     }
 }

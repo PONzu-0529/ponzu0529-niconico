@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Constants\ExpenseConstant;
+use App\Models\Constants\ExpenseModelConstant;
 
 class CreateExpensesTable extends Migration
 {
@@ -14,13 +14,13 @@ class CreateExpensesTable extends Migration
      */
     public function up()
     {
-        Schema::create(ExpenseConstant::TABLE_NAME, function (Blueprint $table) {
+        Schema::create(ExpenseModelConstant::TABLE_NAME, function (Blueprint $table) {
             $table->id();
-            $table->bigInteger(ExpenseConstant::USER_ID);
-            $table->string(ExpenseConstant::TITLE);
-            $table->date(ExpenseConstant::DATE);
-            $table->string(ExpenseConstant::TO);
-            $table->string(ExpenseConstant::MEMO);
+            $table->bigInteger(ExpenseModelConstant::USER_ID);
+            $table->string(ExpenseModelConstant::TITLE);
+            $table->date(ExpenseModelConstant::DATE);
+            $table->string(ExpenseModelConstant::TO);
+            $table->string(ExpenseModelConstant::MEMO);
             $table->timestamps();
 
             $table->softDeletes();
@@ -34,6 +34,6 @@ class CreateExpensesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(ExpenseConstant::TABLE_NAME);
+        Schema::dropIfExists(ExpenseModelConstant::TABLE_NAME);
     }
 }

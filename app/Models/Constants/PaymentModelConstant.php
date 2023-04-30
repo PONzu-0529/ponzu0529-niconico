@@ -2,7 +2,7 @@
 
 namespace App\Models\Constants;
 
-class PaymentConstant extends BaseConstant
+class PaymentModelConstant extends BaseConstant
 {
     public const TABLE_NAME = 'payments';
 

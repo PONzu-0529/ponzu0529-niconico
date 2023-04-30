@@ -2,7 +2,7 @@
 
 namespace App\Models\Constants;
 
-class ExpenseItemConstant extends BaseConstant
+class ExpenseItemModelConstant extends BaseConstant
 {
     public const TABLE_NAME = 'expense_items';
 
