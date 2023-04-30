@@ -186,7 +186,7 @@ erDiagram
     bigint user_id FK
     varchar title
     date date
-    bigint payment_id FK
+    varchar to
     varchar memo
     timestamp created_at
     timestamp updated_at
@@ -198,7 +198,7 @@ erDiagram
     bigint expenses_id FK
     varchar title
     int money
-    varchar to
+    bigint payment_id FK
     timestamp created_at
     timestamp updated_at
     timestamp deleted_at
