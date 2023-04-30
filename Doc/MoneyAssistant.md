@@ -187,7 +187,6 @@ erDiagram
     varchar title
     date date
     bigint payment_id FK
-    varchar to
     varchar memo
     timestamp created_at
     timestamp updated_at
@@ -199,6 +198,7 @@ erDiagram
     bigint expenses_id FK
     varchar title
     int money
+    varchar to
     timestamp created_at
     timestamp updated_at
     timestamp deleted_at
@@ -206,6 +206,6 @@ erDiagram
 
   users ||--o{ payments : ""
   users ||--o{ expenses : ""
-  expenses ||--|{ payments : ""
+  expense_items ||--|{ payments : ""
   expenses |o--o{ expense_items : ""
 ```
