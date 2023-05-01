@@ -57,6 +57,15 @@ class ExpenseServiceTest extends BaseServiceTest
             $this->assertArrayHasKey(ExpenseModelConstant::TO, $result);
             $this->assertArrayHasKey(ExpenseModelConstant::MEMO, $result);
             $this->assertArrayHasKey(ExpenseModelConstant::ITEMS, $result);
+
+            foreach ($result[ExpenseModelConstant::ITEMS] as $item) {
+                $this->assertArrayHasKey(ExpenseItemModelConstant::EXPENSES_ID, $item);
+                $this->assertEquals($result[ExpenseModelConstant::ID], $item[ExpenseItemModelConstant::EXPENSES_ID]);
+                $this->assertArrayHasKey(ExpenseItemModelConstant::TITLE, $item);
+                $this->assertArrayHasKey(ExpenseItemModelConstant::MONEY, $item);
+                $this->assertArrayHasKey(ExpenseItemModelConstant::PAYMENT_ID, $item);
+                $this->assertArrayHasKey(ExpenseItemModelConstant::PAYMENT, $item);
+            }
         }
     }
 
@@ -117,6 +126,7 @@ class ExpenseServiceTest extends BaseServiceTest
             $this->assertArrayHasKey(ExpenseItemModelConstant::TITLE, $item);
             $this->assertArrayHasKey(ExpenseItemModelConstant::MONEY, $item);
             $this->assertArrayHasKey(ExpenseItemModelConstant::PAYMENT_ID, $item);
+            $this->assertArrayHasKey(ExpenseItemModelConstant::PAYMENT, $item);
         }
     }
 

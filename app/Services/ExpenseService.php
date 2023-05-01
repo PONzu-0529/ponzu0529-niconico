@@ -15,6 +15,13 @@ use App\Helpers\AuthenticationHelper;
 
 class ExpenseService
 {
+    private PaymentService $payment_service;
+
+    public function __construct()
+    {
+        $this->payment_service = new PaymentService();
+    }
+
     /**
      * Get ALL
      *
@@ -33,11 +40,19 @@ class ExpenseService
         return array_map(
             function ($expense) {
                 $id = $expense[ExpenseModelConstant::ID];
-                $expense[ExpenseModelConstant::ITEMS] = ExpenseItem::where([
+                $items = ExpenseItem::where([
                     ExpenseItemModelConstant::EXPENSES_ID => $id
                 ])
                     ->get()
                     ->toArray();
+                $expense[ExpenseModelConstant::ITEMS] = array_map(
+                    function ($expense_item) {
+                        $payment_id = $expense_item[ExpenseItemModelConstant::PAYMENT_ID];
+                        $expense_item[ExpenseItemModelConstant::PAYMENT] = $this->payment_service->getById($payment_id);
+                        return $expense_item;
+                    },
+                    $items
+                );
                 return $expense;
             },
             $expenses
@@ -64,11 +79,19 @@ class ExpenseService
 
 
         $id = $expense[ExpenseModelConstant::ID];
-        $expense[ExpenseModelConstant::ITEMS] = ExpenseItem::where([
+        $items = ExpenseItem::where([
             ExpenseItemModelConstant::EXPENSES_ID => $id
         ])
             ->get()
             ->toArray();
+        $expense[ExpenseModelConstant::ITEMS] = array_map(
+            function ($expense_item) {
+                $payment_id = $expense_item[ExpenseItemModelConstant::PAYMENT_ID];
+                $expense_item[ExpenseItemModelConstant::PAYMENT] = $this->payment_service->getById($payment_id);
+                return $expense_item;
+            },
+            $items
+        );
 
         return $expense;
     }
