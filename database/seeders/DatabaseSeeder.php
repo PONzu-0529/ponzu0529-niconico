@@ -3,21 +3,29 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Constants\AuthenticationLevelConstant;
+use App\Constants\ExpenseConstant;
+use App\Constants\CommandLogConstant;
+use App\Constants\IpAddressConstant;
+use App\Constants\MylistAssistantConstant;
+use App\Constants\PaymentConstant;
 use App\Models\Authentication;
+use App\Models\Expense;
+use App\Models\ExpenseItem;
 use App\Models\IpAddress;
 use App\Models\IpAddressAuthentication;
 use App\Models\Music;
+use App\Models\Payment;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserMusic;
 use App\Models\Constants\AuthenticationConstant;
+use App\Models\Constants\ExpenseModelConstant;
+use App\Models\Constants\ExpenseItemModelConstant;
 use App\Models\Constants\IpAddressAuthenticationConstant;
 use App\Models\Constants\MusicConstant;
+use App\Models\Constants\PaymentModelConstant;
 use App\Models\Constants\SettingConstant;
-use App\Constants\AuthenticationLevelConstant;
-use App\Constants\CommandLogConstant;
-use App\Constants\IpAddressConstant;
-use App\Constants\MylistAssistantConstant;
 
 class DatabaseSeeder extends Seeder
 {
@@ -95,6 +103,36 @@ class DatabaseSeeder extends Seeder
         Authentication::create([
             AuthenticationConstant::USER_ID => '3',
             AuthenticationConstant::FUNCTION_ID => MylistAssistantConstant::FUNCTION_ID,
+            AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::VIEW
+        ]);
+        Authentication::create([
+            AuthenticationConstant::USER_ID => '1',
+            AuthenticationConstant::FUNCTION_ID => PaymentConstant::FUNCTION_ID,
+            AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::VIEW
+        ]);
+        Authentication::create([
+            AuthenticationConstant::USER_ID => '1',
+            AuthenticationConstant::FUNCTION_ID => PaymentConstant::FUNCTION_ID,
+            AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::EDIT
+        ]);
+        Authentication::create([
+            AuthenticationConstant::USER_ID => '2',
+            AuthenticationConstant::FUNCTION_ID => PaymentConstant::FUNCTION_ID,
+            AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::VIEW
+        ]);
+        Authentication::create([
+            AuthenticationConstant::USER_ID => '1',
+            AuthenticationConstant::FUNCTION_ID => ExpenseConstant::FUNCTION_ID,
+            AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::VIEW
+        ]);
+        Authentication::create([
+            AuthenticationConstant::USER_ID => '1',
+            AuthenticationConstant::FUNCTION_ID => ExpenseConstant::FUNCTION_ID,
+            AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::EDIT
+        ]);
+        Authentication::create([
+            AuthenticationConstant::USER_ID => '2',
+            AuthenticationConstant::FUNCTION_ID => ExpenseConstant::FUNCTION_ID,
             AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::VIEW
         ]);
 
@@ -193,5 +231,137 @@ class DatabaseSeeder extends Seeder
         ]);
 
         UserMUsic::truncate();
+
+        Payment::truncate();
+        Payment::create([
+            PaymentModelConstant::USER_ID => '1',
+            PaymentModelConstant::TITLE => 'Payment1'
+        ]);
+        Payment::create([
+            PaymentModelConstant::USER_ID => '1',
+            PaymentModelConstant::TITLE => 'Payment2'
+        ]);
+        Payment::create([
+            PaymentModelConstant::USER_ID => '1',
+            PaymentModelConstant::TITLE => 'Payment3'
+        ]);
+        Payment::create([
+            PaymentModelConstant::USER_ID => '2',
+            PaymentModelConstant::TITLE => 'Payment1'
+        ]);
+        Payment::create([
+            PaymentModelConstant::USER_ID => '2',
+            PaymentModelConstant::TITLE => 'Payment2'
+        ]);
+
+        Expense::truncate();
+        ExpenseItem::truncate();
+        Expense::create([
+            ExpenseModelConstant::USER_ID => '1',
+            ExpenseModelConstant::TITLE => 'Expense1',
+            ExpenseModelConstant::DATE => '2023/05/01',
+            ExpenseModelConstant::TO => 'To1',
+            ExpenseModelConstant::MEMO => 'Memo1'
+        ]);
+        ExpenseItem::create([
+            ExpenseItemModelConstant::EXPENSES_ID => '1',
+            ExpenseItemModelConstant::TITLE => 'Item1',
+            ExpenseItemModelConstant::MONEY => '1000',
+            ExpenseItemModelConstant::PAYMENT_ID => '1'
+        ]);
+        ExpenseItem::create([
+            ExpenseItemModelConstant::EXPENSES_ID => '1',
+            ExpenseItemModelConstant::TITLE => 'Item2',
+            ExpenseItemModelConstant::MONEY => '1500',
+            ExpenseItemModelConstant::PAYMENT_ID => '1'
+        ]);
+        ExpenseItem::create([
+            ExpenseItemModelConstant::EXPENSES_ID => '1',
+            ExpenseItemModelConstant::TITLE => 'Item3',
+            ExpenseItemModelConstant::MONEY => '2000',
+            ExpenseItemModelConstant::PAYMENT_ID => '2'
+        ]);
+        Expense::create([
+            ExpenseModelConstant::USER_ID => '1',
+            ExpenseModelConstant::TITLE => 'Expense2',
+            ExpenseModelConstant::DATE => '2023/05/01',
+            ExpenseModelConstant::TO => 'To2',
+            ExpenseModelConstant::MEMO => 'Memo2'
+        ]);
+        ExpenseItem::create([
+            ExpenseItemModelConstant::EXPENSES_ID => '2',
+            ExpenseItemModelConstant::TITLE => 'Item1',
+            ExpenseItemModelConstant::MONEY => '1500',
+            ExpenseItemModelConstant::PAYMENT_ID => '1'
+        ]);
+        ExpenseItem::create([
+            ExpenseItemModelConstant::EXPENSES_ID => '2',
+            ExpenseItemModelConstant::TITLE => 'Item2',
+            ExpenseItemModelConstant::MONEY => '2000',
+            ExpenseItemModelConstant::PAYMENT_ID => '1'
+        ]);
+        Expense::create([
+            ExpenseModelConstant::USER_ID => '1',
+            ExpenseModelConstant::TITLE => 'Expense3',
+            ExpenseModelConstant::DATE => '2023/05/02',
+            ExpenseModelConstant::TO => 'To3',
+            ExpenseModelConstant::MEMO => 'Memo3'
+        ]);
+        ExpenseItem::create([
+            ExpenseItemModelConstant::EXPENSES_ID => '3',
+            ExpenseItemModelConstant::TITLE => 'Item1',
+            ExpenseItemModelConstant::MONEY => '800',
+            ExpenseItemModelConstant::PAYMENT_ID => '1'
+        ]);
+        Expense::create([
+            ExpenseModelConstant::USER_ID => '2',
+            ExpenseModelConstant::TITLE => 'Expense1',
+            ExpenseModelConstant::DATE => '2023/04/01',
+            ExpenseModelConstant::TO => 'To1',
+            ExpenseModelConstant::MEMO => 'Memo1'
+        ]);
+        ExpenseItem::create([
+            ExpenseItemModelConstant::EXPENSES_ID => '4',
+            ExpenseItemModelConstant::TITLE => 'Item1',
+            ExpenseItemModelConstant::MONEY => '1000',
+            ExpenseItemModelConstant::PAYMENT_ID => '1'
+        ]);
+        ExpenseItem::create([
+            ExpenseItemModelConstant::EXPENSES_ID => '4',
+            ExpenseItemModelConstant::TITLE => 'Item2',
+            ExpenseItemModelConstant::MONEY => '1500',
+            ExpenseItemModelConstant::PAYMENT_ID => '1'
+        ]);
+        ExpenseItem::create([
+            ExpenseItemModelConstant::EXPENSES_ID => '4',
+            ExpenseItemModelConstant::TITLE => 'Item3',
+            ExpenseItemModelConstant::MONEY => '2000',
+            ExpenseItemModelConstant::PAYMENT_ID => '2'
+        ]);
+        Expense::create([
+            ExpenseModelConstant::USER_ID => '2',
+            ExpenseModelConstant::TITLE => 'Expense2',
+            ExpenseModelConstant::DATE => '2023/04/01',
+            ExpenseModelConstant::TO => 'To2',
+            ExpenseModelConstant::MEMO => 'Memo2'
+        ]);
+        ExpenseItem::create([
+            ExpenseItemModelConstant::EXPENSES_ID => '5',
+            ExpenseItemModelConstant::TITLE => 'Item1',
+            ExpenseItemModelConstant::MONEY => '1000',
+            ExpenseItemModelConstant::PAYMENT_ID => '1'
+        ]);
+        ExpenseItem::create([
+            ExpenseItemModelConstant::EXPENSES_ID => '5',
+            ExpenseItemModelConstant::TITLE => 'Item2',
+            ExpenseItemModelConstant::MONEY => '1500',
+            ExpenseItemModelConstant::PAYMENT_ID => '1'
+        ]);
+        ExpenseItem::create([
+            ExpenseItemModelConstant::EXPENSES_ID => '5',
+            ExpenseItemModelConstant::TITLE => 'Item3',
+            ExpenseItemModelConstant::MONEY => '2000',
+            ExpenseItemModelConstant::PAYMENT_ID => '2'
+        ]);
     }
 }

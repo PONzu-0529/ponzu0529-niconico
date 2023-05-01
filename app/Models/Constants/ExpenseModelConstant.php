@@ -11,4 +11,6 @@ class ExpenseModelConstant extends BaseConstant
     public const DATE = 'date';
     public const TO = 'to';
     public const MEMO = 'memo';
+
+    public const ITEMS = 'items';
 }
