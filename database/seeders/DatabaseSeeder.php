@@ -15,6 +15,7 @@ use App\Models\ExpenseItem;
 use App\Models\IpAddress;
 use App\Models\IpAddressAuthentication;
 use App\Models\Music;
+use App\Models\MusicMemo;
 use App\Models\Payment;
 use App\Models\Setting;
 use App\Models\User;
@@ -229,6 +230,7 @@ class DatabaseSeeder extends Seeder
             MusicConstant::TITLE => 'Title19',
             MusicConstant::NICONICO_ID => 'NiconicoID19'
         ]);
+        MusicMemo::truncate();
 
         UserMUsic::truncate();
 
