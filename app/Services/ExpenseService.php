@@ -102,7 +102,7 @@ class ExpenseService
      * @param string $title
      * @return integer
      */
-    public function add(string $title, DateTime $date, string $to, string $memo, array $items): int
+    public function add(string $title, string $date, string $to, string $memo, array $items): int
     {
         $this->checkAuthorize(AuthenticationLevelConstant::EDIT);
 
@@ -110,7 +110,7 @@ class ExpenseService
 
         $model[ExpenseModelConstant::USER_ID] = Auth::user()[AuthenticationConstant::ID];
         $model[ExpenseModelConstant::TITLE] = $title;
-        $model[ExpenseModelConstant::DATE] = $date->format('Y-m-d');
+        $model[ExpenseModelConstant::DATE] = (new DateTime($date))->format('Y-m-d');
         $model[ExpenseModelConstant::TO] = $to;
         $model[ExpenseModelConstant::MEMO] = $memo;
 
@@ -138,7 +138,7 @@ class ExpenseService
      * @param string $title
      * @return void
      */
-    public function update(int $id, string $title, DateTime $date, string $to, string $memo, array $items): void
+    public function update(int $id, string $title, string $date, string $to, string $memo, array $items): void
     {
         $this->checkAuthorize(AuthenticationLevelConstant::EDIT);
 
@@ -152,7 +152,7 @@ class ExpenseService
 
         $model[ExpenseModelConstant::USER_ID] = Auth::user()[AuthenticationConstant::ID];
         $model[ExpenseModelConstant::TITLE] = $title;
-        $model[ExpenseModelConstant::DATE] = $date->format('Y-m-d');
+        $model[ExpenseModelConstant::DATE] = (new DateTime($date))->format('Y-m-d');
         $model[ExpenseModelConstant::TO] = $to;
         $model[ExpenseModelConstant::MEMO] = $memo;
 

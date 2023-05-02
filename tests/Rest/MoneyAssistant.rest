@@ -1,0 +1,134 @@
+# Commentout \App\Http\Middleware\VerifyCsrfToken::class in app/Http/Kernel.php
+
+#####
+##### Login
+#####
+
+POST http://localhost/login
+Content-Type: application/json
+
+{
+    "email": "test1@sample.com",
+    "password": "password"
+}
+
+#####
+##### Get All Payment
+#####
+
+GET http://localhost/api/money-assistant/payment
+
+#####
+##### Get Payment By ID
+#####
+
+GET http://localhost/api/money-assistant/payment/1
+
+#####
+##### Add Payment
+#####
+
+POST http://localhost/api/money-assistant/payment
+Content-Type: application/json
+
+{
+    "title": "TestPaymentTitle(Rest)"
+}
+
+#####
+##### Update Payment
+#####
+
+PUT http://localhost/api/money-assistant/payment/1
+Content-Type: application/json
+
+{
+    "title": "TestPaymentTitle(Rest)_New"
+}
+
+#####
+##### Delete Payment
+#####
+
+DELETE http://localhost/api/money-assistant/payment/1
+
+#####
+##### Get All Expense
+#####
+
+GET http://localhost/api/money-assistant/expense
+
+#####
+##### Get Expense By ID
+#####
+
+GET http://localhost/api/money-assistant/expense/1
+
+#####
+##### Add Expense
+#####
+
+POST http://localhost/api/money-assistant/expense
+Content-Type: application/json
+
+{
+    "title": "TestExpenseTitle(Rest)",
+    "date": "2023/05/01",
+    "to": "TestExpenseTo(Rest)",
+    "memo": "TestExpenseMemo(Rest)",
+    "items": [
+        {
+            "title": "TestExpenseItem1(Rest)",
+            "money": 150,
+            "payment_id": 1
+        },
+        {
+            "title": "TestExpenseItem2(Rest)",
+            "money": 300,
+            "payment_id": 1
+        },
+        {
+            "title": "TestExpenseItem2(Rest)",
+            "money": 180,
+            "payment_id": 2
+        }
+    ]
+}
+
+#####
+##### Update Expense
+#####
+
+PUT http://localhost/api/money-assistant/expense/1
+Content-Type: application/json
+
+{
+    "title": "TestExpenseTitle(Rest)_New",
+    "date": "2023/05/01",
+    "to": "TestExpenseTo(Rest)_New",
+    "memo": "TestExpenseMemo(Rest)_New",
+    "items": [
+        {
+            "title": "TestExpenseItem1(Rest)_New",
+            "money": 150,
+            "payment_id": 1
+        },
+        {
+            "title": "TestExpenseItem2(Rest)_New",
+            "money": 300,
+            "payment_id": 1
+        },
+        {
+            "title": "TestExpenseItem2(Rest)_New",
+            "money": 180,
+            "payment_id": 2
+        }
+    ]
+}
+
+#####
+##### Delete Expense
+#####
+
+DELETE http://localhost/api/money-assistant/expense/1
+
