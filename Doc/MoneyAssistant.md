@@ -57,8 +57,6 @@ C4Context
   }
 
   Boundary(service, "Service", "") {
-    Component(money_assistant_service, "MoneyAssistantService", "", "")
-
     Component(payment_service, "PaymentService", "", "")
 
     Component(expense_service, "ExpenseService", "", "")
@@ -86,10 +84,8 @@ C4Context
 
   BiRel(money_assistant_view_model, money_assistant_controller, "", "")
 
-  BiRel(money_assistant_controller, money_assistant_service, "", "")
-
-  BiRel(money_assistant_service, expense_service, "", "")
-  BiRel(money_assistant_service, payment_service, "", "")
+  BiRel(money_assistant_controller, payment_service, "", "")
+  BiRel(money_assistant_controller, expense_service, "", "")
   BiRel(expense_service, payment_service, "", "")
 
   BiRel(payment_service, model-payment, "", "")
@@ -119,20 +115,6 @@ classDiagram
     +deleteExpense(id: int): Response
   }
 
-  class MoneyAssistantService {
-    +getAllPayment(): array
-    +getPaymentById(id: int): Payment
-    +addPayment(): int
-    +updatePayment(): void
-    +deletePayment(): void
-
-    +getAllExpense(): array
-    +getExpenseById(id: int): Expense
-    +addExpense(): int
-    +updateExpense(): void
-    +deleteExpense(): void
-  }
-
   class PaymentService {
     +getAll(): array
     +getById(id: int): Payment
@@ -155,10 +137,9 @@ classDiagram
 
   class ExpenseItem
 
-  MoneyAssistantController --> MoneyAssistantService
+  MoneyAssistantController --> PaymentService
+  MoneyAssistantController --> ExpenseService
 
-  MoneyAssistantService --> PaymentService
-  MoneyAssistantService --> ExpenseService
   ExpenseService --> PaymentService
 
   PaymentService --> Payment
