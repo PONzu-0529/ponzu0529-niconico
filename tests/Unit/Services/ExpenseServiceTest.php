@@ -133,7 +133,7 @@ class ExpenseServiceTest extends BaseServiceTest
     public function test_add_notLogin()
     {
         try {
-            $this->service->add('', new Datetime(), '', '', []);
+            $this->service->add('', (new Datetime())->format('Y-m-d'), '', '', []);
         } catch (Exception $ex) {
             $this->assertEquals(
                 $ex->getMessage(),
@@ -146,7 +146,7 @@ class ExpenseServiceTest extends BaseServiceTest
     {
         try {
             $this->login_user2();
-            $this->service->add('', new Datetime(), '', '', []);
+            $this->service->add('', (new Datetime())->format('Y-m-d'), '', '', []);
         } catch (Exception $ex) {
             $this->assertEquals(
                 $ex->getMessage(),
@@ -160,7 +160,7 @@ class ExpenseServiceTest extends BaseServiceTest
         $this->login_user1();
 
         $title = 'TestExpenseTitle';
-        $date = new Datetime('2023-03-01');
+        $date = (new Datetime('2023-03-01'))->format('Y-m-d');
         $to = 'TestExpenseTo';
         $memo = 'TestExpenseMemo';
         $items = [
@@ -188,7 +188,7 @@ class ExpenseServiceTest extends BaseServiceTest
 
         $this->assertEquals($result[ExpenseModelConstant::USER_ID], 1);
         $this->assertEquals($result[ExpenseModelConstant::TITLE], $title);
-        $this->assertEquals($result[ExpenseModelConstant::DATE], $date->format('Y-m-d'));
+        $this->assertEquals($result[ExpenseModelConstant::DATE], $date);
         $this->assertEquals($result[ExpenseModelConstant::TO], $to);
         $this->assertEquals($result[ExpenseModelConstant::MEMO], $memo);
 
@@ -203,7 +203,7 @@ class ExpenseServiceTest extends BaseServiceTest
     public function test_update_notLogin()
     {
         try {
-            $this->service->update(1, '', new Datetime(), '', '', []);
+            $this->service->update(1, '', (new Datetime())->format('Y-m-d'), '', '', []);
         } catch (Exception $ex) {
             $this->assertEquals(
                 $ex->getMessage(),
@@ -216,7 +216,7 @@ class ExpenseServiceTest extends BaseServiceTest
     {
         try {
             $this->login_user2();
-            $this->service->update(1, '', new Datetime(), '', '', []);
+            $this->service->update(1, '', (new Datetime())->format('Y-m-d'), '', '', []);
         } catch (Exception $ex) {
             $this->assertEquals(
                 $ex->getMessage(),
@@ -229,7 +229,7 @@ class ExpenseServiceTest extends BaseServiceTest
     {
         try {
             $this->login_user1();
-            $this->service->update(99, '', new Datetime(), '', '', []);
+            $this->service->update(99, '', (new Datetime())->format('Y-m-d'), '', '', []);
         } catch (Exception $ex) {
             $this->assertEquals(
                 $ex->getMessage(),
@@ -243,7 +243,7 @@ class ExpenseServiceTest extends BaseServiceTest
         $this->login_user1();
 
         $title = 'TestExpenseTitle';
-        $date = new Datetime('2023-03-01');
+        $date = (new Datetime('2023-03-01'))->format('Y-m-d');
         $to = 'TestExpenseTo';
         $memo = 'TestExpenseMemo';
         $items = [
@@ -267,7 +267,7 @@ class ExpenseServiceTest extends BaseServiceTest
         $id = $this->service->add($title, $date, $to, $memo, $items);
 
         $title = 'TestExpenseTitle_New';
-        $date = new Datetime('2023-03-20');
+        $date = (new Datetime('2023-03-20'))->format('Y-m-d');
         $to = 'TestExpenseTo_New';
         $memo = 'TestExpenseMemo_New';
         $items = [
@@ -295,7 +295,7 @@ class ExpenseServiceTest extends BaseServiceTest
 
         $this->assertEquals($result[ExpenseModelConstant::USER_ID], 1);
         $this->assertEquals($result[ExpenseModelConstant::TITLE], $title);
-        $this->assertEquals($result[ExpenseModelConstant::DATE], $date->format('Y-m-d'));
+        $this->assertEquals($result[ExpenseModelConstant::DATE], $date);
         $this->assertEquals($result[ExpenseModelConstant::TO], $to);
         $this->assertEquals($result[ExpenseModelConstant::MEMO], $memo);
 
@@ -350,7 +350,7 @@ class ExpenseServiceTest extends BaseServiceTest
         $this->login_user1();
 
         $title = 'TestExpenseTitle';
-        $date = new Datetime('2023-03-01');
+        $date = (new Datetime('2023-03-01'))->format('Y-m-d');
         $to = 'TestExpenseTo';
         $memo = 'TestExpenseMemo';
         $items = [
