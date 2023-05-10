@@ -29,7 +29,7 @@ $convert-transfers-option-gap-width: 10px;
     width: $convert-transfers-content-width-smartphone;
   }
 
-  margin: $convert-transfers-content-margin;
+  padding: $convert-transfers-content-margin;
 
   overflow-y: scroll;
 
@@ -48,10 +48,12 @@ $convert-transfers-option-gap-width: 10px;
 
     textarea {
       height: calc($convert-transfers-main-width / 2);
+      max-height: $convert-transfers-main-height;
       width: calc($convert-transfers-main-width - 5px);
 
       @include smartphone {
         height: $convert-transfers-main-width-smartphone;
+        max-height: $convert-transfers-main-height-smartphone;
         width: calc($convert-transfers-main-width-smartphone - 5px);
       }
     }

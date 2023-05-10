@@ -43,7 +43,7 @@ $create-bibliography-option-gap-width: 10px;
     width: $create-bibliography-content-width-smartphone;
   }
 
-  margin: $create-bibliography-content-margin;
+  padding: $create-bibliography-content-margin;
 
   overflow-y: scroll;
 
@@ -83,10 +83,12 @@ $create-bibliography-option-gap-width: 10px;
 
     textarea {
       height: calc($create-bibliography-main-width / 2);
+      max-height: $create-bibliography-main-height;
       width: calc($create-bibliography-main-width - 5px);
 
       @include smartphone {
         height: $create-bibliography-main-width-smartphone;
+        max-height: $create-bibliography-main-height;
         width: calc($create-bibliography-main-width-smartphone - 5px);
       }
     }

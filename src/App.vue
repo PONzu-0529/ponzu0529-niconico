@@ -56,6 +56,7 @@ export default class App extends Vue {
   private slotNum1: string;
   private slotNum2: string;
   private isDev: boolean;
+  private clientWidth: number;
 
   public constructor() {
     super();
@@ -64,6 +65,7 @@ export default class App extends Vue {
     this.slotNum1 = '';
     this.slotNum2 = '';
     this.isDev = true;
+    this.clientWidth = 0;
   }
 
   private async created(): Promise<void> {
@@ -71,11 +73,15 @@ export default class App extends Vue {
     this.slotNum1 = await SettingHelper.getSetting('ADSENCE_SLOT_NUM1');
     this.slotNum2 = await SettingHelper.getSetting('ADSENCE_SLOT_NUM2');
     this.isDev = Utils.getEnv() === 'development';
+    this.clientWidth = document.body.clientWidth;
   }
 
   private mounted(): void {
     window.addEventListener('resize', () => {
-      window.location.reload();
+      if (Utils.isSmartphone(this.clientWidth) !== Utils.isSmartphone()) {
+        window.location.reload();
+      }
+      this.clientWidth = document.body.clientWidth;
     });
 
     TitleHelper.setTitleByPath(location.pathname);
