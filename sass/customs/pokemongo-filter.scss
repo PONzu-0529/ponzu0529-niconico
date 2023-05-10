@@ -92,10 +92,12 @@ $pokemongo-filter-option-gap-width: 10px;
 
     textarea {
       height: calc($pokemongo-filter-main-width / 2);
+      max-height: $pokemongo-filter-main-height;
       width: calc($pokemongo-filter-main-width - 5px);
 
       @include smartphone {
         height: $pokemongo-filter-main-width-smartphone;
+        max-height: $pokemongo-filter-main-height-smartphone;
         width: calc($pokemongo-filter-main-width-smartphone - 5px);
       }
     }

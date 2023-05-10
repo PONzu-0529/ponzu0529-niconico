@@ -35,8 +35,8 @@ export default class Utils {
    * Check Width for Smartphone
    * @returns true or false
    */
-  public static isSmartphone(): boolean {
-    return document.body.clientWidth < 480;
+  public static isSmartphone(width: number = document.body.clientWidth): boolean {
+    return width < 480;
   }
 
   public static overlay(): void {
