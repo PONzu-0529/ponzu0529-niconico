@@ -3,8 +3,11 @@
 
 .btn-medium,
 .select-medium {
-  height: 4vh;
+  @extend .btn;
+  @extend .btn-outline-dark;
+
   width: 10vw;
+  height: 2.4rem;
 
   @include smartphone {
     width: 20vw;
