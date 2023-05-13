@@ -81,7 +81,7 @@ $mylist-assistant-main-width-smartphone: $content-width-smartphone;
 }
 
 $mylist-assistant-dialog-main-height: calc($dialog-content-height * 0.9);
-$mylist-assistant-dialog-main-height-smartphone: calc($dialog-content-height-smartphone * 0.9);
+$mylist-assistant-dialog-main-height-smartphone: calc($dialog-content-height-smartphone * 0.8);
 $mylist-assistant-dialog-main-width: calc($dialog-content-width - $scroll-bar-height);
 $mylist-assistant-dialog-main-width-smartphone: $dialog-content-width-smartphone;
 
@@ -184,7 +184,7 @@ $mylist-assistant-dialog-main-value-width-smartphone: $mylist-assistant-dialog-m
 }
 
 $mylist-assistant-dialog-option-height: calc($dialog-content-height * 0.1);
-$mylist-assistant-dialog-option-height-smartphone: calc($dialog-content-height-smartphone * 0.1);
+$mylist-assistant-dialog-option-height-smartphone: calc($dialog-content-height-smartphone * 0.2);
 $mylist-assistant-dialog-option-width: calc($dialog-content-width - $scroll-bar-height);
 $mylist-assistant-dialog-option-width-smartphone: $dialog-content-width-smartphone;
 $mylist-assistant-dialog-option-gap: 10px;

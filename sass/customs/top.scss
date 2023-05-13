@@ -62,6 +62,9 @@ $top-btn-description-height-smartphone: calc($top-btn-height-smartphone * 0.5);
 }
 
 .btn-top {
+  @extend .btn;
+  @extend .btn-outline-dark;
+
   height: $top-btn-height;
   width: $top-btn-width;
 

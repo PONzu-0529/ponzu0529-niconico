@@ -10,12 +10,12 @@ $app-width: calc(100vw - ($app-margin * 2));
 $app-width-smartphone: calc(100vw - ($app-margin * 2));
 
 $navigator-height: calc($app-height * 0.05);
-$navigator-height-smartphone: calc($app-height-smartphone * 0.05);
+$navigator-height-smartphone: calc($app-height-smartphone * 0.1);
 $navigator-half-width: calc($app-width / 2);
 $navigator-gap-width: 10px;
 
 $main-height: calc($app-height * 0.95);
-$main-height-smartphone: calc($app-height-smartphone * 0.95);
+$main-height-smartphone: calc($app-height-smartphone * 0.9);
 $main-width: $app-width;
 $main-width-smartphone: $app-width-smartphone;
 
@@ -55,9 +55,9 @@ $dialog-width-smartphone: calc($content-width-smartphone - $dialog-margin * 2);
 $dialog-title-height: calc($dialog-height * 0.1);
 $dialog-title-height-smartphone: calc($dialog-height-smartphone * 0.1);
 $dialog-title-width: $dialog-width;
-$dialog-title-width-smartphone: $dialog-width-smartphone;
+$dialog-title-width-smartphone: calc($dialog-width-smartphone - $dialog-padding * 2);
 
 $dialog-content-height: calc($dialog-height * 0.9);
-$dialog-content-height-smartphone: calc($dialog-height-smartphone * 0.9);
+$dialog-content-height-smartphone: calc($dialog-height-smartphone * 0.9 - $dialog-padding * 2);
 $dialog-content-width: $dialog-width;
-$dialog-content-width-smartphone: $dialog-width-smartphone;
+$dialog-content-width-smartphone: calc($dialog-width-smartphone - $dialog-padding * 2);
