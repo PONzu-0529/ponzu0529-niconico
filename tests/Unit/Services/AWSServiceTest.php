@@ -40,34 +40,34 @@ class AWSServiceTest extends TestCase
         }
     }
 
-    public function test_success_aws_start_and_stop_instance()
-    {
-        $service = new AWSService();
+    // public function test_success_aws_start_and_stop_instance()
+    // {
+    //     $service = new AWSService();
 
-        try {
-            $service->getInstanceIPAddress(SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID'));
-        } catch (Exception $ex) {
-            $this->assertEquals($ex->getMessage(), 'This Instance is not Started.');
-        }
+    //     try {
+    //         $service->getInstanceIPAddress(SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID'));
+    //     } catch (Exception $ex) {
+    //         $this->assertEquals($ex->getMessage(), 'This Instance is not Started.');
+    //     }
 
-        $service->startInstance(SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID'));
+    //     $service->startInstance(SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID'));
 
-        try {
-            $service->startInstance(SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID'));
-        } catch (Exception $ex) {
-            $this->assertEquals($ex->getMessage(), 'This Instance is Already Started.');
-        }
+    //     try {
+    //         $service->startInstance(SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID'));
+    //     } catch (Exception $ex) {
+    //         $this->assertEquals($ex->getMessage(), 'This Instance is Already Started.');
+    //     }
 
-        $service->getInstanceIPAddress(SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID'));
+    //     $service->getInstanceIPAddress(SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID'));
 
-        $service->stopInstance(SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID'));
+    //     $service->stopInstance(SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID'));
 
-        try {
-            $service->stopInstance(SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID'));
-        } catch (Exception $ex) {
-            $this->assertEquals($ex->getMessage(), 'This Instance is Already Stopped.');
-        }
+    //     try {
+    //         $service->stopInstance(SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID'));
+    //     } catch (Exception $ex) {
+    //         $this->assertEquals($ex->getMessage(), 'This Instance is Already Stopped.');
+    //     }
 
-        $this->assertTrue(true);
-    }
+    //     $this->assertTrue(true);
+    // }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Aws\Credentials\Credentials;
+use Aws\Ec2\Ec2Client;
 use Exception;
 use App\Helpers\SettingHelper;
 
@@ -9,6 +11,16 @@ class AWSService
 {
     private int $ATTEMPT_COUNT = 10;
     private int $WAIT_TIME = 5;
+
+    private Ec2Client $ec2Client;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->setCredentials();
+    }
 
     /**
      * Get AWS EC2 Instance Status
@@ -18,13 +30,21 @@ class AWSService
      */
     public function isInstanceRunning(string $instance_id): bool
     {
-        $output = $this->executeCommand(
-            "aws ec2 describe-instance-status --instance-ids \"{$instance_id}\"",
-            true,
-            'EC2 Instance ID is Invalid.'
-        );
+        try {
+            $result = $this->ec2Client->describeInstanceStatus([
+                'InstanceIds' => [$instance_id]
+            ]);
+        } catch (Exception $ex) {
+            throw new Exception('EC2 Instance ID is Invalid.');
+        }
 
-        return count($output['InstanceStatuses']) > 0;
+        if (count($result['InstanceStatuses']) == 0) {
+            return false;
+        };
+
+        $status = $result['InstanceStatuses'][0]['InstanceState']['Name'];
+
+        return $status == 'running';
     }
 
     public function startInstance(string $instance_id): void
@@ -105,7 +125,7 @@ class AWSService
      */
     private function executeCommand(string $command, bool $is_output_array = false, string $exception_message = '')
     {
-        $this->setSettings();
+        $this->setCredentials();
 
         exec($command, $output);
 
@@ -127,10 +147,18 @@ class AWSService
      *
      * @return void
      */
-    private function setSettings(): void
+    private function setCredentials(): void
     {
-        putenv('AWS_DEFAULT_REGION=' . SettingHelper::getSettingValue('AWS_DEFAULT_REGION'));
-        putenv('AWS_ACCESS_KEY_ID=' . SettingHelper::getSettingValue('AWS_ACCESS_KEY_ID'));
-        putenv('AWS_SECRET_ACCESS_KEY=' . SettingHelper::getSettingValue('AWS_SECRET_ACCESS_KEY'));
+        $region = SettingHelper::getSettingValue('AWS_DEFAULT_REGION');
+        $credentials = new Credentials(
+            SettingHelper::getSettingValue('AWS_ACCESS_KEY_ID'),
+            SettingHelper::getSettingValue('AWS_SECRET_ACCESS_KEY')
+        );
+
+        $this->ec2Client = new Ec2Client([
+            'version' => 'latest',
+            'region' => $region,
+            'credentials' => $credentials
+        ]);
     }
 }
