@@ -28,118 +28,113 @@ class AWSService
      * @param string $instance_id Instance ID
      * @return void
      */
-    public function isInstanceRunning(string $instance_id): bool
+    public function isInstanceState(string $instance_id, string $desiredState = 'running'): bool
     {
         try {
-            $result = $this->ec2Client->describeInstanceStatus([
+            $result = $this->ec2Client->describeInstances([
                 'InstanceIds' => [$instance_id]
             ]);
         } catch (Exception $ex) {
             throw new Exception('EC2 Instance ID is Invalid.');
         }
 
-        if (count($result['InstanceStatuses']) == 0) {
-            return false;
-        };
+        $state = $result['Reservations'][0]['Instances'][0]['State']['Name'];
 
-        $status = $result['InstanceStatuses'][0]['InstanceState']['Name'];
-
-        return $status == 'running';
-    }
-
-    public function startInstance(string $instance_id): void
-    {
-        if ($this->isInstanceRunning($instance_id)) {
-            throw new Exception('This Instance is Already Started.');
-        }
-
-        $this->executeCommand("aws ec2 start-instances --instance-ids \"{$instance_id}\"", true);
-
-        $count = 0;
-        $isInstanceRunning = false;
-
-        while ($count < $this->ATTEMPT_COUNT) {
-            $isInstanceRunning = $this->isInstanceRunning($instance_id);
-
-            if ($isInstanceRunning) {
-                break;
-            }
-
-            sleep($this->WAIT_TIME);
-
-            $count++;
-        }
-
-        if (!$isInstanceRunning) {
-            throw new Exception('Failed to Start Instance.');
-        }
-    }
-
-    public function stopInstance(string $instance_id): void
-    {
-        if (!$this->isInstanceRunning($instance_id)) {
-            throw new Exception('This Instance is Already Stopped.');
-        }
-
-        $this->executeCommand("aws ec2 stop-instances --instance-ids \"{$instance_id}\"", true);
-
-        $count = 0;
-        $isInstanceRunning = true;
-
-        while ($count < $this->ATTEMPT_COUNT) {
-            $isInstanceRunning = $this->isInstanceRunning($instance_id);
-
-            if (!$isInstanceRunning) {
-                break;
-            }
-
-            sleep($this->WAIT_TIME);
-
-            $count++;
-        }
-
-        if ($isInstanceRunning) {
-            throw new Exception('Failed to Stop Instance.');
-        }
-    }
-
-    public function getInstanceIPAddress(string $instance_id): string
-    {
-        if (!$this->isInstanceRunning($instance_id)) {
-            throw new Exception('This Instance is not Started.');
-        }
-
-        $output = $this->executeCommand(
-            "aws ec2 describe-instances --instance-ids \"{$instance_id}\" --query 'Reservations[].Instances[].PublicIpAddress' --output text"
-        );
-
-        return $output;
+        return $state == $desiredState;
     }
 
     /**
-     * Execute Command
+     * Start EC2 Instance
      *
-     * @param string $command Command
-     * @param string $exception_message Exception Message
-     * @return string | array Output
+     * @param string $instance_id Instance ID
+     * @return void
      */
-    private function executeCommand(string $command, bool $is_output_array = false, string $exception_message = '')
+    public function startInstance(string $instance_id): void
     {
-        $this->setCredentials();
-
-        exec($command, $output);
-
-        if (!$is_output_array) {
-            return $output[0];
+        if ($this->isInstanceState($instance_id)) {
+            return;
         }
 
-        if (count($output) === 0) {
-            throw new Exception($exception_message ?? 'Command is Invalid.');
+        $startParams = [
+            'InstanceIds' => [$instance_id],
+        ];
+
+        try {
+            $this->ec2Client->startInstances($startParams);
+
+            $attempts = 0;
+
+            while ($attempts < $this->ATTEMPT_COUNT) {
+                if ($this->isInstanceState($instance_id)) {
+                    return;
+                }
+
+                sleep($this->WAIT_TIME);
+                $attempts++;
+            }
+        } catch (Exception $ex) {
+            throw new Exception('Failed to Start Instance.');
         }
 
-        $output_json = str_replace(' ', '', implode('', $output));
+        throw new Exception('Failed to Start Instance.');
+    }
 
-        return json_decode($output_json, true);
+    /**
+     * Stop EC2 Instance
+     *
+     * @param string $instance_id Instance ID
+     * @return void
+     */
+    public function stopInstance(string $instance_id): void
+    {
+        if ($this->isInstanceState($instance_id, 'stopped')) {
+            return;
+        }
+
+        $stopParams = [
+            'InstanceIds' => [$instance_id],
+        ];
+
+        try {
+            $this->ec2Client->stopInstances($stopParams);
+
+            $attempts = 0;
+
+            while ($attempts < $this->ATTEMPT_COUNT) {
+                if ($this->isInstanceState($instance_id, 'stopped')) {
+                    return;
+                }
+
+                sleep(5);
+                $attempts++;
+            }
+        } catch (Exception $e) {
+            throw new Exception('Failed to Stop Instance.');
+        }
+
+        throw new Exception('Failed to Stop Instance.');
+    }
+
+    /**
+     * Get EC2 Instance IP Address
+     *
+     * @param string $instance_id Instance ID
+     * @return string IP Address
+     */
+    public function getInstanceIPAddress(string $instance_id): string
+    {
+        if (!$this->isInstanceState($instance_id)) {
+            throw new Exception('This Instance is Not Running.');
+        }
+
+        $params = [
+            'InstanceIds' => [$instance_id],
+        ];
+
+        $result = $this->ec2Client->describeInstances($params);
+        $ipAddress = $result['Reservations'][0]['Instances'][0]['PublicIpAddress'];
+
+        return $ipAddress;
     }
 
     /**
