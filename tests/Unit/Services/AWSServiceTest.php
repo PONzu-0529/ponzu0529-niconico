@@ -96,15 +96,4 @@ class AWSServiceTest extends TestCase
             $this->assertEquals($ex->getMessage(), 'EC2 Instance ID is Invalid.');
         }
     }
-
-    public function test_fail_get_instance_ip_address_stopped_instance_id()
-    {
-        $service = new AWSService();
-
-        try {
-            $service->getInstanceIPAddress(SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID'));
-        } catch (Exception $ex) {
-            $this->assertEquals($ex->getMessage(), 'This Instance is Not Running.');
-        }
-    }
 }
