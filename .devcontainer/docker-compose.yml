@@ -48,6 +48,13 @@ services:
       PMA_PASSWORD: ${DB_PASSWORD}
     ports:
       - "8888:80"
+  chrome:
+    image: selenium/standalone-chrome:4.0.0-rc-1-prerelease-20210713
+    container_name: "${PROJECT_NAME}_chrome"
+    shm_size: 2gb
+    ports:
+      - "4444:4444"
+      - "7900:7900"
   # selenium:
   #   build:
   #     context: "${LOCAL_HOST_PATH}/selenium"

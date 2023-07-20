@@ -151,7 +151,7 @@ classDiagram
         +clickButton(RemoteWebElement $button): void
         +typeInInput(RemoteWebElement $input, string $text): void
         +clickAlertOK(): void
-        +waitForElement(string $cssSelector, int $timeout): void
+        +waitForElementByCssSelector(string $cssSelector, int $timeout): void
         +saveScreenshot(string $filename): void
         +quit(): void
         -setupDriver(string $host): void
