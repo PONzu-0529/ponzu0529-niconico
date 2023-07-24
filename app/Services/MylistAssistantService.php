@@ -2,12 +2,14 @@
 
 namespace App\Services;
 
-use Illuminate\Http\JsonResponse;
 use Auth;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use App\Constants\AuthenticationLevelConstant;
 use App\Constants\MylistAssistantConstant;
 use App\Helpers\AuthenticationHelper;
 use App\Helpers\ResponseHelper;
+use App\Helpers\SettingHelper;
 use App\Models\Music;
 use App\Models\MusicMemo;
 use App\Models\UserMusic;
@@ -16,6 +18,8 @@ use App\Models\Constants\MusicConstant;
 use App\Models\Constants\MusicMemoConstant;
 use App\Models\Constants\UserMusicConstant;
 use App\Models\Constants\UserMusic2ViewConstant;
+use App\DTO\MylistAssistant\CreateMylistDTO;
+use App\Services\MylistAssistantSeleniumService;
 
 class MylistAssistantService
 {
@@ -229,6 +233,47 @@ class MylistAssistantService
 
         $response_obj = json_decode($response, true);
         return ResponseHelper::jsonResponse($response_obj);
+    }
+
+    /**
+     * Create Mylist
+     *
+     * @param CreateMylistDTO $parameter Create Mylist Parameter
+     * @return JsonResponse JSON Response
+     */
+    public function createMylist(CreateMylistDTO $parameter): JsonResponse
+    {
+        $aws_service = new AWSService();
+
+        $instance_id = SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID');
+
+        $aws_service->startInstance($instance_id);
+
+        $ip_address = $aws_service->getInstanceIPAddress($instance_id);
+
+        $mylist_assistant_selenium_service = new MylistAssistantSeleniumService("http://$ip_address:4444");
+
+        try {
+            $mylist_assistant_selenium_service->loginNiconico($parameter->getEmail(), $parameter->getPassword());
+
+            $mylist_assistant_selenium_service->deleteMylist($parameter->getMylistTitle());
+
+            $mylist_assistant_selenium_service->createMylist($parameter->getMylistTitle());
+
+            foreach ($parameter->getMusicIdList() as $video_id) {
+                $mylist_assistant_selenium_service->addVideoToMylist($video_id, $parameter->getMylistTitle());
+            }
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+            var_dump($ex->getTraceAsString());
+        } finally {
+            $mylist_assistant_selenium_service->quit();
+            $aws_service->stopInstance($instance_id);
+        }
+
+        return ResponseHelper::jsonResponse([
+            'status' => 'success'
+        ]);
     }
 
     /**

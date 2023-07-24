@@ -164,6 +164,23 @@ class SeleniumService
     }
 
     /**
+     * Handle Alert
+     *
+     * @return void
+     */
+    public function handleAlert(): void
+    {
+        $this->checkDriverDisposed();
+
+        try {
+            $alert = $this->driver->switchTo()->alert();
+            $alert->accept();
+        } catch (WebDriverException $ex) {
+            $this->handleError($ex);
+        }
+    }
+
+    /**
      * Input Text
      *
      * @param string $selector Selector
