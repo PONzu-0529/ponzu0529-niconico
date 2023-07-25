@@ -138,12 +138,12 @@ class MylistAssistantController extends Controller
     {
         $mylist_assistant_service = new MylistAssistantService();
 
-        $music_id_list = $mylist_assistant_service->getRandomMusics($request->input('Count'));
+        $music_id_list = $mylist_assistant_service->getRandomMusics($request->input('count'));
 
         $parameter = new CreateMylistDTO(
-            $request->input('Email'),
-            $request->input('Password'),
-            $request->input('MylistTitle'),
+            $request->input('email'),
+            $request->input('password'),
+            $request->input('mylist_title'),
             $music_id_list
         );
 

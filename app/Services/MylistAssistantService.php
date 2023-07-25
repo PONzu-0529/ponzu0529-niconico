@@ -5,6 +5,7 @@ namespace App\Services;
 use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 use App\Constants\AuthenticationLevelConstant;
 use App\Constants\MylistAssistantConstant;
 use App\Helpers\AuthenticationHelper;
@@ -299,8 +300,8 @@ class MylistAssistantService
                 $mylist_assistant_selenium_service->addVideoToMylist($video_id, $parameter->getMylistTitle());
             }
         } catch (Exception $ex) {
-            var_dump($ex->getMessage());
-            var_dump($ex->getTraceAsString());
+            Log::alert($ex->getMessage());
+            Log::alert($ex->getTraceAsString());
         } finally {
             $mylist_assistant_selenium_service->quit();
             $aws_service->stopInstance($instance_id);

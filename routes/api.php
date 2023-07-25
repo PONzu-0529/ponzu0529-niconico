@@ -38,6 +38,7 @@ Route::post('command-log', [CommandLogController::class, 'store']);
 Route::get('auth/mylist-assistant', [MylistAssistantController::class, 'authentication']);
 Route::get('mylist-assistant/get-niconico-info', [MylistAssistantController::class, 'getNiconicoInfo']);
 Route::get('mylist-assistant/get-now-playing-info', [MylistAssistantController::class, 'getNowPlayingInfo']);
+Route::post('mylist-assistant/create-custom-mylist', [MylistAssistantController::class, 'createCustomMylist']);
 Route::resource('mylist-assistant', MylistAssistantController::class, ['except' => ['create', 'edit']]);
 
 // Setting

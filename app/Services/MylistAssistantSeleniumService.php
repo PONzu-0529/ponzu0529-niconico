@@ -21,18 +21,18 @@ class MylistAssistantSeleniumService extends SeleniumService
         $this->openPage('https://www.nicovideo.jp/my/mylist');
 
         $NEW_BUTTON_SELECTOR = '#UserPage-app > section > section > main > div > section > div > div.MylistsContainer-section.MylistsContainer-actionSection > button:nth-child(1)';
+        $this->waitForElementByCssSelector($NEW_BUTTON_SELECTOR);
         $new_button_element = $this->getWebElementByCssSelector($NEW_BUTTON_SELECTOR);
-        $this->waitForElement($new_button_element);
         $this->clickButton($new_button_element);
 
         $MYLIST_TITLE_SELECTOR = '#undefined-title';
+        $this->waitForElementByCssSelector($MYLIST_TITLE_SELECTOR);
         $mylist_title_element = $this->getWebElementByCssSelector($MYLIST_TITLE_SELECTOR);
-        $this->waitForElement($mylist_title_element);
         $this->typeInInput($mylist_title_element, $mylist_title);
 
         $CREATE_BUTTON_SELECTOR = 'body > div.Fade.Modal.EditMylistModal.MylistCreateModalContainer > div > div > article > footer > button';
+        $this->waitForElementByCssSelector($CREATE_BUTTON_SELECTOR);
         $create_button_element = $this->getWebElementByCssSelector($CREATE_BUTTON_SELECTOR);
-        $this->waitForElement($create_button_element);
         $this->clickButton($create_button_element);
     }
 

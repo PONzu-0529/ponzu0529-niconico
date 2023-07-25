@@ -88,6 +88,11 @@
         :disabled="!hasMasterEditAuth"
         @click="clickAdd"
       >Add</button>
+      <button
+        class="btn-medium"
+        :disabled="!hasMasterEditAuth"
+        @click="clickAuto"
+      >Auto</button>
     </div>
 
     <div class="l-mylist-assistant-main">
@@ -367,6 +372,18 @@ export default class MylistAssistant extends BaseView {
     }
     this.isModalOpen = false;
     this.musicList = await MylistAssistantHelper.getAll();
+  }
+
+  /**
+   * Click Auto Button
+   */
+  private async clickAuto(): Promise<void> {
+    MylistAssistantHelper.createCustomMylist({
+      count: 100,
+      email: '',
+      password: '',
+      mylist_title: 'CustomMylist'
+    });
   }
 
   private clickDialogCancel(): void {
