@@ -42,6 +42,41 @@ class MylistAssistantService
             ->toArray();
     }
 
+    /**
+     * Get Random Musics
+     *
+     * @param integer $count Music Count
+     * @return array Music ID List
+     */
+    public function getRandomMusics(int $count): array
+    {
+        if (
+            !AuthenticationHelper::checkAuthentication(
+                MylistAssistantConstant::FUNCTION_ID,
+                AuthenticationLevelConstant::VIEW
+            )
+        ) {
+            abort(403, 'This User is unauthorized.');
+        }
+
+        $music_list = UserMusic2View::select()
+            ->where([
+                UserMusic2ViewConstant::USER_ID => Auth::user()['id']
+            ])
+            ->inRandomOrder()
+            ->limit($count)
+            ->get()
+            ->toArray();
+
+        $music_id_list = [];
+
+        foreach ($music_list as $music) {
+            $music_id_list[] = $music[UserMusic2ViewConstant::NICONICO_ID];
+        }
+
+        return $music_id_list;
+    }
+
     public function getById(int $id): UserMusic2View
     {
         if (
@@ -256,7 +291,7 @@ class MylistAssistantService
         try {
             $mylist_assistant_selenium_service->loginNiconico($parameter->getEmail(), $parameter->getPassword());
 
-            $mylist_assistant_selenium_service->deleteMylist($parameter->getMylistTitle());
+            // $mylist_assistant_selenium_service->deleteMylist($parameter->getMylistTitle());
 
             $mylist_assistant_selenium_service->createMylist($parameter->getMylistTitle());
 
