@@ -27,6 +27,11 @@ RUN sed -ri -e "s!/var/www/html!${DOCUMENT_ROOT}!g" /etc/apache2/sites-available
     sed -ri -e 's/;extension=mysqli/extension=mysqli/g' $PHP_INI_DIR/php.ini && \
     docker-php-ext-install mysqli pdo_mysql zip
 
+# Setup AWS CLI
+RUN wget https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh && \
+    yes yes | bash Anaconda3-2022.05-Linux-x86_64.sh
+ENV PATH $PATH:$PATH:/home/${USERNAME}/bin:/home/${USERNAME}/.local/bin
+
 # setup python
 COPY requirements.txt /var/requirements.txt
 RUN pip install --no-cache-dir -r /var/requirements.txt

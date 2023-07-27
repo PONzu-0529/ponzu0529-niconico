@@ -1,6 +1,6 @@
 import Utils from '@/common/Utils';
 import ApiHelper from '@/common/ApiHelper';
-import { MusicStyle } from '@/models/MylistAssistantModel';
+import { MusicStyle, CreateCustomMylistStyle } from '@/models/MylistAssistantModel';
 import { NowPlayingStyle } from '@/interfaces/KiiteInfoStyle';
 import { NiconicoInfo } from '@/interfaces/NiconicoInfoStyle';
 
@@ -47,5 +47,13 @@ export default class MylistAssistantHelper {
 
   public static async getNowPlayingInfo(): Promise<NowPlayingStyle> {
     return await ApiHelper.get(`${Utils.getHostWithProtocol()}/api/mylist-assistant/get-now-playing-info`);
+  }
+
+  /**
+   * Call CreateCustomMylist
+   * @param parameter CreateCustomMylist Parameter
+   */
+  public static async createCustomMylist(parameter: CreateCustomMylistStyle): Promise<void> {
+    return await ApiHelper.post(`${Utils.getHostWithProtocol()}/api/mylist-assistant/create-custom-mylist`, parameter);
   }
 }

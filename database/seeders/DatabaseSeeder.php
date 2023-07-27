@@ -42,6 +42,22 @@ class DatabaseSeeder extends Seeder
             [
                 SettingConstant::KEY => 'ADSENCE_SLOT_NUM2',
                 SettingConstant::VALUE => '2345678901'
+            ],
+            [
+                SettingConstant::KEY => 'AWS_DEFAULT_REGION',
+                SettingConstant::VALUE => ''
+            ],
+            [
+                SettingConstant::KEY => 'AWS_ACCESS_KEY_ID',
+                SettingConstant::VALUE => ''
+            ],
+            [
+                SettingConstant::KEY => 'AWS_SECRET_ACCESS_KEY',
+                SettingConstant::VALUE => ''
+            ],
+            [
+                SettingConstant::KEY => 'SELENIUM_STANDALONE_INSTANCE_ID',
+                SettingConstant::VALUE => ''
             ]
         ]);
 
