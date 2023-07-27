@@ -8,3 +8,20 @@ export interface MusicStyle {
   skip: boolean
   memo: string
 }
+
+/**
+ * CreateCustomMylist Style
+ */
+export interface CreateCustomMylistStyle {
+  /** Count */
+  count: number;
+
+  /** Email */
+  email: string;
+
+  /** Password */
+  password: string;
+
+  /** Mylist Title */
+  mylist_title: string;
+}

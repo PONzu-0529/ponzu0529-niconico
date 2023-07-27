@@ -78,8 +78,57 @@
     </div>
 
     <div
+      class="dialog"
+      v-if="isEditDialogOpen"
+    >
+      <div class="dialog-title">Create Mylist</div>
+      <div class="dialog-content">
+        <div>
+          Email:
+          <input
+            class=""
+            v-model="customMylistParameter.email"
+          >
+        </div>
+        <div>
+          Password:
+          <input
+            class=""
+            v-model="customMylistParameter.password"
+            type="password"
+          >
+        </div>
+        <div>
+          Mylist Title:
+          <input
+            class=""
+            v-model="customMylistParameter.mylist_title"
+          >
+        </div>
+        <div>
+          Count:
+          <input
+            class=""
+            v-model="customMylistParameter.count"
+            type="number"
+          >
+        </div>
+        <div>
+          <button
+            class="btn-medium"
+            @click="clickCreate"
+          >Create</button>
+          <button
+            class="btn-medium"
+            @click="clickEditDialogCancel"
+          >Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div
       class="overlay"
-      v-if="isModalOpen"
+      v-if="isDialogOpen"
     ></div>
 
     <div class="l-mylist-assistant-option">
@@ -88,6 +137,11 @@
         :disabled="!hasMasterEditAuth"
         @click="clickAdd"
       >Add</button>
+      <button
+        class="btn-medium"
+        :disabled="!hasMasterEditAuth"
+        @click="clickAuto"
+      >Auto</button>
     </div>
 
     <div class="l-mylist-assistant-main">
@@ -258,14 +312,22 @@
 import { Component, Watch } from 'vue-property-decorator';
 import Utils from '@/common/Utils';
 import MylistAssistantHelper from '@/helpers/MylistAssistantHelper';
-import { MusicStyle } from '@/models/MylistAssistantModel';
+import { MusicStyle, CreateCustomMylistStyle } from '@/models/MylistAssistantModel';
 import BaseView from '@/views/BaseView.vue';
 
 @Component({})
 export default class MylistAssistant extends BaseView {
   private musicList: Array<MusicStyle>;
   private music: MusicStyle;
+
+  /** Parameter of Custom Mylist */
+  private customMylistParameter: CreateCustomMylistStyle;
+
   private isModalOpen: boolean;
+
+  /** Custom Mylist Dialog Open Flag */
+  private isEditDialogOpen: boolean;
+
   private hasEditAuth: boolean;
   private hasMasterEditAuth: boolean;
 
@@ -280,7 +342,14 @@ export default class MylistAssistant extends BaseView {
       skip: false,
       memo: ''
     };
+    this.customMylistParameter = {
+      count: 0,
+      email: '',
+      password: '',
+      mylist_title: ''
+    };
     this.isModalOpen = false;
+    this.isEditDialogOpen = false;
     this.hasEditAuth = false;
     this.hasMasterEditAuth = false;
   }
@@ -290,6 +359,14 @@ export default class MylistAssistant extends BaseView {
     if (this.checkExist(this.music.niconico_id)) {
       this.music = this.musicList.filter(music => music.niconico_id === this.music.niconico_id)[0];
     }
+  }
+
+  /**
+   * Get State of Dialog Open
+   * @returns Is Dialog Open
+   */
+  private get isDialogOpen(): boolean {
+    return this.isModalOpen || this.isEditDialogOpen;
   }
 
   private async mounted(): Promise<void> {
@@ -371,6 +448,27 @@ export default class MylistAssistant extends BaseView {
 
   private clickDialogCancel(): void {
     this.isModalOpen = false;
+  }
+
+  /**
+   * Click Auto Button
+   */
+  private clickAuto(): void {
+    this.isEditDialogOpen = true;
+  }
+
+  /**
+   * Click Create Button
+   */
+  private async clickCreate(): Promise<void> {
+    MylistAssistantHelper.createCustomMylist(this.customMylistParameter);
+  }
+
+  /**
+   * Click Cancel Button of Click Edit Dialog
+   */
+  private clickEditDialogCancel(): void {
+    this.isEditDialogOpen = false;
   }
 }
 </script>

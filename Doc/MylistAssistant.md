@@ -1,44 +1,13 @@
 # MylistAssistant
 
-## Context
-
-```mermaid
-C4Context
-    Person(user, "User")
-
-    System(ponzu-tools, "Ponzu-Tools")
-
-    SystemDb(db, "DB")
-
-    BiRel(user, ponzu-tools, "")
-    BiRel(ponzu-tools, db, "")
-```
-
 ## Container
 
-```mermaid
-C4Context
-    Person(user, "User")
+![](assets/MylistAssistant-Container.svg)
 
-    Boundary(client, "Client") {
-        Container(view, "View")
-        Container(viewModel, "viewModel")
-    }
-
-    Boundary(service, "Server") {
-        Container(model, "Model")
-        Container(service, "Service")
-        Container(controller, "Controller")
-    }
-
-    ContainerDb(db, "DB")
-
-    BiRel(user, view, "")
-    BiRel(viewModel, controller, "")
-    BiRel(model, db, "")
-```
 
 ## Component
+
+![](assets/MylistAssistant-Component.svg)
 
 ### Get All, Get By Id
 
@@ -171,3 +140,32 @@ erDiagram
 ```
 
 ## Class Diagram
+
+```mermaid
+classDiagram
+    class SeleniumService {
+        #driver: CustomRemoteWebDriver
+        -is_driver_disposed: bool
+        +openPage(string $url): void
+        +getWebElementByCssSelector(string $cssSelector): RemoteWebElement
+        +clickButton(RemoteWebElement $button): void
+        +typeInInput(RemoteWebElement $input, string $text): void
+        +clickAlertOK(): void
+        +waitForElementByCssSelector(string $cssSelector, int $timeout): void
+        +saveScreenshot(string $filename): void
+        +quit(): void
+        -setupDriver(string $host): void
+        -checkDriverDisposed(): void
+        -handleError(WebDriverException $ex): void
+    }
+
+    class MylistAssistantSeleniumService {
+        +loginNiconico(string $email, string $password): void
+        +createMylist(string $mylist_name): void
+        +deleteMylist(string $mylist_name): void
+        +addVideoToMylist(string $video_id, string $mylist_name): void
+        #getAllMylistName(): array
+    }
+
+    SeleniumService <|.. MylistAssistantSeleniumService
+```
