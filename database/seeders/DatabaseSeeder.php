@@ -58,6 +58,22 @@ class DatabaseSeeder extends Seeder
             [
                 SettingConstant::KEY => 'SELENIUM_STANDALONE_INSTANCE_ID',
                 SettingConstant::VALUE => ''
+            ],
+            [
+                SettingConstant::KEY => 'LINE_NOTIFY_LOG_ACCESS_TOKEN',
+                SettingConstant::VALUE => ''
+            ],
+            [
+                SettingConstant::KEY => 'LINE_NOTIFY_ALERT_ACCESS_TOKEN',
+                SettingConstant::VALUE => ''
+            ],
+            [
+                SettingConstant::KEY => 'LINE_NOTIFY_ERROR_ACCESS_TOKEN',
+                SettingConstant::VALUE => ''
+            ],
+            [
+                SettingConstant::KEY => 'LINE_NOTIFY_SUCCESS_ACCESS_TOKEN',
+                SettingConstant::VALUE => ''
             ]
         ]);
 
