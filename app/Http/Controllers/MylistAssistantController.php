@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Constants\AuthenticationLevelConstant;
 use App\Constants\MylistAssistantConstant;
 use App\DTO\MylistAssistant\CreateMylistDTO;
 use App\Helpers\AuthenticationHelper;
+use App\Helpers\ExceptionHelper;
 use App\Models\Constants\MusicConstant;
 use App\Models\Constants\MusicMemoConstant;
 use App\Models\Constants\UserMusicConstant;
@@ -136,17 +138,21 @@ class MylistAssistantController extends Controller
      */
     public function createCustomMylist(Request $request): JsonResponse
     {
-        $mylist_assistant_service = new MylistAssistantService();
+        try {
+            $mylist_assistant_service = new MylistAssistantService();
 
-        $music_id_list = $mylist_assistant_service->getRandomMusics($request->input('count'));
+            $music_id_list = $mylist_assistant_service->getRandomMusics($request->input('count'));
 
-        $parameter = new CreateMylistDTO(
-            $request->input('email'),
-            $request->input('password'),
-            $request->input('mylist_title'),
-            $music_id_list
-        );
+            $parameter = new CreateMylistDTO(
+                $request->input('email'),
+                $request->input('password'),
+                $request->input('mylist_title'),
+                $music_id_list
+            );
 
-        return $mylist_assistant_service->createMylist($parameter);
+            return $mylist_assistant_service->createMylist($parameter);
+        } catch (Exception $ex) {
+            ExceptionHelper::handleException($ex);
+        }
     }
 }

@@ -300,8 +300,7 @@ class MylistAssistantService
                 $mylist_assistant_selenium_service->addVideoToMylist($video_id, $parameter->getMylistTitle());
             }
         } catch (Exception $ex) {
-            Log::alert($ex->getMessage());
-            Log::alert($ex->getTraceAsString());
+            throw $ex;
         } finally {
             $mylist_assistant_selenium_service->quit();
             $aws_service->stopInstance($instance_id);
