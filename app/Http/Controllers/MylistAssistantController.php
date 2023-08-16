@@ -152,7 +152,7 @@ class MylistAssistantController extends Controller
 
             return $mylist_assistant_service->createMylist($parameter);
         } catch (Exception $ex) {
-            ExceptionHelper::handleException($ex);
+            ExceptionHelper::handleExceptionAndReturn($ex);
         }
     }
 }
