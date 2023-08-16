@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use App\Constants\AuthenticationLevelConstant;
 use App\Constants\MylistAssistantConstant;
 use App\Helpers\AuthenticationHelper;
+use App\Helpers\ExceptionHelper;
 use App\Helpers\ResponseHelper;
 use App\Helpers\SettingHelper;
 use App\Models\Music;
@@ -20,6 +21,7 @@ use App\Models\Constants\MusicMemoConstant;
 use App\Models\Constants\UserMusicConstant;
 use App\Models\Constants\UserMusic2ViewConstant;
 use App\DTO\MylistAssistant\CreateMylistDTO;
+use App\Helpers\LogHelper;
 use App\Services\MylistAssistantSeleniumService;
 
 class MylistAssistantService
@@ -285,6 +287,8 @@ class MylistAssistantService
 
         $aws_service->startInstance($instance_id);
 
+        LogHelper::log('Start Instance.');
+
         $ip_address = $aws_service->getInstanceIPAddress($instance_id);
 
         $mylist_assistant_selenium_service = new MylistAssistantSeleniumService("http://$ip_address:4444");
@@ -292,18 +296,28 @@ class MylistAssistantService
         try {
             $mylist_assistant_selenium_service->loginNiconico($parameter->getEmail(), $parameter->getPassword());
 
+            LogHelper::log('Login Niconico.');
+
             // $mylist_assistant_selenium_service->deleteMylist($parameter->getMylistTitle());
 
             $mylist_assistant_selenium_service->createMylist($parameter->getMylistTitle());
 
+            LogHelper::log('Create Mylist.');
+
             foreach ($parameter->getMusicIdList() as $video_id) {
-                $mylist_assistant_selenium_service->addVideoToMylist($video_id, $parameter->getMylistTitle());
+                try {
+                    $mylist_assistant_selenium_service->addVideoToMylist($video_id, $parameter->getMylistTitle());
+                } catch (Exception $ex) {
+                    ExceptionHelper::handleException($ex);
+                }
             }
         } catch (Exception $ex) {
             throw $ex;
         } finally {
             $mylist_assistant_selenium_service->quit();
             $aws_service->stopInstance($instance_id);
+
+            LogHelper::log('Quit Driver and Stop Instance.');
         }
 
         return ResponseHelper::jsonResponse([

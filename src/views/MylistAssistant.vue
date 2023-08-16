@@ -343,10 +343,10 @@ export default class MylistAssistant extends BaseView {
       memo: ''
     };
     this.customMylistParameter = {
-      count: 0,
+      count: 100,
       email: '',
       password: '',
-      mylist_title: ''
+      mylist_title: 'CustomMylist'
     };
     this.isModalOpen = false;
     this.isEditDialogOpen = false;

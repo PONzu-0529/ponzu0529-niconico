@@ -8,6 +8,19 @@ use App\Helpers\SettingHelper;
 class LineNotifyService
 {
     /**
+     * Send Log Notify
+     *
+     * @param string $message Message
+     * @return void
+     */
+    public function sendLogNotify(string $message): void
+    {
+        $accessToken = SettingHelper::getSettingValue('LINE_NOTIFY_LOG_ACCESS_TOKEN');
+
+        $this->sendNotify($accessToken, $message);
+    }
+
+    /**
      * Send Error Log Notify
      *
      * @param string $message Message

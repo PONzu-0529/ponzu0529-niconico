@@ -16,6 +16,13 @@ class LineNotifyServiceTest extends TestCase
         $this->lineNotifyService = new LineNotifyService();
     }
 
+    public function test_send_log_notify()
+    {
+        $this->lineNotifyService->sendLogNotify('Test Log Message.');
+
+        $this->assertTrue(true);
+    }
+
     public function test_send_error_log_notify()
     {
         $this->lineNotifyService->sendErrorLogNotify('Test Error Log Message.');

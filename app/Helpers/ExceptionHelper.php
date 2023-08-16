@@ -17,7 +17,34 @@ class ExceptionHelper
      * @param Exception $exception Exception
      * @return void
      */
-    public static function handleException(Exception $exception, int $status = 500): JsonResponse
+    public static function handleException(Exception $exception): void
+    {
+        ExceptionHelper::loggingDB($exception);
+        ExceptionHelper::notify($exception);
+    }
+
+    /**
+     * Handle Exception and Return
+     *
+     * @param Exception $exception Exception
+     * @return void
+     */
+    public static function handleExceptionAndReturn(Exception $exception, int $status = 500): JsonResponse
+    {
+        ExceptionHelper::handleException($exception);
+
+        return response()->json([
+            'message' => $exception->getMessage()
+        ], $status);
+    }
+
+    /**
+     * Log
+     *
+     * @param Exception $exception Exception
+     * @return void
+     */
+    private static function loggingDB(Exception $exception): void
     {
         $logService = new LogService();
         $loggingObject = new LoggingObject(
@@ -27,12 +54,17 @@ class ExceptionHelper
             $exception->getTraceAsString()
         );
         $logService->log($loggingObject);
+    }
 
+    /**
+     * LINE Notify
+     *
+     * @param Exception $exception Exception
+     * @return void
+     */
+    private static function notify(Exception $exception): void
+    {
         $lineNotifyService = new LineNotifyService();
         $lineNotifyService->sendErrorLogNotify($exception->getMessage());
-
-        return response()->json([
-            'message' => $exception->getMessage()
-        ], $status);
     }
 }
