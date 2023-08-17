@@ -308,12 +308,12 @@ class MylistAssistantService
                 try {
                     $mylist_assistant_selenium_service->addVideoToMylist($video_id, $parameter->getMylistTitle());
                 } catch (Exception $ex) {
-                    $mylist_assistant_selenium_service->saveScreenshot('storage/logs/screenshot_' . time() . '.png');
+                    $mylist_assistant_selenium_service->saveScreenshot(__DIR__ . '../../storage/logs/screenshot_' . time() . '.png');
                     ExceptionHelper::handleException($ex);
                 }
             }
         } catch (Exception $ex) {
-            $mylist_assistant_selenium_service->saveScreenshot('storage/logs/screenshot_' . time() . '.png');
+            $mylist_assistant_selenium_service->saveScreenshot(__DIR__ . '../../storage/logs/screenshot_' . time() . '.png');
             throw $ex;
         } finally {
             $mylist_assistant_selenium_service->quit();
