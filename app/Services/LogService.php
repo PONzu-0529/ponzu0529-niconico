@@ -44,7 +44,7 @@ class LogService
             Schema::create($tableName, function (Blueprint $table) {
                 $table->id();
                 $table->string('type');
-                $table->string('message');
+                $table->text('message');
                 $table->string('file');
                 $table->text('stacktrace');
                 $table->timestamps();
