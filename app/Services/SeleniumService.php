@@ -335,7 +335,9 @@ class SeleniumService
      */
     private function handleError(WebDriverException $ex): void
     {
-        $this->driver->quit();
+        $this->saveScreenshot(__DIR__ . '/../../storage/logs/screenshot_' . time() . '.png');
+
+        $this->quit();
 
         throw $ex;
     }
