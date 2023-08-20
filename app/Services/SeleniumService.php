@@ -259,7 +259,6 @@ class SeleniumService
         try {
             $screenshot = $this->driver->takeScreenshot($filename);
         } catch (WebDriverException $ex) {
-            $this->handleError($ex);
         }
     }
 
