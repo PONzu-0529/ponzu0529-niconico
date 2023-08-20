@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Exception;
 use Facebook\WebDriver\WebDriverBy;
 use App\Services\SeleniumService;
 
@@ -85,6 +86,10 @@ class MylistAssistantSeleniumService extends SeleniumService
     {
         $this->openPage("https://www.nicovideo.jp/watch/$video_id");
 
+        if ($this->checkExceptionPage()) {
+            throw new Exception("$video_id may not exist or may have been deleted.");
+        }
+
         $ADD_MYLIST_BUTTON_SELECTOR = '#js-app > div > div.WatchAppContainer-main > div.MainContainer > div.MainContainer-playerPanel > div.Grid.VideoMenuContainer > div.GridCell.col-fill.VideoMenuContainer-areaLeft > div:nth-child(2) > button';
         $this->waitForElementByCssSelector($ADD_MYLIST_BUTTON_SELECTOR);
         $add_mylist_button_element = $this->getWebElementByCssSelector($ADD_MYLIST_BUTTON_SELECTOR);
@@ -147,5 +152,22 @@ class MylistAssistantSeleniumService extends SeleniumService
         $this->clickButton(
             $this->getWebElementByCssSelector($LOGIN_BUTTON_SELECTOR)
         );
+    }
+
+    /**
+     * Check Exception Page
+     *
+     * @return boolean
+     */
+    private function checkExceptionPage(): bool
+    {
+        $EXCEPTION_PAGE_SELECTOR = 'body > div.BaseLayout-main > div.WatchExceptionPage';
+
+        try {
+            $this->driver->findElement(WebDriverBy::cssSelector($EXCEPTION_PAGE_SELECTOR));
+            return true;
+        } catch (Exception $ex) {
+            return false;
+        }
     }
 }
