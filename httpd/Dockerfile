@@ -10,7 +10,7 @@ ARG USER_GID=$USER_UID
 RUN apt -y update && \
     apt -y upgrade && \
     curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt -y install vim sudo tzdata git wget nodejs python3-pip libzip-dev && \
+    apt -y install vim sudo tzdata git wget nodejs python3-pip libzip-dev cron && \
     npm install -g yarn && \
     yarn global add @vue/cli
 
@@ -44,6 +44,10 @@ RUN useradd --uid ${USER_UID} --create-home --shell /bin/bash -G sudo,root ${USE
 COPY setup.sh /var/setup.sh
 RUN chmod 700 /var/setup.sh && \
     chown ${USERNAME}:${USERNAME} /var/setup.sh
+
+# Setting Cron
+COPY crontab /var/spool/cron/crontabs/root
+RUN crontab /var/spool/cron/crontabs/root
 
 # User Settings
 USER 1000

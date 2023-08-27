@@ -16,3 +16,6 @@ sudo chmod -R 777 bootstrap/cache
 # Change Owner
 sudo chown -R 1000 /home/${XSERVER_ID}/${XSERVER_DOMAIN}/repos/${XSERVER_SUBDOMAIN}/vendor
 sudo chown -R 1000 /home/${XSERVER_ID}/${XSERVER_DOMAIN}/repos/${XSERVER_SUBDOMAIN}/node_modules
+
+# Start Cron
+sudo /etc/init.d/cron start
