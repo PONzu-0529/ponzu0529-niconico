@@ -1,5 +1,11 @@
 # Automatic Niconico Mylist Generator
 
-## About
+## Architecture
+
+### About
 
 ![](assets/about.svg)
+
+### Component
+
+![](assets/component.svg)
