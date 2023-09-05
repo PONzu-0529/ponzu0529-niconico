@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Authentication;
-use App\Models\IpAddress;
 use App\Models\IpAddressAuthentication;
 use App\Models\Music;
 use App\Models\MusicMemo;
@@ -16,8 +15,8 @@ use App\Models\Constants\IpAddressAuthenticationConstant;
 use App\Models\Constants\MusicConstant;
 use App\Models\Constants\SettingConstant;
 use App\Constants\AuthenticationLevelConstant;
+use App\Constants\AutomaticNiconicoMylistGeneratorConstant;
 use App\Constants\CommandLogConstant;
-use App\Constants\IpAddressConstant;
 use App\Constants\MylistAssistantConstant;
 
 class DatabaseSeeder extends Seeder
@@ -129,6 +128,11 @@ class DatabaseSeeder extends Seeder
             AuthenticationConstant::USER_ID => '3',
             AuthenticationConstant::FUNCTION_ID => MylistAssistantConstant::FUNCTION_ID,
             AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::VIEW
+        ]);
+        Authentication::create([
+            AuthenticationConstant::USER_ID => '1',
+            AuthenticationConstant::FUNCTION_ID => AutomaticNiconicoMylistGeneratorConstant::FUNCTION_ID,
+            AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::AUTHORIZED
         ]);
 
         // IpAddress::truncate();
