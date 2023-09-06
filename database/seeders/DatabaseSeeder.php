@@ -18,6 +18,8 @@ use App\Constants\AuthenticationLevelConstant;
 use App\Constants\AutomaticNiconicoMylistGeneratorConstant;
 use App\Constants\CommandLogConstant;
 use App\Constants\MylistAssistantConstant;
+use App\Models\AutoGeneratorRequest;
+use App\Models\AutoGeneratorVideo;
 
 class DatabaseSeeder extends Seeder
 {
@@ -231,5 +233,8 @@ class DatabaseSeeder extends Seeder
         MusicMemo::truncate();
 
         UserMUsic::truncate();
+
+        AutoGeneratorRequest::truncate();
+        AutoGeneratorVideo::truncate();
     }
 }

@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Constants\AuthenticationLevelConstant;
 use App\Constants\AutomaticNiconicoMylistGeneratorConstant;
 use App\Helpers\AuthenticationHelper;
+use App\Models\AutoGeneratorRequest;
+use App\Models\AutoGeneratorVideo;
 use App\Objects\MylistAssistant\MylistAssistantOptionObject;
 use App\Objects\NicoMylistAutoGen\CreateCustomMylistRequestObject;
 use App\Objects\NicoMylistAutoGen\CreateCustomMylistResponseObject;
@@ -32,8 +34,20 @@ class AutomaticNiconicoMylistGeneratorService
         $mylistAssistantService = new MylistAssistantService();
         $music_array = $mylistAssistantService->getMusics($mylistAssistantOption);
 
+        $autoGeneratorRequest = new AutoGeneratorRequest();
+        $autoGeneratorRequest[AutoGeneratorRequest::EMAIL] = $request->getEmail();
+        $autoGeneratorRequest[AutoGeneratorRequest::PASSWORD] = $request->getPassword();
+        $autoGeneratorRequest[AutoGeneratorRequest::MYLIST_TITLE] = $request->getMylistTitle();
+        $autoGeneratorRequest->save();
+
+        $request_id = $autoGeneratorRequest[AutoGeneratorRequest::ID];
+
         foreach ($music_array as $music_id) {
-            var_dump($music_id);
+            $autoGeneratorVideo = new AutoGeneratorVideo();
+            $autoGeneratorVideo[AutoGeneratorVideo::REQUEST_ID] = $request_id;
+            $autoGeneratorVideo[AutoGeneratorVideo::VIDEO_ID] = $music_id;
+            $autoGeneratorVideo[AutoGeneratorVideo::STATE] = 'standby';
+            $autoGeneratorVideo->save();
         }
 
         return new CreateCustomMylistResponseObject('success');
