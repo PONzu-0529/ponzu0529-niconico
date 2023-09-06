@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Constants\AuthenticationLevelConstant;
 use App\Constants\AutomaticNiconicoMylistGeneratorConstant;
 use App\Helpers\AuthenticationHelper;
+use App\Objects\MylistAssistant\MylistAssistantOptionObject;
 use App\Objects\NicoMylistAutoGen\CreateCustomMylistRequestObject;
 use App\Objects\NicoMylistAutoGen\CreateCustomMylistResponseObject;
 use Exception;
@@ -24,6 +25,16 @@ class AutomaticNiconicoMylistGeneratorService
         }
 
         $this->validateCreateCustomMylistRequest($request);
+
+        $mylistAssistantOption = new MylistAssistantOptionObject();
+        $mylistAssistantOption->setCount($request->getCount());
+
+        $mylistAssistantService = new MylistAssistantService();
+        $music_array = $mylistAssistantService->getMusics($mylistAssistantOption);
+
+        foreach ($music_array as $music_id) {
+            var_dump($music_id);
+        }
 
         return new CreateCustomMylistResponseObject('success');
     }
