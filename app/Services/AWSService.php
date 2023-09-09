@@ -9,6 +9,8 @@ use App\Helpers\SettingHelper;
 
 class AWSService
 {
+    public string $instance_id;
+
     private int $ATTEMPT_COUNT = 10;
     private int $WAIT_TIME = 5;
 
@@ -80,6 +82,79 @@ class AWSService
     }
 
     /**
+     * Start Instance from Template
+     *
+     * @param string $template_name Template Name
+     * @return string Instance ID
+     */
+    public function startInstanceFromTemplate(string $template_name): string
+    {
+        try {
+            $response = $this->ec2Client->runInstances([
+                'LaunchTemplate' => [
+                    'LaunchTemplateName' => $template_name,
+                    'Version' => '$Latest'
+                ],
+                'MaxCount' => 1,
+                'MinCount' => 1
+            ]);
+
+            $this->instance_id = $response->get('Instances')[0]['InstanceId'];
+
+            $attempts = 0;
+
+            while ($attempts < $this->ATTEMPT_COUNT) {
+                if ($this->isInstanceState($this->instance_id)) {
+                    return $this->instance_id;
+                }
+
+                sleep($this->WAIT_TIME);
+
+                $attempts++;
+            }
+        } catch (Exception $ex) {
+            throw new Exception('Failed to Start Instance.');
+        }
+
+        throw new Exception('Failed to Start Instance.');
+    }
+
+    /**
+     * Terminate Instance
+     *
+     * @return void
+     */
+    public function terminateInstance(): void
+    {
+        if ($this->isInstanceState($this->instance_id, 'terminated')) {
+            return;
+        }
+
+        $stopParams = [
+            'InstanceIds' => [$this->instance_id],
+        ];
+
+        try {
+            $this->ec2Client->terminateInstances($stopParams);
+
+            $attempts = 0;
+
+            while ($attempts < $this->ATTEMPT_COUNT) {
+                if ($this->isInstanceState($this->instance_id, 'terminated')) {
+                    return;
+                }
+
+                sleep(5);
+                $attempts++;
+            }
+        } catch (Exception $e) {
+            throw new Exception('Failed to Terminate Instance.');
+        }
+
+        throw new Exception('Failed to Terminate Instance.');
+    }
+
+    /**
      * Stop EC2 Instance
      *
      * @param string $instance_id Instance ID
@@ -121,8 +196,12 @@ class AWSService
      * @param string $instance_id Instance ID
      * @return string IP Address
      */
-    public function getInstanceIPAddress(string $instance_id): string
+    public function getInstanceIPAddress(string $instance_id = ''): string
     {
+        if ($instance_id === '') {
+            $instance_id = $this->instance_id;
+        }
+
         if (!$this->isInstanceState($instance_id)) {
             throw new Exception('This Instance is Not Running.');
         }

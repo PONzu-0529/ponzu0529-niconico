@@ -309,6 +309,8 @@ class SeleniumService
                 sleep($this->WAIT_TIME);
                 $attempts++;
             }
+
+            throw $ex;
         } catch (Exception $ex) {
             throw new Exception('Failed to Connect.');
         }
