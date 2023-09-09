@@ -9,4 +9,5 @@ class AutoGeneratorRequest extends BaseModel
     public const EMAIL = 'email';
     public const PASSWORD = 'password';
     public const MYLIST_TITLE = 'mylist_title';
+    public const STATE = 'state';
 }

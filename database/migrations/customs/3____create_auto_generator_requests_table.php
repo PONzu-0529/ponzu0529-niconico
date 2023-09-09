@@ -19,6 +19,7 @@ class CreateAutoGeneratorRequestsTable extends Migration
             $table->string(AutoGeneratorRequest::EMAIL);
             $table->string(AutoGeneratorRequest::PASSWORD);
             $table->string(AutoGeneratorRequest::MYLIST_TITLE);
+            $table->string(AutoGeneratorRequest::STATE);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Constants\AuthenticationLevelConstant;
 use App\Constants\AutomaticNiconicoMylistGeneratorConstant;
+use App\Constants\NicoMylistAutoGen\RequetsStateConstant;
+use App\Constants\NicoMylistAutoGen\VideoStateConstant;
 use App\Helpers\AuthenticationHelper;
 use App\Models\AutoGeneratorRequest;
 use App\Models\AutoGeneratorVideo;
@@ -38,6 +40,7 @@ class AutomaticNiconicoMylistGeneratorService
         $autoGeneratorRequest[AutoGeneratorRequest::EMAIL] = $request->getEmail();
         $autoGeneratorRequest[AutoGeneratorRequest::PASSWORD] = $request->getPassword();
         $autoGeneratorRequest[AutoGeneratorRequest::MYLIST_TITLE] = $request->getMylistTitle();
+        $autoGeneratorRequest[AutoGeneratorRequest::STATE] = RequetsStateConstant::STANDBY;
         $autoGeneratorRequest->save();
 
         $request_id = $autoGeneratorRequest[AutoGeneratorRequest::ID];
@@ -46,7 +49,7 @@ class AutomaticNiconicoMylistGeneratorService
             $autoGeneratorVideo = new AutoGeneratorVideo();
             $autoGeneratorVideo[AutoGeneratorVideo::REQUEST_ID] = $request_id;
             $autoGeneratorVideo[AutoGeneratorVideo::VIDEO_ID] = $music_id;
-            $autoGeneratorVideo[AutoGeneratorVideo::STATE] = 'standby';
+            $autoGeneratorVideo[AutoGeneratorVideo::STATE] = VideoStateConstant::STANDBY;
             $autoGeneratorVideo->save();
         }
 
