@@ -312,8 +312,9 @@
 import { Component, Watch } from 'vue-property-decorator';
 import Utils from '@/common/Utils';
 import MylistAssistantHelper from '@/helpers/MylistAssistantHelper';
-import { MusicStyle, CreateCustomMylistStyle } from '@/models/MylistAssistantModel';
+import { MusicStyle } from '@/models/MylistAssistantModel';
 import BaseView from '@/views/BaseView.vue';
+import CreateCustomMylistRequestObject from '@/Objects/NicoMylistAutoGen/CreateCustomMylistRequestObject';
 
 @Component({})
 export default class MylistAssistant extends BaseView {
@@ -321,7 +322,7 @@ export default class MylistAssistant extends BaseView {
   private music: MusicStyle;
 
   /** Parameter of Custom Mylist */
-  private customMylistParameter: CreateCustomMylistStyle;
+  private customMylistParameter: CreateCustomMylistRequestObject;
 
   private isModalOpen: boolean;
 
@@ -343,10 +344,10 @@ export default class MylistAssistant extends BaseView {
       memo: ''
     };
     this.customMylistParameter = {
-      count: 100,
       email: '',
       password: '',
-      mylist_title: 'CustomMylist'
+      mylist_title: 'CustomMylist',
+      count: 100
     };
     this.isModalOpen = false;
     this.isEditDialogOpen = false;

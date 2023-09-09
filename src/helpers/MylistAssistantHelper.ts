@@ -1,8 +1,9 @@
 import Utils from '@/common/Utils';
 import ApiHelper from '@/common/ApiHelper';
-import { MusicStyle, CreateCustomMylistStyle } from '@/models/MylistAssistantModel';
+import { MusicStyle } from '@/models/MylistAssistantModel';
 import { NowPlayingStyle } from '@/interfaces/KiiteInfoStyle';
 import { NiconicoInfo } from '@/interfaces/NiconicoInfoStyle';
+import CreateCustomMylistRequestObject from '@/Objects/NicoMylistAutoGen/CreateCustomMylistRequestObject';
 
 export default class MylistAssistantHelper {
   public static async getAuth(): Promise<boolean> {
@@ -51,9 +52,9 @@ export default class MylistAssistantHelper {
 
   /**
    * Call CreateCustomMylist
-   * @param parameter CreateCustomMylist Parameter
+   * @param parameter CreateCustomMylistRequestObject
    */
-  public static async createCustomMylist(parameter: CreateCustomMylistStyle): Promise<void> {
-    return await ApiHelper.post(`${Utils.getHostWithProtocol()}/api/mylist-assistant/create-custom-mylist`, parameter);
+  public static async createCustomMylist(parameter: CreateCustomMylistRequestObject): Promise<void> {
+    return await ApiHelper.post(`${Utils.getHostWithProtocol()}/api/automatic-niconico-mylist-generator/create-custom-mylist`, parameter);
   }
 }
