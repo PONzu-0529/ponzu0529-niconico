@@ -22,6 +22,7 @@ use App\Models\Constants\UserMusicConstant;
 use App\Models\Constants\UserMusic2ViewConstant;
 use App\DTO\MylistAssistant\CreateMylistDTO;
 use App\Helpers\LogHelper;
+use App\Objects\MylistAssistant\MylistAssistantOptionObject;
 use App\Services\MylistAssistantSeleniumService;
 
 class MylistAssistantService
@@ -78,6 +79,38 @@ class MylistAssistantService
         }
 
         return $music_id_list;
+    }
+
+    /**
+     * Get Musics
+     *
+     * @param MylistAssistantOptionObject $option Mylist Assistant Option
+     * @return array Music ID Array
+     */
+    public function getMusics(MylistAssistantOptionObject $option): array
+    {
+        if (!AuthenticationHelper::checkAuthentication(MylistAssistantConstant::FUNCTION_ID, AuthenticationLevelConstant::VIEW)) {
+            throw new Exception('This User is Unauthorized.');
+        }
+
+        $this->validateCreateCustomMylistRequest($option);
+
+        $music_list = UserMusic2View::select()
+            ->where([
+                UserMusic2ViewConstant::USER_ID => Auth::user()['id']
+            ])
+            ->inRandomOrder()
+            ->limit($option->getCount())
+            ->get()
+            ->toArray();
+
+        $music_id_array = [];
+
+        foreach ($music_list as $music) {
+            $music_id_array[] = $music[UserMusic2ViewConstant::NICONICO_ID];
+        }
+
+        return $music_id_array;
     }
 
     public function getById(int $id): UserMusic2View
@@ -336,5 +369,18 @@ class MylistAssistantService
         return Music::where([
             MusicConstant::NICONICO_ID => $niconico_id
         ])->exists();
+    }
+
+    /**
+     * Validate Mylist Assistant Option
+     *
+     * @param MylistAssistantOptionObject $option Option
+     * @return void
+     */
+    private function validateCreateCustomMylistRequest(MylistAssistantOptionObject $option): void
+    {
+        if (!$option->getCount()) {
+            throw new Exception('Parameter \'Count\' is Missing.');
+        }
     }
 }
