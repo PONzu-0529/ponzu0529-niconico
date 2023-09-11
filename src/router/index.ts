@@ -6,7 +6,9 @@ import ConvertTransfers from '@/views/ConvertTransfers.vue';
 import CreateBibliography from '@/views/CreateBibliography.vue';
 import FilterInPokemonGo from '@/views/FilterInPokemonGo.vue';
 import MylistAssistant from '@/views/MylistAssistant.vue';
+import Test from '@/views/Test.vue';
 import Error from '@/views/Error.vue';
+import Utils from '@/common/Utils';
 
 Vue.use(VueRouter);
 
@@ -41,6 +43,14 @@ const routes: Array<RouteConfig> = [
     component: Error
   }
 ];
+
+if (Utils.getEnv() === 'development') {
+  routes.push({
+    path: '/test',
+    name: 'Test',
+    component: Test
+  });
+}
 
 const router = new VueRouter({
   mode: 'history',
