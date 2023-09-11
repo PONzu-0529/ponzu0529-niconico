@@ -63,6 +63,15 @@ export default class Home extends Vue {
         }
       });
     }
+
+    if (Utils.getEnv() === 'development') {
+      this.BUTTON_ITEM_LIST.push(
+        {
+          title: 'テストページ',
+          description: 'テストページです。',
+          url: '/test',
+        });
+    }
   }
 
   private async changePage(url: string): Promise<void> {
@@ -74,7 +83,7 @@ interface ButtonItemStyle {
   functionId?: string;
   title: string;
   description: string;
-  icon: string;
+  icon?: string;
   url: string;
   disabled?: boolean
 }
