@@ -33,11 +33,13 @@ import { Component } from 'vue-property-decorator';
 import BaseView from '@/views/BaseView.vue';
 import CustomButton, { CustomButtonOption } from '@/components/CustomButton.vue';
 import CustomSelectBox, { CustomSelectBoxOption } from '@/components/CustomSelectBox.vue';
+import CustomSimpleTable, { CustomTableOption } from '@/components/CustomSimpleTable.vue';
 
 @Component({
   components: {
     CustomButton,
-    CustomSelectBox
+    CustomSelectBox,
+    CustomSimpleTable
   }
 })
 export default class Test extends BaseView {
