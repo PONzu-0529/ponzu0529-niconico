@@ -39,6 +39,23 @@ class MylistAssistantServiceTest extends TestCase
         $this->assertArrayHasKey('memo', $result[0]);
     }
 
+    public function test_getRandomMusics()
+    {
+        $COUNT = 10;
+
+        Auth::attempt(
+            [
+                'email' => 'test1@sample.com',
+                'password' => 'password'
+            ]
+        );
+
+        $service = new MylistAssistantService();
+        $result = $service->getRandomMusics($COUNT);
+
+        $this->assertCount($COUNT, $result);
+    }
+
     public function test_getById_unauthorized()
     {
         $service = new MylistAssistantService();

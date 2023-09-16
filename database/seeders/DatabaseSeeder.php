@@ -27,6 +27,9 @@ use App\Models\Constants\IpAddressAuthenticationConstant;
 use App\Models\Constants\MusicConstant;
 use App\Models\Constants\PaymentModelConstant;
 use App\Models\Constants\SettingConstant;
+use App\Constants\AutomaticNiconicoMylistGeneratorConstant;
+use App\Models\AutoGeneratorRequest;
+use App\Models\AutoGeneratorVideo;
 
 class DatabaseSeeder extends Seeder
 {
@@ -50,6 +53,38 @@ class DatabaseSeeder extends Seeder
             [
                 SettingConstant::KEY => 'ADSENCE_SLOT_NUM2',
                 SettingConstant::VALUE => '2345678901'
+            ],
+            [
+                SettingConstant::KEY => 'AWS_DEFAULT_REGION',
+                SettingConstant::VALUE => ''
+            ],
+            [
+                SettingConstant::KEY => 'AWS_ACCESS_KEY_ID',
+                SettingConstant::VALUE => ''
+            ],
+            [
+                SettingConstant::KEY => 'AWS_SECRET_ACCESS_KEY',
+                SettingConstant::VALUE => ''
+            ],
+            [
+                SettingConstant::KEY => 'SELENIUM_STANDALONE_INSTANCE_ID',
+                SettingConstant::VALUE => ''
+            ],
+            [
+                SettingConstant::KEY => 'LINE_NOTIFY_LOG_ACCESS_TOKEN',
+                SettingConstant::VALUE => ''
+            ],
+            [
+                SettingConstant::KEY => 'LINE_NOTIFY_ALERT_ACCESS_TOKEN',
+                SettingConstant::VALUE => ''
+            ],
+            [
+                SettingConstant::KEY => 'LINE_NOTIFY_ERROR_ACCESS_TOKEN',
+                SettingConstant::VALUE => ''
+            ],
+            [
+                SettingConstant::KEY => 'LINE_NOTIFY_SUCCESS_ACCESS_TOKEN',
+                SettingConstant::VALUE => ''
             ]
         ]);
 
@@ -135,6 +170,11 @@ class DatabaseSeeder extends Seeder
             AuthenticationConstant::USER_ID => '2',
             AuthenticationConstant::FUNCTION_ID => ExpenseConstant::FUNCTION_ID,
             AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::VIEW
+        ]);
+        Authentication::create([
+            AuthenticationConstant::USER_ID => '1',
+            AuthenticationConstant::FUNCTION_ID => AutomaticNiconicoMylistGeneratorConstant::FUNCTION_ID,
+            AuthenticationConstant::AUTHENTICATION_LEVEL => AuthenticationLevelConstant::AUTHORIZED
         ]);
 
         // IpAddress::truncate();
@@ -365,5 +405,8 @@ class DatabaseSeeder extends Seeder
             ExpenseItemModelConstant::MONEY => '2000',
             ExpenseItemModelConstant::PAYMENT_ID => '2'
         ]);
+
+        AutoGeneratorRequest::truncate();
+        AutoGeneratorVideo::truncate();
     }
 }

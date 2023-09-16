@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AutomaticNiconicoMylistGeneratorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommandLogController;
@@ -39,7 +40,9 @@ Route::post('command-log', [CommandLogController::class, 'store']);
 Route::get('auth/mylist-assistant', [MylistAssistantController::class, 'authentication']);
 Route::get('mylist-assistant/get-niconico-info', [MylistAssistantController::class, 'getNiconicoInfo']);
 Route::get('mylist-assistant/get-now-playing-info', [MylistAssistantController::class, 'getNowPlayingInfo']);
+Route::post('mylist-assistant/create-custom-mylist', [MylistAssistantController::class, 'createCustomMylist']);
 Route::resource('mylist-assistant', MylistAssistantController::class, ['except' => ['create', 'edit']]);
+Route::post('automatic-niconico-mylist-generator/create-custom-mylist', [AutomaticNiconicoMylistGeneratorController::class, 'createCustomMylist']);
 
 // Setting
 Route::post('setting', [SettingController::class, 'show']);

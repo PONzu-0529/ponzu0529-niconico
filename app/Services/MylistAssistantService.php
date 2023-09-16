@@ -2,12 +2,16 @@
 
 namespace App\Services;
 
-use Illuminate\Http\JsonResponse;
 use Auth;
+use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 use App\Constants\AuthenticationLevelConstant;
 use App\Constants\MylistAssistantConstant;
 use App\Helpers\AuthenticationHelper;
+use App\Helpers\ExceptionHelper;
 use App\Helpers\ResponseHelper;
+use App\Helpers\SettingHelper;
 use App\Models\Music;
 use App\Models\MusicMemo;
 use App\Models\UserMusic;
@@ -16,6 +20,10 @@ use App\Models\Constants\MusicConstant;
 use App\Models\Constants\MusicMemoConstant;
 use App\Models\Constants\UserMusicConstant;
 use App\Models\Constants\UserMusic2ViewConstant;
+use App\DTO\MylistAssistant\CreateMylistDTO;
+use App\Helpers\LogHelper;
+use App\Objects\MylistAssistant\MylistAssistantOptionObject;
+use App\Services\MylistAssistantSeleniumService;
 
 class MylistAssistantService
 {
@@ -36,6 +44,73 @@ class MylistAssistantService
             ->orderBy(UserMusic2ViewConstant::MUSIC_ID, 'asc')
             ->get()
             ->toArray();
+    }
+
+    /**
+     * Get Random Musics
+     *
+     * @param integer $count Music Count
+     * @return array Music ID List
+     */
+    public function getRandomMusics(int $count): array
+    {
+        if (
+            !AuthenticationHelper::checkAuthentication(
+                MylistAssistantConstant::FUNCTION_ID,
+                AuthenticationLevelConstant::VIEW
+            )
+        ) {
+            abort(403, 'This User is unauthorized.');
+        }
+
+        $music_list = UserMusic2View::select()
+            ->where([
+                UserMusic2ViewConstant::USER_ID => Auth::user()['id']
+            ])
+            ->inRandomOrder()
+            ->limit($count)
+            ->get()
+            ->toArray();
+
+        $music_id_list = [];
+
+        foreach ($music_list as $music) {
+            $music_id_list[] = $music[UserMusic2ViewConstant::NICONICO_ID];
+        }
+
+        return $music_id_list;
+    }
+
+    /**
+     * Get Musics
+     *
+     * @param MylistAssistantOptionObject $option Mylist Assistant Option
+     * @return array Music ID Array
+     */
+    public function getMusics(MylistAssistantOptionObject $option): array
+    {
+        if (!AuthenticationHelper::checkAuthentication(MylistAssistantConstant::FUNCTION_ID, AuthenticationLevelConstant::VIEW)) {
+            throw new Exception('This User is Unauthorized.');
+        }
+
+        $this->validateCreateCustomMylistRequest($option);
+
+        $music_list = UserMusic2View::select()
+            ->where([
+                UserMusic2ViewConstant::USER_ID => Auth::user()['id']
+            ])
+            ->inRandomOrder()
+            ->limit($option->getCount())
+            ->get()
+            ->toArray();
+
+        $music_id_array = [];
+
+        foreach ($music_list as $music) {
+            $music_id_array[] = $music[UserMusic2ViewConstant::NICONICO_ID];
+        }
+
+        return $music_id_array;
     }
 
     public function getById(int $id): UserMusic2View
@@ -232,6 +307,58 @@ class MylistAssistantService
     }
 
     /**
+     * Create Mylist
+     *
+     * @param CreateMylistDTO $parameter Create Mylist Parameter
+     * @return JsonResponse JSON Response
+     */
+    public function createMylist(CreateMylistDTO $parameter): JsonResponse
+    {
+        $aws_service = new AWSService();
+
+        $instance_id = SettingHelper::getSettingValue('SELENIUM_STANDALONE_INSTANCE_ID');
+
+        $aws_service->startInstance($instance_id);
+
+        LogHelper::log('Start Instance.');
+
+        $ip_address = $aws_service->getInstanceIPAddress($instance_id);
+
+        $mylist_assistant_selenium_service = new MylistAssistantSeleniumService("http://$ip_address:4444");
+
+        try {
+            $mylist_assistant_selenium_service->loginNiconico($parameter->getEmail(), $parameter->getPassword());
+
+            LogHelper::log('Login Niconico.');
+
+            // $mylist_assistant_selenium_service->deleteMylist($parameter->getMylistTitle());
+
+            $mylist_assistant_selenium_service->createMylist($parameter->getMylistTitle());
+
+            LogHelper::log('Create Mylist.');
+
+            foreach ($parameter->getMusicIdList() as $video_id) {
+                try {
+                    $mylist_assistant_selenium_service->addVideoToMylist($video_id, $parameter->getMylistTitle());
+                } catch (Exception $ex) {
+                    ExceptionHelper::handleException($ex);
+                }
+            }
+        } catch (Exception $ex) {
+            throw $ex;
+        } finally {
+            $mylist_assistant_selenium_service->quit();
+            $aws_service->stopInstance($instance_id);
+
+            LogHelper::log('Quit Driver and Stop Instance.');
+        }
+
+        return ResponseHelper::jsonResponse([
+            'status' => 'success'
+        ]);
+    }
+
+    /**
      * Check Niconico ID Duplication
      *
      * @param string $niconico_id
@@ -242,5 +369,18 @@ class MylistAssistantService
         return Music::where([
             MusicConstant::NICONICO_ID => $niconico_id
         ])->exists();
+    }
+
+    /**
+     * Validate Mylist Assistant Option
+     *
+     * @param MylistAssistantOptionObject $option Option
+     * @return void
+     */
+    private function validateCreateCustomMylistRequest(MylistAssistantOptionObject $option): void
+    {
+        if (!$option->getCount()) {
+            throw new Exception('Parameter \'Count\' is Missing.');
+        }
     }
 }

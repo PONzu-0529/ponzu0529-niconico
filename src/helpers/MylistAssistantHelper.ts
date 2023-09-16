@@ -3,6 +3,7 @@ import ApiHelper from '@/common/ApiHelper';
 import { MusicStyle } from '@/models/MylistAssistantModel';
 import { NowPlayingStyle } from '@/interfaces/KiiteInfoStyle';
 import { NiconicoInfo } from '@/interfaces/NiconicoInfoStyle';
+import CreateCustomMylistRequestObject from '@/Objects/NicoMylistAutoGen/CreateCustomMylistRequestObject';
 
 export default class MylistAssistantHelper {
   public static async getAuth(): Promise<boolean> {
@@ -47,5 +48,13 @@ export default class MylistAssistantHelper {
 
   public static async getNowPlayingInfo(): Promise<NowPlayingStyle> {
     return await ApiHelper.get(`${Utils.getHostWithProtocol()}/api/mylist-assistant/get-now-playing-info`);
+  }
+
+  /**
+   * Call CreateCustomMylist
+   * @param parameter CreateCustomMylistRequestObject
+   */
+  public static async createCustomMylist(parameter: CreateCustomMylistRequestObject): Promise<void> {
+    return await ApiHelper.post(`${Utils.getHostWithProtocol()}/api/automatic-niconico-mylist-generator/create-custom-mylist`, parameter);
   }
 }
