@@ -1,0 +1,9 @@
+@import '../common';
+@import '../variables';
+
+.l-money-assistant-option,
+.l-money-assistant-edit-modal-option {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

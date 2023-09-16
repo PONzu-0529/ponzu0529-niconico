@@ -4,6 +4,8 @@ $scroll-bar-height: 20px;
 
 $app-margin: 10px;
 
+$common-padding: 10px;
+
 $app-height: calc(100vh - ($app-margin * 2) - $scroll-bar-height);
 $app-height-smartphone: calc(100svh - ($app-margin * 2));
 $app-width: calc(100vw - ($app-margin * 2));
