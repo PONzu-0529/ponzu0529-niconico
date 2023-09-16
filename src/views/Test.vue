@@ -27,6 +27,12 @@
     </div>
     <br>
     <div>
+      DefaultInput:
+      <custom-input :option="defaultInputOption" />
+      : {{ defaultInputValue }}
+    </div>
+    <br>
+    <div>
       <custom-simple-table
         :option="simpleTableOption"
         @clickPage="clickSimpleTablePageClick"
@@ -39,12 +45,14 @@
 import { Component } from 'vue-property-decorator';
 import BaseView from '@/views/BaseView.vue';
 import CustomButton, { CustomButtonOption } from '@/components/CustomButton.vue';
+import CustomInput, { CustomInputOption } from '@/components/CustomInput.vue';
 import CustomSelectBox, { CustomSelectBoxOption } from '@/components/CustomSelectBox.vue';
 import CustomSimpleTable, { CustomTableOption } from '@/components/CustomSimpleTable.vue';
 
 @Component({
   components: {
     CustomButton,
+    CustomInput,
     CustomSelectBox,
     CustomSimpleTable
   }
@@ -98,6 +106,13 @@ export default class Test extends BaseView {
     disabled: true
   }
 
+  private defaultInputValue: string;
+  private defaultInputOption: CustomInputOption = {
+    value: '',
+    placeholder: 'DefaultInput',
+    handleInput: this.handleDefaultInput
+  }
+
   private simpleTableOption: CustomTableOption = {
     head: [
       {
@@ -149,6 +164,8 @@ export default class Test extends BaseView {
 
     this.defaultSelectBoxValue = '';
     this.disabledSelectBoxValue = '';
+
+    this.defaultInputValue = '';
   }
 
   private handleDefaultSelectBoxValue(value: string): void {
@@ -157,6 +174,10 @@ export default class Test extends BaseView {
 
   private handleDisabledSelectBoxValue(value: string): void {
     this.disabledSelectBoxValue = value;
+  }
+
+  private handleDefaultInput(event: InputEvent): void {
+    this.defaultInputValue = (event.target as HTMLInputElement).value;
   }
 
   private clickSimpleTablePageClick(index: number): void {
