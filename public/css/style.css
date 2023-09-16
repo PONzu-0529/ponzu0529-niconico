@@ -120,13 +120,13 @@ td {
 
 .btn-medium,
 .select-medium {
-  width: 10vw;
+  min-width: 10vw;
   height: 2.4rem;
 }
 @media (max-width: 480px) {
   .btn-medium,
   .select-medium {
-    width: 20vw;
+    min-width: 20vw;
   }
 }
 
@@ -195,6 +195,12 @@ td {
   .dialog .dialog-content {
     overflow-x: scroll;
   }
+}
+
+.table-footer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 .l-top-content {

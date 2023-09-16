@@ -20,6 +20,10 @@ export default class TitleHelper {
       {
         path: '/mylist-assistant',
         title: 'マイリストアシスタント'
+      },
+      {
+        path: '/test',
+        title: 'テストページ'
       }
     ];
 
