@@ -31,6 +31,21 @@
       <custom-input :option="defaultInputOption" />
       : {{ defaultInputValue }}
     </div>
+    <div>
+      DisabledInput:
+      <custom-input :option="disabledInputOption" />
+      : {{ disabledInputValue }}
+    </div>
+    <div>
+      NumberInput:
+      <custom-input-number :option="numberInputOption" />
+      : {{ numberInputValue }}
+    </div>
+    <div>
+      DisabledNumberInput:
+      <custom-input-number :option="disabledNumberInputOption" />
+      : {{ disabledNumberInputValue }}
+    </div>
     <br>
     <div>
       <custom-simple-table
@@ -46,6 +61,7 @@ import { Component } from 'vue-property-decorator';
 import BaseView from '@/views/BaseView.vue';
 import CustomButton, { CustomButtonOption } from '@/components/CustomButton.vue';
 import CustomInput, { CustomInputOption } from '@/components/CustomInput.vue';
+import CustomInputNumber, { CustomInputNumberOption } from '@/components/CustomInputNumber.vue';
 import CustomSelectBox, { CustomSelectBoxOption } from '@/components/CustomSelectBox.vue';
 import CustomSimpleTable, { CustomTableOption } from '@/components/CustomSimpleTable.vue';
 
@@ -53,6 +69,7 @@ import CustomSimpleTable, { CustomTableOption } from '@/components/CustomSimpleT
   components: {
     CustomButton,
     CustomInput,
+    CustomInputNumber,
     CustomSelectBox,
     CustomSimpleTable
   }
@@ -113,6 +130,29 @@ export default class Test extends BaseView {
     handleInput: this.handleDefaultInput
   }
 
+  private disabledInputValue: string;
+  private disabledInputOption: CustomInputOption = {
+    value: '',
+    placeholder: 'DefaultInput',
+    disabled: true,
+    handleInput: this.handleDefaultInput
+  }
+
+  private numberInputValue: number;
+  private numberInputOption: CustomInputNumberOption = {
+    value: 0,
+    placeholder: 'NumberIput',
+    handleInput: this.handleNumberInput
+  }
+
+  private disabledNumberInputValue: number;
+  private disabledNumberInputOption: CustomInputNumberOption = {
+    value: 0,
+    placeholder: 'NumberIput',
+    disabled: true,
+    handleInput: this.handleNumberInput
+  }
+
   private simpleTableOption: CustomTableOption = {
     head: [
       {
@@ -166,6 +206,9 @@ export default class Test extends BaseView {
     this.disabledSelectBoxValue = '';
 
     this.defaultInputValue = '';
+    this.disabledInputValue = '';
+    this.numberInputValue = 0;
+    this.disabledNumberInputValue = 0;
   }
 
   private handleDefaultSelectBoxValue(value: string): void {
@@ -178,6 +221,16 @@ export default class Test extends BaseView {
 
   private handleDefaultInput(event: InputEvent): void {
     this.defaultInputValue = (event.target as HTMLInputElement).value;
+  }
+
+  private handleNumberInput(event: InputEvent): void {
+    const numericValue = parseFloat((event.target as HTMLInputElement).value);
+
+    if (!isNaN(numericValue)) {
+      this.numberInputValue = numericValue;
+    } else {
+      this.numberInputValue = 0;
+    }
   }
 
   private clickSimpleTablePageClick(index: number): void {
