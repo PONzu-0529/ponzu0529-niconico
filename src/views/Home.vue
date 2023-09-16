@@ -53,24 +53,47 @@ export default class Home extends Vue {
       url: '/mylist-assistant',
       disabled: true
     },
+    {
+      functionId: 'MONEY_ASSISTANT',
+      title: 'マネーアシスタント',
+      description: 'お金の管理をサポートをします。',
+      url: '/money-assistant',
+      disabled: true
+    },
   ];
 
   private async mounted(): Promise<void> {
-    if (await MylistAssistantHelper.getAuth()) {
-      this.BUTTON_ITEM_LIST.forEach((item, index) => {
+    this.BUTTON_ITEM_LIST.forEach(async (item, index) => {
+      if (await MylistAssistantHelper.getAuth()) {
         if (item.functionId === 'MYLIST_ASSISTANT') {
           this.BUTTON_ITEM_LIST[index].disabled = false;
         }
-      });
-    }
+      }
+
+      // TODO: 暫定追加
+      // if (await MoneyAssistantHelper.getAuth()) {
+      //   if (item.functionId === 'MONEY_ASSISTANT') {
+      //     this.BUTTON_ITEM_LIST[index].disabled = false;
+      //   }
+      // }
+    });
+
 
     if (Utils.getEnv() === 'development') {
-      this.BUTTON_ITEM_LIST.push(
+      const devButtonList: Array<ButtonItemStyle> = [
         {
           title: 'テストページ',
           description: 'テストページです。',
           url: '/test',
-        });
+        },
+        {
+          title: 'マネーアシスタント (デザイン)',
+          description: 'お金の管理をサポートをします (デザイン確認用)。',
+          url: '/money-assistant-design',
+        },
+      ];
+
+      this.BUTTON_ITEM_LIST.push(...devButtonList);
     }
   }
 

@@ -5,6 +5,7 @@ import CheckTodofuken from '@/views/CheckTodofuken.vue';
 import ConvertTransfers from '@/views/ConvertTransfers.vue';
 import CreateBibliography from '@/views/CreateBibliography.vue';
 import FilterInPokemonGo from '@/views/FilterInPokemonGo.vue';
+import MoneyAssistant from '@/views/MoneyAssistant.vue';
 import MylistAssistant from '@/views/MylistAssistant.vue';
 import Test from '@/views/Test.vue';
 import Error from '@/views/Error.vue';
@@ -38,6 +39,11 @@ const routes: Array<RouteConfig> = [
     component: MylistAssistant
   },
   {
+    path: '/money-assistant',
+    name: 'MoneyAssistant',
+    component: MoneyAssistant
+  },
+  {
     path: '*',
     name: 'error',
     component: Error
@@ -45,11 +51,20 @@ const routes: Array<RouteConfig> = [
 ];
 
 if (Utils.getEnv() === 'development') {
-  routes.push({
-    path: '/test',
-    name: 'Test',
-    component: Test
-  });
+  const devRoutes: Array<RouteConfig> = [
+    {
+      path: '/test',
+      name: 'Test',
+      component: Test
+    },
+    {
+      path: '/money-assistant-design',
+      name: 'MoneyAssistantDesign',
+      component: MoneyAssistant
+    }
+  ];
+
+  routes.push(...devRoutes);
 }
 
 const router = new VueRouter({

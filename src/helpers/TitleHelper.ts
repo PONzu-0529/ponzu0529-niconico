@@ -24,6 +24,14 @@ export default class TitleHelper {
       {
         path: '/test',
         title: 'テストページ'
+      },
+      {
+        path: '/money-assistant',
+        title: 'マネーアシスタント'
+      },
+      {
+        path: '/money-assistant-design',
+        title: 'マネーアシスタント (デザイン)'
       }
     ];
 
