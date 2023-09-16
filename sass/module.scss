@@ -95,3 +95,9 @@ $overlay-left-margin-smartphone: calc(0px - ($app-margin));
     }
   }
 }
+
+.table-footer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
