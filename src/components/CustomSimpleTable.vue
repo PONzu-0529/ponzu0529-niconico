@@ -28,10 +28,11 @@
       </table>
     </div>
     <div class="table-footer">
-      <template v-for="(index) in pageList">
+      <template v-for="(index) in option.pageList">
         <a
+          href="#"
           :key="index"
-          href=""
+          @click.prevent.stop="clickPage(index)"
         >{{ index }}</a>
       </template>
     </div>
@@ -39,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
 import CustomButton, { CustomButtonOption } from '@/components/CustomButton.vue';
 
 @Component({
@@ -51,28 +52,17 @@ export default class CustomSimpleTable extends Vue {
   @Prop()
   private option: CustomTableOption
 
-  private pageList: Array<number>;
-
-  constructor() {
-    super();
-
-    this.pageList = [];
-  }
-
-  private mounted(): void {
-    this.pageList.push(
-      this.option.page - 2, this.option.page - 1, this.option.page);
-    const minPage = Math.max(1, this.option.page - 2);
-    const maxPage = Math.max(minPage, this.option.page + 2);
-
-    this.pageList = Array.from({ length: maxPage - minPage + 1 }, (_, index) => minPage + index);
+  @Emit('clickPage')
+  private clickPage(index: number): number {
+    return index;
   }
 }
 
 export interface CustomTableOption {
-  head: Array<CustomTableRowOption>
-  body: Array<Array<CustomTableRowOption>>
-  page: number
+  head: Array<CustomTableRowOption>;
+  body: Array<Array<CustomTableRowOption>>;
+  currentPage: number;
+  pageList: Array<number>;
 }
 
 export interface CustomTableRowOption {

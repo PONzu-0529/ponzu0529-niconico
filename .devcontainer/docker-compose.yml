@@ -22,12 +22,12 @@ services:
       - /home/${XSERVER_ID}/${XSERVER_DOMAIN}/repos/${XSERVER_SUBDOMAIN}/node_modules
       - /home/${XSERVER_ID}/${XSERVER_DOMAIN}/repos/${XSERVER_SUBDOMAIN}/vendor
     working_dir: "/home/${XSERVER_ID}/${XSERVER_DOMAIN}/repos/${XSERVER_SUBDOMAIN}"
-  design:
-    image: httpd
-    ports:
-      - "5000:80"
-    volumes:
-      - ${LOCAL_HOST_PATH}/design/:/usr/local/apache2/htdocs/
+  # design:
+  #   image: httpd
+  #   ports:
+  #     - "5000:80"
+  #   volumes:
+  #     - ${LOCAL_HOST_PATH}/design/:/usr/local/apache2/htdocs/
   mariadb:
     image: mariadb:10.5
     container_name: "${PROJECT_NAME}_mariadb"
@@ -48,13 +48,13 @@ services:
       PMA_PASSWORD: ${DB_PASSWORD}
     ports:
       - "8888:80"
-  chrome:
-    image: selenium/standalone-chrome:4.0.0-rc-1-prerelease-20210713
-    container_name: "${PROJECT_NAME}_chrome"
-    shm_size: 2gb
-    ports:
-      - "4444:4444"
-      - "7900:7900"
+  # chrome:
+  #   image: selenium/standalone-chrome:4.0.0-rc-1-prerelease-20210713
+  #   container_name: "${PROJECT_NAME}_chrome"
+  #   shm_size: 2gb
+  #   ports:
+  #     - "4444:4444"
+  #     - "7900:7900"
   # selenium:
   #   build:
   #     context: "${LOCAL_HOST_PATH}/selenium"

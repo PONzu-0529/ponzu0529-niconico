@@ -25,6 +25,13 @@
       />
       : {{ disabledSelectBoxValue }}
     </div>
+    <br>
+    <div>
+      <custom-simple-table
+        :option="simpleTableOption"
+        @clickPage="clickSimpleTablePageClick"
+      />
+    </div>
   </div>
 </template>
 
@@ -91,6 +98,52 @@ export default class Test extends BaseView {
     disabled: true
   }
 
+  private simpleTableOption: CustomTableOption = {
+    head: [
+      {
+        value: 'Header1'
+      },
+      {
+        value: 'Header2'
+      },
+      {
+        value: 'Header3'
+      }
+    ],
+    body: [
+      [
+        {
+          value: 'Column1-1'
+        },
+        {
+          value: 'Column1-2'
+        },
+        {
+          button: {
+            label: 'Column1',
+            click: () => { return; }
+          }
+        }
+      ],
+      [
+        {
+          value: 'Column2-1'
+        },
+        {
+          value: 'Column2-2'
+        },
+        {
+          button: {
+            label: 'Column2',
+            click: () => { return; }
+          }
+        }
+      ]
+    ],
+    currentPage: 5,
+    pageList: [3, 4, 5, 6, 7]
+  }
+
   constructor() {
     super();
 
@@ -104,6 +157,10 @@ export default class Test extends BaseView {
 
   private handleDisabledSelectBoxValue(value: string): void {
     this.disabledSelectBoxValue = value;
+  }
+
+  private clickSimpleTablePageClick(index: number): void {
+    return;
   }
 }
 </script>
