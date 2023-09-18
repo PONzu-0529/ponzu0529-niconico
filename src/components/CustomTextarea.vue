@@ -1,6 +1,5 @@
 <template>
   <textarea
-    :value="option.value"
     :rows="option.rows ?? 5"
     :cols="option.cols ?? 30"
     :disabled="option.disabled ?? false"
@@ -18,7 +17,6 @@ export default class CustomTextarea extends Vue {
 }
 
 export interface CustomTextareaOption {
-  value: string;
   rows?: number;
   cols?: number;
   disabled?: boolean;

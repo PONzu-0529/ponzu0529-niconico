@@ -167,7 +167,6 @@ export default class Test extends BaseView {
 
   private defaultTextareaValue: string;
   private defaultTextareaOption: CustomTextareaOption = {
-    value: '',
     handleInput: this.handleDefaultTextare
   }
 

@@ -21,6 +21,7 @@
       </div>
       <div>
         メモ:
+        <custom-textarea :option="memoTextareaOption" />
       </div>
       <div class="l-table">
         <custom-simple-table
@@ -44,13 +45,15 @@ import CustomButton, { CustomButtonOption } from '@/components/CustomButton.vue'
 import CustomInput, { CustomInputOption } from '@/components/CustomInput.vue';
 import CustomSelectBox, { CustomSelectBoxOption } from '@/components/CustomSelectBox.vue';
 import CustomSimpleTable, { CustomTableOption } from '@/components/CustomSimpleTable.vue';
+import CustomTextarea, { CustomTextareaOption } from '@/components/CustomTextarea.vue';
 
 @Component({
   components: {
     CustomButton,
     CustomInput,
     CustomSelectBox,
-    CustomSimpleTable
+    CustomSimpleTable,
+    CustomTextarea,
   }
 })
 export default class MoneyAssistantEditModal extends BaseView {
@@ -95,6 +98,10 @@ export default class MoneyAssistantEditModal extends BaseView {
   }
 
   private memo: string;
+  private memoTextareaOption: CustomTextareaOption = {
+    rows: 3,
+    handleInput: this.handleMemoInput
+  }
 
   private registerButtonOption: CustomButtonOption = {
     label: '更新',
@@ -148,6 +155,10 @@ export default class MoneyAssistantEditModal extends BaseView {
 
   private handleFromSelectBoxValue(value: string): void {
     this.from = value;
+  }
+
+  private handleMemoInput(event: InputEvent): void {
+    this.memo = (event.target as HTMLInputElement).value;
   }
 
   private clickPage(index: number): void {
