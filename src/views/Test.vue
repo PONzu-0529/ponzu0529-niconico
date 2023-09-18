@@ -46,7 +46,17 @@
       <custom-input-number :option="disabledNumberInputOption" />
       : {{ disabledNumberInputValue }}
     </div>
+
     <br>
+
+    <div>
+      DefaultTextarea:
+      <custom-textarea :option="defaultTextareaOption" />
+      : {{ defaultTextareaValue }}
+    </div>
+
+    <br>
+
     <div>
       <custom-simple-table
         :option="simpleTableOption"
@@ -64,6 +74,7 @@ import CustomInput, { CustomInputOption } from '@/components/CustomInput.vue';
 import CustomInputNumber, { CustomInputNumberOption } from '@/components/CustomInputNumber.vue';
 import CustomSelectBox, { CustomSelectBoxOption } from '@/components/CustomSelectBox.vue';
 import CustomSimpleTable, { CustomTableOption } from '@/components/CustomSimpleTable.vue';
+import CustomTextarea, { CustomTextareaOption } from '@/components/CustomTextarea.vue';
 
 @Component({
   components: {
@@ -71,7 +82,8 @@ import CustomSimpleTable, { CustomTableOption } from '@/components/CustomSimpleT
     CustomInput,
     CustomInputNumber,
     CustomSelectBox,
-    CustomSimpleTable
+    CustomSimpleTable,
+    CustomTextarea,
   }
 })
 export default class Test extends BaseView {
@@ -153,6 +165,12 @@ export default class Test extends BaseView {
     handleInput: this.handleNumberInput
   }
 
+  private defaultTextareaValue: string;
+  private defaultTextareaOption: CustomTextareaOption = {
+    value: '',
+    handleInput: this.handleDefaultTextare
+  }
+
   private simpleTableOption: CustomTableOption = {
     head: [
       {
@@ -210,6 +228,8 @@ export default class Test extends BaseView {
     this.disabledInputValue = '';
     this.numberInputValue = 0;
     this.disabledNumberInputValue = 0;
+
+    this.defaultTextareaValue = '';
   }
 
   private handleDefaultSelectBoxValue(value: string): void {
@@ -232,6 +252,10 @@ export default class Test extends BaseView {
     } else {
       this.numberInputValue = 0;
     }
+  }
+
+  private handleDefaultTextare(event: InputEvent): void {
+    this.defaultTextareaValue = (event.target as HTMLInputElement).value;
   }
 
   private clickSimpleTablePageClick(index: number): void {
