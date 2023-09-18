@@ -20,6 +20,9 @@
                   <template v-if="row.button">
                     <custom-button :option="row.button" />
                   </template>
+                  <template v-else-if="row.input">
+                    <custom-input :option="row.input" />
+                  </template>
                   <template v-else-if="row.value">
                     {{ row.value }}
                   </template>
@@ -45,10 +48,12 @@
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
 import CustomButton, { CustomButtonOption } from '@/components/CustomButton.vue';
+import CustomInput, { CustomInputOption } from '@/components/CustomInput.vue';
 
 @Component({
   components: {
-    CustomButton
+    CustomButton,
+    CustomInput,
   }
 })
 export default class CustomSimpleTable extends Vue {
@@ -59,6 +64,12 @@ export default class CustomSimpleTable extends Vue {
   private clickPage(index: number): number {
     return index;
   }
+
+  private mounted(): void {
+    if (this.option.defaultRow) {
+      this.option.body.push(this.option.defaultRow);
+    }
+  }
 }
 
 export interface CustomTableOption {
@@ -66,11 +77,13 @@ export interface CustomTableOption {
   body: Array<Array<CustomTableRowOption>>;
   currentPage: number;
   pageList: Array<number>;
+  defaultRow?: Array<CustomTableRowOption>;
   widthList?: Array<number | null>;
 }
 
 export interface CustomTableRowOption {
-  value?: string
-  button?: CustomButtonOption
+  value?: string;
+  button?: CustomButtonOption;
+  input?: CustomInputOption;
 }
 </script>

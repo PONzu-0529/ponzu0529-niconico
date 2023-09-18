@@ -147,14 +147,12 @@ export default class Test extends BaseView {
 
   private defaultInputValue: string;
   private defaultInputOption: CustomInputOption = {
-    value: '',
     placeholder: 'DefaultInput',
     handleInput: this.handleDefaultInput
   }
 
   private disabledInputValue: string;
   private disabledInputOption: CustomInputOption = {
-    value: '',
     placeholder: 'DefaultInput',
     disabled: true,
     handleInput: this.handleDefaultInput
@@ -162,14 +160,12 @@ export default class Test extends BaseView {
 
   private numberInputValue: number;
   private numberInputOption: CustomInputNumberOption = {
-    value: 0,
     placeholder: 'NumberIput',
     handleInput: this.handleNumberInput
   }
 
   private disabledNumberInputValue: number;
   private disabledNumberInputOption: CustomInputNumberOption = {
-    value: 0,
     placeholder: 'NumberIput',
     disabled: true,
     handleInput: this.handleNumberInput

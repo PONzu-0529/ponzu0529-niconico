@@ -65,7 +65,6 @@ export default class MoneyAssistantEditModal extends BaseView {
 
   private title: string;
   private titleInputOption: CustomInputOption = {
-    value: '',
     placeholder: 'タイトル',
     handleInput: this.handleTitleInput
   }
@@ -134,7 +133,26 @@ export default class MoneyAssistantEditModal extends BaseView {
     body: [[]],
     currentPage: 1,
     pageList: [],
-    widthList: [300, 200, 200],
+    defaultRow: [
+      {
+        input: {
+          placeholder: '名称',
+          handleInput: () => { _.noop(); }
+        }
+      },
+      {
+        input: {
+          placeholder: 'ジャンル',
+          handleInput: () => { _.noop(); }
+        }
+      },
+      {
+        input: {
+          placeholder: '金額',
+          handleInput: () => { _.noop(); }
+        }
+      }
+    ],
   }
 
   constructor() {
