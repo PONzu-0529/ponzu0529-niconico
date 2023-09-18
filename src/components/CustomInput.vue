@@ -1,6 +1,5 @@
 <template>
   <input
-    :value="option.value"
     :placeholder="option.placeholder"
     :disabled="option.disabled ?? false"
     @input="option.handleInput"
@@ -17,7 +16,6 @@ export default class CustomInput extends Vue {
 }
 
 export interface CustomInputOption {
-  value: string;
   placeholder: string;
   disabled?: boolean;
   handleInput: (event: InputEvent) => void;
