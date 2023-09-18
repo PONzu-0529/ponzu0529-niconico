@@ -5,7 +5,10 @@
         <thead>
           <tr>
             <template v-for="(head, index) in option.head">
-              <th :key="index">{{ head.value }}</th>
+              <th
+                :key="index"
+                :width="option.widthList ? option.widthList[index] : null"
+              >{{ head.value }}</th>
             </template>
           </tr>
         </thead>
@@ -63,6 +66,7 @@ export interface CustomTableOption {
   body: Array<Array<CustomTableRowOption>>;
   currentPage: number;
   pageList: Array<number>;
+  widthList?: Array<number | null>;
 }
 
 export interface CustomTableRowOption {

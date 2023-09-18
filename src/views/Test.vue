@@ -196,7 +196,8 @@ export default class Test extends BaseView {
       ]
     ],
     currentPage: 5,
-    pageList: [3, 4, 5, 6, 7]
+    pageList: [3, 4, 5, 6, 7],
+    widthList: [200, 500, null],
   }
 
   constructor() {

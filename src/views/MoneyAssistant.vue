@@ -1,7 +1,7 @@
 <template>
   <div class="l-content">
     <money-assistant-edit-modal
-      v-show="editModalOpen"
+      v-if="editModalOpen"
       :option="editModalOption"
     />
     <div class="l-money-assistant-option">

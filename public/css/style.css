@@ -776,6 +776,12 @@ td {
   gap: 10px;
 }
 
+.l-money-assistant-edit-modal .l-option {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
 /*!
  * Bootstrap  v5.2.3 (https://getbootstrap.com/)
  * Copyright 2011-2022 The Bootstrap Authors
