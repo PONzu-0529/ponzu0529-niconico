@@ -4,6 +4,7 @@
       <div>
         <custom-input :option="titleInputOption" />
         日付:
+        <custom-input-date :option="dateInputOption" />
       </div>
       <div>
         支払先:
@@ -43,6 +44,7 @@ import _ from 'lodash';
 import BaseView from '@/views/BaseView.vue';
 import CustomButton, { CustomButtonOption } from '@/components/CustomButton.vue';
 import CustomInput, { CustomInputOption } from '@/components/CustomInput.vue';
+import CustomInputDate, { CustomInputDateOption } from '@/components/CustomInputDate.vue';
 import CustomSelectBox, { CustomSelectBoxOption } from '@/components/CustomSelectBox.vue';
 import CustomSimpleTable, { CustomTableOption } from '@/components/CustomSimpleTable.vue';
 import CustomTextarea, { CustomTextareaOption } from '@/components/CustomTextarea.vue';
@@ -51,6 +53,7 @@ import CustomTextarea, { CustomTextareaOption } from '@/components/CustomTextare
   components: {
     CustomButton,
     CustomInput,
+    CustomInputDate,
     CustomSelectBox,
     CustomSimpleTable,
     CustomTextarea,
@@ -68,6 +71,9 @@ export default class MoneyAssistantEditModal extends BaseView {
   }
 
   private date: Date;
+  private dateInputOption: CustomInputDateOption = {
+    handleInput: this.handleDateInput
+  }
 
   private to: string;
   private toSelectBoxOption: CustomSelectBoxOption = {
@@ -147,6 +153,10 @@ export default class MoneyAssistantEditModal extends BaseView {
 
   private handleTitleInput(event: InputEvent): void {
     this.title = (event.target as HTMLInputElement).value;
+  }
+
+  private handleDateInput(date: Date): void {
+    this.date = date;
   }
 
   private handleToSelectBoxValue(value: string): void {

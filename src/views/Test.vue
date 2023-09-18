@@ -50,6 +50,14 @@
     <br>
 
     <div>
+      DateInput:
+      <custom-input-date :option="dateInputOption" />
+      : {{ dateInputValue }}
+    </div>
+
+    <br>
+
+    <div>
       DefaultTextarea:
       <custom-textarea :option="defaultTextareaOption" />
       : {{ defaultTextareaValue }}
@@ -71,6 +79,7 @@ import { Component } from 'vue-property-decorator';
 import BaseView from '@/views/BaseView.vue';
 import CustomButton, { CustomButtonOption } from '@/components/CustomButton.vue';
 import CustomInput, { CustomInputOption } from '@/components/CustomInput.vue';
+import CustomInputDate, { CustomInputDateOption } from '@/components/CustomInputDate.vue';
 import CustomInputNumber, { CustomInputNumberOption } from '@/components/CustomInputNumber.vue';
 import CustomSelectBox, { CustomSelectBoxOption } from '@/components/CustomSelectBox.vue';
 import CustomSimpleTable, { CustomTableOption } from '@/components/CustomSimpleTable.vue';
@@ -80,6 +89,7 @@ import CustomTextarea, { CustomTextareaOption } from '@/components/CustomTextare
   components: {
     CustomButton,
     CustomInput,
+    CustomInputDate,
     CustomInputNumber,
     CustomSelectBox,
     CustomSimpleTable,
@@ -165,6 +175,11 @@ export default class Test extends BaseView {
     handleInput: this.handleNumberInput
   }
 
+  private dateInputValue: Date;
+  private dateInputOption: CustomInputDateOption = {
+    handleInput: this.handleDateInput
+  }
+
   private defaultTextareaValue: string;
   private defaultTextareaOption: CustomTextareaOption = {
     handleInput: this.handleDefaultTextare
@@ -228,6 +243,8 @@ export default class Test extends BaseView {
     this.numberInputValue = 0;
     this.disabledNumberInputValue = 0;
 
+    this.dateInputValue = new Date();
+
     this.defaultTextareaValue = '';
   }
 
@@ -251,6 +268,10 @@ export default class Test extends BaseView {
     } else {
       this.numberInputValue = 0;
     }
+  }
+
+  private handleDateInput(date: Date): void {
+    this.dateInputValue = date;
   }
 
   private handleDefaultTextare(event: InputEvent): void {
