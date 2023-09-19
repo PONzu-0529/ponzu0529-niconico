@@ -18,6 +18,7 @@ module.exports = {
     "semi-spacing": ["error", { "after": true, "before": false }],
     "semi-style": ["error", "last"],
     "no-extra-semi": "error",
+    "no-multi-spaces": "error",
     "no-unexpected-multiline": "error",
     "no-unreachable": "error",
     "quotes": ["error", "single"],
