@@ -66,9 +66,17 @@
     <br>
 
     <div>
+      SimpleTable:
       <custom-simple-table
         :option="simpleTableOption"
         @clickPage="clickSimpleTablePageClick"
+      />
+    </div>
+    <div>
+      EditableTable:
+      <custom-simple-table
+        :option="editableTalbeOption"
+        @clickPage="clickEditableTablePageClick"
       />
     </div>
   </div>
@@ -76,6 +84,7 @@
 
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
+import _ from 'lodash';
 import BaseView from '@/views/BaseView.vue';
 import CustomButton, { CustomButtonOption } from '@/components/CustomButton.vue';
 import CustomInput, { CustomInputOption } from '@/components/CustomInput.vue';
@@ -228,6 +237,38 @@ export default class Test extends BaseView {
     widthList: [200, 500, null],
   }
 
+  private editableTalbeOption: CustomTableOption = {
+    head: [
+      {
+        value: 'Header1'
+      },
+      {
+        value: 'Header2'
+      },
+    ],
+    body: [
+      [
+        {
+          value: 'Column1-1'
+        },
+        {
+          value: 'Column1-2'
+        },
+      ],
+      [
+        {
+          value: 'Column2-1'
+        },
+        {
+          value: 'Column2-2'
+        },
+      ]
+    ],
+    currentPage: 5,
+    pageList: [3, 4, 5, 6, 7],
+    editable: true,
+  }
+
   constructor() {
     super();
 
@@ -252,8 +293,8 @@ export default class Test extends BaseView {
     this.disabledSelectBoxValue = value;
   }
 
-  private handleDefaultInput(event: InputEvent): void {
-    this.defaultInputValue = (event.target as HTMLInputElement).value;
+  private handleDefaultInput(value: string): void {
+    this.defaultInputValue = value;
   }
 
   private handleNumberInput(event: InputEvent): void {
@@ -276,6 +317,10 @@ export default class Test extends BaseView {
 
   private clickSimpleTablePageClick(index: number): void {
     return;
+  }
+
+  private clickEditableTablePageClick(index: number): void {
+    _.noop();
   }
 }
 </script>
