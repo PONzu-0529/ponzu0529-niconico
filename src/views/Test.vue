@@ -46,7 +46,25 @@
       <custom-input-number :option="disabledNumberInputOption" />
       : {{ disabledNumberInputValue }}
     </div>
+
     <br>
+
+    <div>
+      DateInput:
+      <custom-input-date :option="dateInputOption" />
+      : {{ dateInputValue }}
+    </div>
+
+    <br>
+
+    <div>
+      DefaultTextarea:
+      <custom-textarea :option="defaultTextareaOption" />
+      : {{ defaultTextareaValue }}
+    </div>
+
+    <br>
+
     <div>
       <custom-simple-table
         :option="simpleTableOption"
@@ -61,17 +79,21 @@ import { Component } from 'vue-property-decorator';
 import BaseView from '@/views/BaseView.vue';
 import CustomButton, { CustomButtonOption } from '@/components/CustomButton.vue';
 import CustomInput, { CustomInputOption } from '@/components/CustomInput.vue';
+import CustomInputDate, { CustomInputDateOption } from '@/components/CustomInputDate.vue';
 import CustomInputNumber, { CustomInputNumberOption } from '@/components/CustomInputNumber.vue';
 import CustomSelectBox, { CustomSelectBoxOption } from '@/components/CustomSelectBox.vue';
 import CustomSimpleTable, { CustomTableOption } from '@/components/CustomSimpleTable.vue';
+import CustomTextarea, { CustomTextareaOption } from '@/components/CustomTextarea.vue';
 
 @Component({
   components: {
     CustomButton,
     CustomInput,
+    CustomInputDate,
     CustomInputNumber,
     CustomSelectBox,
-    CustomSimpleTable
+    CustomSimpleTable,
+    CustomTextarea,
   }
 })
 export default class Test extends BaseView {
@@ -125,14 +147,12 @@ export default class Test extends BaseView {
 
   private defaultInputValue: string;
   private defaultInputOption: CustomInputOption = {
-    value: '',
     placeholder: 'DefaultInput',
     handleInput: this.handleDefaultInput
   }
 
   private disabledInputValue: string;
   private disabledInputOption: CustomInputOption = {
-    value: '',
     placeholder: 'DefaultInput',
     disabled: true,
     handleInput: this.handleDefaultInput
@@ -140,17 +160,25 @@ export default class Test extends BaseView {
 
   private numberInputValue: number;
   private numberInputOption: CustomInputNumberOption = {
-    value: 0,
     placeholder: 'NumberIput',
     handleInput: this.handleNumberInput
   }
 
   private disabledNumberInputValue: number;
   private disabledNumberInputOption: CustomInputNumberOption = {
-    value: 0,
     placeholder: 'NumberIput',
     disabled: true,
     handleInput: this.handleNumberInput
+  }
+
+  private dateInputValue: Date;
+  private dateInputOption: CustomInputDateOption = {
+    handleInput: this.handleDateInput
+  }
+
+  private defaultTextareaValue: string;
+  private defaultTextareaOption: CustomTextareaOption = {
+    handleInput: this.handleDefaultTextare
   }
 
   private simpleTableOption: CustomTableOption = {
@@ -196,7 +224,8 @@ export default class Test extends BaseView {
       ]
     ],
     currentPage: 5,
-    pageList: [3, 4, 5, 6, 7]
+    pageList: [3, 4, 5, 6, 7],
+    widthList: [200, 500, null],
   }
 
   constructor() {
@@ -209,6 +238,10 @@ export default class Test extends BaseView {
     this.disabledInputValue = '';
     this.numberInputValue = 0;
     this.disabledNumberInputValue = 0;
+
+    this.dateInputValue = new Date();
+
+    this.defaultTextareaValue = '';
   }
 
   private handleDefaultSelectBoxValue(value: string): void {
@@ -231,6 +264,14 @@ export default class Test extends BaseView {
     } else {
       this.numberInputValue = 0;
     }
+  }
+
+  private handleDateInput(date: Date): void {
+    this.dateInputValue = date;
+  }
+
+  private handleDefaultTextare(event: InputEvent): void {
+    this.defaultTextareaValue = (event.target as HTMLInputElement).value;
   }
 
   private clickSimpleTablePageClick(index: number): void {

@@ -1,6 +1,7 @@
 <template>
-  <input
-    :placeholder="option.placeholder"
+  <textarea
+    :rows="option.rows ?? 5"
+    :cols="option.cols ?? 30"
     :disabled="option.disabled ?? false"
     @input="option.handleInput"
   />
@@ -10,13 +11,14 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 
 @Component({})
-export default class CustomInput extends Vue {
+export default class CustomTextarea extends Vue {
   @Prop()
-  private option: CustomInputOption;
+  private option: CustomTextareaOption;
 }
 
-export interface CustomInputOption {
-  placeholder: string;
+export interface CustomTextareaOption {
+  rows?: number;
+  cols?: number;
   disabled?: boolean;
   handleInput: (event: InputEvent) => void;
 }
