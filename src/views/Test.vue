@@ -54,6 +54,11 @@
       <custom-input-date :option="dateInputOption" />
       : {{ dateInputValue }}
     </div>
+    <div>
+      CustomDateInput:
+      <custom-input-date :option="customDateInputValueOption" />
+      : {{ customDateInputValue }}
+    </div>
 
     <br>
 
@@ -66,9 +71,17 @@
     <br>
 
     <div>
+      SimpleTable:
       <custom-simple-table
         :option="simpleTableOption"
         @clickPage="clickSimpleTablePageClick"
+      />
+    </div>
+    <div>
+      EditableTable:
+      <custom-simple-table
+        :option="editableTalbeOption"
+        @clickPage="clickEditableTablePageClick"
       />
     </div>
   </div>
@@ -76,6 +89,7 @@
 
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
+import _ from 'lodash';
 import BaseView from '@/views/BaseView.vue';
 import CustomButton, { CustomButtonOption } from '@/components/CustomButton.vue';
 import CustomInput, { CustomInputOption } from '@/components/CustomInput.vue';
@@ -176,6 +190,12 @@ export default class Test extends BaseView {
     handleInput: this.handleDateInput
   }
 
+  private customDateInputValue: Date;
+  private customDateInputValueOption: CustomInputDateOption = {
+    defaultValue: new Date('2023-01-01'),
+    handleInput: this.handleCustomDateInput,
+  }
+
   private defaultTextareaValue: string;
   private defaultTextareaOption: CustomTextareaOption = {
     handleInput: this.handleDefaultTextare
@@ -228,6 +248,38 @@ export default class Test extends BaseView {
     widthList: [200, 500, null],
   }
 
+  private editableTalbeOption: CustomTableOption = {
+    head: [
+      {
+        value: 'Header1'
+      },
+      {
+        value: 'Header2'
+      },
+    ],
+    body: [
+      [
+        {
+          value: 'Column1-1'
+        },
+        {
+          value: 'Column1-2'
+        },
+      ],
+      [
+        {
+          value: 'Column2-1'
+        },
+        {
+          value: 'Column2-2'
+        },
+      ]
+    ],
+    currentPage: 5,
+    pageList: [3, 4, 5, 6, 7],
+    editable: true,
+  }
+
   constructor() {
     super();
 
@@ -240,6 +292,7 @@ export default class Test extends BaseView {
     this.disabledNumberInputValue = 0;
 
     this.dateInputValue = new Date();
+    this.customDateInputValue = new Date('2023-01-01');
 
     this.defaultTextareaValue = '';
   }
@@ -252,30 +305,32 @@ export default class Test extends BaseView {
     this.disabledSelectBoxValue = value;
   }
 
-  private handleDefaultInput(event: InputEvent): void {
-    this.defaultInputValue = (event.target as HTMLInputElement).value;
+  private handleDefaultInput(value: string): void {
+    this.defaultInputValue = value;
   }
 
-  private handleNumberInput(event: InputEvent): void {
-    const numericValue = parseFloat((event.target as HTMLInputElement).value);
-
-    if (!isNaN(numericValue)) {
-      this.numberInputValue = numericValue;
-    } else {
-      this.numberInputValue = 0;
-    }
+  private handleNumberInput(value: number): void {
+    this.numberInputValue = value;
   }
 
   private handleDateInput(date: Date): void {
     this.dateInputValue = date;
   }
 
-  private handleDefaultTextare(event: InputEvent): void {
-    this.defaultTextareaValue = (event.target as HTMLInputElement).value;
+  private handleCustomDateInput(date: Date): void {
+    this.customDateInputValue = date;
+  }
+
+  private handleDefaultTextare(value: string): void {
+    this.defaultTextareaValue = value;
   }
 
   private clickSimpleTablePageClick(index: number): void {
     return;
+  }
+
+  private clickEditableTablePageClick(index: number): void {
+    _.noop();
   }
 }
 </script>

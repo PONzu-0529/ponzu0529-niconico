@@ -1,8 +1,11 @@
 <template>
   <input
+    ref="inputRef"
+    :value="option.defaultValue"
     :placeholder="option.placeholder"
     :disabled="option.disabled ?? false"
-    @input="option.handleInput"
+    @input="handleInput"
+    @blur="handleBlur"
   />
 </template>
 
@@ -13,11 +16,30 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 export default class CustomInput extends Vue {
   @Prop()
   private option: CustomInputOption;
+
+  private mounted(): void {
+    if (this.option.autoFocus) {
+      (this.$refs.inputRef as HTMLElement).focus();
+    }
+  }
+
+  private handleInput(event: InputEvent): void {
+    this.option.handleInput((event.target as HTMLInputElement).value);
+  }
+
+  private handleBlur(): void {
+    if (this.option.handleBlur) {
+      this.option.handleBlur();
+    }
+  }
 }
 
 export interface CustomInputOption {
+  defaultValue?: string;
   placeholder: string;
+  autoFocus?: boolean;
   disabled?: boolean;
-  handleInput: (event: InputEvent) => void;
+  handleInput: (value: string) => void;
+  handleBlur?: () => void;
 }
 </script>

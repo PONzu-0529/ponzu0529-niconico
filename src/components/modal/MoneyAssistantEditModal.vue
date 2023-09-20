@@ -169,8 +169,8 @@ export default class MoneyAssistantEditModal extends BaseView {
     this.clickPage(1);
   }
 
-  private handleTitleInput(event: InputEvent): void {
-    this.title = (event.target as HTMLInputElement).value;
+  private handleTitleInput(value: string): void {
+    this.title = value;
   }
 
   private handleDateInput(date: Date): void {
@@ -185,8 +185,8 @@ export default class MoneyAssistantEditModal extends BaseView {
     this.from = value;
   }
 
-  private handleMemoInput(event: InputEvent): void {
-    this.memo = (event.target as HTMLInputElement).value;
+  private handleMemoInput(value: string): void {
+    this.memo = value;
   }
 
   private clickPage(index: number): void {
