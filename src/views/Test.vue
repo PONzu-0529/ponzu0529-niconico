@@ -202,15 +202,18 @@ export default class Test extends BaseView {
   }
 
   private simpleTableOption: CustomTableOption = {
-    head: [
+    column: [
       {
-        value: 'Header1'
+        type: 'string',
+        head: 'Header1',
       },
       {
-        value: 'Header2'
+        type: 'string',
+        head: 'Header2',
       },
       {
-        value: 'Header3'
+        type: 'custom-button',
+        head: 'Header3',
       }
     ],
     body: [
@@ -224,7 +227,7 @@ export default class Test extends BaseView {
         {
           button: {
             label: 'Column1',
-            click: () => { return; }
+            click: _.noop,
           }
         }
       ],
@@ -238,23 +241,28 @@ export default class Test extends BaseView {
         {
           button: {
             label: 'Column2',
-            click: () => { return; }
+            click: _.noop,
           }
         }
       ]
     ],
     currentPage: 5,
     pageList: [3, 4, 5, 6, 7],
-    widthList: [200, 500, null],
   }
 
   private editableTalbeOption: CustomTableOption = {
-    head: [
+    column: [
       {
-        value: 'Header1'
+        type: 'string',
+        head: 'Header1',
       },
       {
-        value: 'Header2'
+        type: 'string',
+        head: 'Header2',
+      },
+      {
+        type: 'number',
+        head: 'Header3',
       },
     ],
     body: [
@@ -265,6 +273,9 @@ export default class Test extends BaseView {
         {
           value: 'Column1-2'
         },
+        {
+          number: 10,
+        },
       ],
       [
         {
@@ -272,6 +283,9 @@ export default class Test extends BaseView {
         },
         {
           value: 'Column2-2'
+        },
+        {
+          number: 20,
         },
       ]
     ],
@@ -326,7 +340,7 @@ export default class Test extends BaseView {
   }
 
   private clickSimpleTablePageClick(index: number): void {
-    return;
+    _.noop();
   }
 
   private clickEditableTablePageClick(index: number): void {

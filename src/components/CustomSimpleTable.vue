@@ -4,11 +4,11 @@
       <table>
         <thead>
           <tr>
-            <template v-for="(head, index) in option.head">
+            <template v-for="(column, index) in option.column">
               <th
                 :key="index"
-                :width="option.widthList ? option.widthList[index] : null"
-              >{{ head.value }}</th>
+                :width="column.width"
+              >{{ column.head }}</th>
             </template>
           </tr>
         </thead>
@@ -17,27 +17,46 @@
             <tr :key="rowNumber">
               <template v-for="(row, columnNumber) in body">
                 <td :key="columnNumber">
-                  <template v-if="row.button">
-                    <custom-button :option="row.button" />
-                  </template>
-                  <template v-else-if="row.input">
-                    <custom-input
-                      :option="row.input"
-                      ref="childRef"
-                    />
-                  </template>
-                  <template v-else-if="row.value">
+                  <template v-if="['string', 'number'].includes(option.column[columnNumber].type)">
                     <template v-if="option.editable">
-                      <a
-                        href="#"
-                        @click.prevent.stop="clickCell(rowNumber, columnNumber)"
-                      >
-                        {{ row.value }}
-                      </a>
+                      <template v-if="row.editing">
+                        <template v-if="option.column[columnNumber].type === 'string'">
+                          <custom-input :option="editingValueInputOption" />
+                        </template>
+
+                        <template v-else-if="option.column[columnNumber].type === 'number'">
+                          <custom-input-number :option="editingNumberInputOption" />
+                        </template>
+                      </template>
+
+                      <template v-else>
+                        <template v-if="option.column[columnNumber].type === 'string'">
+                          <a
+                            href="#"
+                            @click.prevent.stop="clickCell(rowNumber, columnNumber)"
+                          >
+                            {{ row.value }}
+                          </a>
+                        </template>
+
+                        <template v-else-if="option.column[columnNumber].type === 'number'">
+                          <a
+                            href="#"
+                            @click.prevent.stop="clickCell(rowNumber, columnNumber)"
+                          >
+                            {{ row.number }}
+                          </a>
+                        </template>
+                      </template>
                     </template>
+
                     <template v-else>
                       {{ row.value }}
                     </template>
+                  </template>
+
+                  <template v-else-if="option.column[columnNumber].type === 'custom-button'">
+                    <custom-button :option="row.button" />
                   </template>
                 </td>
               </template>
@@ -64,31 +83,67 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
 import CustomButton, { CustomButtonOption } from '@/components/CustomButton.vue';
 import CustomInput, { CustomInputOption } from '@/components/CustomInput.vue';
+import CustomInputNumber, { CustomInputNumberOption } from '@/components/CustomInputNumber.vue';
 
 @Component({
   components: {
     CustomButton,
     CustomInput,
+    CustomInputNumber,
   }
 })
 export default class CustomSimpleTable extends Vue {
   @Prop()
   private option: CustomTableOption;
 
-  private editingValue: string;
-  private editingRowNumber: number;
-  private editingColumnNumber: number;
+  private editingValue: string | null = '';
+  private editingNumber: number | null = 0;
+  private editingRowNumber = 0;
+  private editingColumnNumber = 0;
+
+  private editingValueInputOption: CustomInputOption = {
+    placeholder: '',
+    autoFocus: true,
+    handleInput: this.handleEditingInput,
+    handleBlur: this.handleBlurInput,
+  }
+
+  private handleEditingInput(value: string): void {
+    this.editingValue = value;
+  }
+
+  private handleBlurInput(): void {
+    if (this.editingValue === '') return;
+
+    this.option.body[this.editingRowNumber].splice(this.editingColumnNumber, 1, {
+      value: this.editingValue ?? undefined
+    });
+  }
+
+  private editingNumberInputOption: CustomInputNumberOption = {
+    placeholder: '',
+    autoFocus: true,
+    handleInput: this.handleEditingNumberInput,
+    handleBlur: this.handleBlurNumberInput,
+  }
+
+  private handleEditingNumberInput(value: number): void {
+    this.editingNumber = value;
+  }
+
+  private handleBlurNumberInput(): void {
+    this.option.body[this.editingRowNumber].splice(this.editingColumnNumber, 1, {
+      number: this.editingNumber ?? undefined
+    });
+  }
+
+  private get hasEditingOption(): boolean {
+    return this.option.body.some(row => row.some(option => option.editing));
+  }
 
   @Emit('clickPage')
   private clickPage(index: number): number {
     return index;
-  }
-
-  constructor() {
-    super();
-
-    this.editingRowNumber = 0;
-    this.editingColumnNumber = 0;
   }
 
   private mounted(): void {
@@ -98,45 +153,43 @@ export default class CustomSimpleTable extends Vue {
   }
 
   private clickCell(row: number, column: number): void {
-    this.editingValue = this.option.body[row][column].value ?? '';
+    if (this.hasEditingOption) return;
+
+    this.editingValue = this.option.body[row][column].value ?? null;
+    this.editingNumber = this.option.body[row][column].number ?? null;
     this.editingRowNumber = row;
     this.editingColumnNumber = column;
 
+    this.editingValueInputOption.defaultValue = this.editingValue ?? undefined;
+    this.editingNumberInputOption.defaultValue = this.editingNumber ?? undefined;
+
     this.option.body[row].splice(column, 1, {
-      input: {
-        defaultValue: this.editingValue,
-        placeholder: '',
-        autoFocus: true,
-        handleInput: this.handleEditingInput,
-        handleBlur: this.handleBlurInput,
-      }
-    });
-  }
-
-  private handleEditingInput(value: string): void {
-    this.editingValue = value;
-  }
-
-  private handleBlurInput(): void {
-    this.option.body[this.editingRowNumber].splice(this.editingColumnNumber, 1, {
-      value: this.editingValue
+      value: this.editingValue ?? undefined,
+      number: this.editingNumber ?? undefined,
+      editing: true,
     });
   }
 }
 
 export interface CustomTableOption {
-  head: Array<CustomTableRowOption>;
+  column: Array<CustomTableColumnOption>;
   body: Array<Array<CustomTableRowOption>>;
   currentPage: number;
   pageList: Array<number>;
   defaultRow?: Array<CustomTableRowOption>;
   editable?: boolean;
-  widthList?: Array<number | null>;
+}
+
+export interface CustomTableColumnOption {
+  type: 'string' | 'number' | 'custom-button';
+  head: string;
+  width?: number
 }
 
 export interface CustomTableRowOption {
   value?: string;
+  number?: number;
   button?: CustomButtonOption;
-  input?: CustomInputOption;
+  editing?: boolean;
 }
 </script>
