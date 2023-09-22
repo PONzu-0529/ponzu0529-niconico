@@ -148,7 +148,7 @@ export default class CustomSimpleTable extends Vue {
 
   private mounted(): void {
     if (this.option.defaultRow) {
-      this.option.body.push(this.option.defaultRow);
+      this.option.body.splice(0, 1, this.option.defaultRow);
     }
   }
 

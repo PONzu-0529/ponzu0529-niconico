@@ -9,6 +9,12 @@
 }
 
 .l-money-assistant-edit-modal {
+  .l-table-option {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
   .l-option {
     display: flex;
     justify-content: center;

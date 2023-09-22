@@ -776,6 +776,11 @@ td {
   gap: 10px;
 }
 
+.l-money-assistant-edit-modal .l-table-option {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
 .l-money-assistant-edit-modal .l-option {
   display: flex;
   justify-content: center;

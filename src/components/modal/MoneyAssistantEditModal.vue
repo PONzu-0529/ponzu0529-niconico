@@ -24,6 +24,9 @@
         メモ:
         <custom-textarea :option="memoTextareaOption" />
       </div>
+      <div class="l-table-option">
+        <custom-button :option="addRowButtonOption" />
+      </div>
       <div class="l-table">
         <custom-simple-table
           :option="expenseItemTableOption"
@@ -108,6 +111,25 @@ export default class MoneyAssistantEditModal extends BaseView {
     handleInput: this.handleMemoInput
   }
 
+  private addRowButtonOption: CustomButtonOption = {
+    label: '追加',
+    click: this.addRow
+  }
+
+  private addRow(): void {
+    this.expenseItemTableOption.body.push([
+      {
+        value: '名称',
+      },
+      {
+        value: 'ジャンル',
+      },
+      {
+        number: 0,
+      },
+    ]);
+  }
+
   private registerButtonOption: CustomButtonOption = {
     label: '更新',
     click: this.clickRegisterButton
@@ -119,40 +141,24 @@ export default class MoneyAssistantEditModal extends BaseView {
   }
 
   private expenseItemTableOption: CustomTableOption = {
-    head: [
+    column: [
       {
-        value: '名称'
+        type: 'string',
+        head: '名称',
       },
       {
-        value: 'ジャンル'
+        type: 'string',
+        head: 'ジャンル',
       },
       {
-        value: '金額'
+        type: 'number',
+        head: '金額',
       },
     ],
     body: [[]],
     currentPage: 1,
     pageList: [],
-    defaultRow: [
-      {
-        input: {
-          placeholder: '名称',
-          handleInput: () => { _.noop(); }
-        }
-      },
-      {
-        input: {
-          placeholder: 'ジャンル',
-          handleInput: () => { _.noop(); }
-        }
-      },
-      {
-        input: {
-          placeholder: '金額',
-          handleInput: () => { _.noop(); }
-        }
-      }
-    ],
+    editable: true,
   }
 
   constructor() {
