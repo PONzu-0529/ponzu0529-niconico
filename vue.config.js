@@ -8,6 +8,14 @@ module.exports = {
     },
   },
 
+  configureWebpack: {
+    mode: 'production',
+  },
+
+  chainWebpack: config => {
+    config.mode('mock').name('Mock');
+  },
+
   // disable hashes in filenames
   filenameHashing: false,
 }

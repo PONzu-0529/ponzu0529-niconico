@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --mode mock",
     "build-full": "yarn build-vue && yarn build-laravel",
     "build-full-dev": "yarn build-vue-dev && yarn build-laravel",
     "build-vue": "vue-cli-service build && yarn build-vue-sass",
