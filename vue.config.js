@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = {
   pages: {
     index: {
@@ -9,11 +11,11 @@ module.exports = {
   },
 
   configureWebpack: {
-    mode: 'production',
-  },
-
-  chainWebpack: config => {
-    config.mode('mock').name('Mock');
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env.is_served': JSON.stringify(process.argv.includes('serve')), // true if run with 'yarn serve'
+      })
+    ]
   },
 
   // disable hashes in filenames

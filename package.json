@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --mode mock",
+    "serve": "vue-cli-service serve",
     "build-full": "yarn build-vue && yarn build-laravel",
     "build-full-dev": "yarn build-vue-dev && yarn build-laravel",
     "build-vue": "vue-cli-service build && yarn build-vue-sass",
@@ -29,7 +29,9 @@
     "buefy": "^0.9.8",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.5",
+    "inversify": "3",
     "jest": "^29.5.0",
+    "reflect-metadata": "^0.1.13",
     "ts-jest": "^29.0.5",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
