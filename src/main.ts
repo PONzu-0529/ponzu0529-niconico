@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import Vue from 'vue';
 import Buefy from 'buefy';
 import VModal from 'vue-js-modal';
@@ -7,6 +8,7 @@ import router from './router';
 import store from './store';
 
 import TitleHelper from './helpers/TitleHelper';
+import { ContainerHelper } from './helpers/ContainerHelper';
 
 // FontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -22,6 +24,14 @@ Vue.use(VueHead);
 // FontAwesome
 library.add(faMusic, faTrainSubway, faBook, faGamepad);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
+
+// Bind Services
+// ContainerHelper.bind('SampleService1', SampleService1);
+
+// Rebind Services for Mocks
+if (process.env.is_served) {
+  // ContainerHelper.rebind('SampleService1', SampleService1Mock);
+}
 
 router.beforeEach((to, from, next) => {
   TitleHelper.setTitleByPath(to.path);
